@@ -1,9 +1,5 @@
 <?php
 
-//
-// connect to database
-//
-
 define('DB_NAME', 'disce');
 define('DB_USER', 'root');
 define('DB_PASSWORD', '');
@@ -39,7 +35,7 @@ if (!empty($_POST['customer_segment-submit'])) {
 
 if (!empty($_POST['customer_persona-submit'])) {
    $name = $_POST['name'];
-   $persona_name = $_POST['name'];
+   $persona_name = $_POST['persona_name'];
    $image_name = 'default';
    $location = $_POST['location'];
    $age = $_POST['age'];
@@ -109,5 +105,55 @@ if (!empty($_POST['customer_relationship_grow-submit'])) {
 		die('ERROR: ' . mysql_error());
 	}
 }
+
+
+if (!empty($_POST['key_partners-submit'])){
+	$canvas_id = 0;
+	$partners = $_POST['partners'];
+	
+	$sql = "INSERT INTO key_partners (canvas_id, partners) VALUES ('$canvas_id', '$partners')";
+	
+	if (!mysql_query($sql)) {
+	
+		die('ERROR: ' . mysql_error());
+	}
+}
+
+
+
+if (!empty($_POST['cost_structure-submit'])){
+
+	$canvas_id = 0;
+	$salaries = $_POST['salaries'];
+	$equipment = $_POST['equipment'];
+	$marketing = $_POST['marketing'];
+	$legal = $_POST['legal'];
+	$accounting = $_POST['accounting'];
+	$premises_and_bills = $_POST['premises_and_bills'];
+	$expenses = $_POST['expenses'];
+	
+	$sql = "INSERT INTO cost_structure (canvas_id, salaries, equipment, marketing, legal, accounting, premises_and_bills, expenses)
+	VALUES('$canvas_id', '$salaries', '$equipment', '$marketing', '$legal', '$accounting', '$premises_and_bills', '$expenses')";
+	
+	if (!mysql_query($sql)) {
+		die('ERROR: ' . mysql_error());
+	}
+}
+
+if (!empty($_POST['revenue_streams-submit'])){
+	$canvas_id = 0;
+	$market_type = $_POST['market_type'];
+	$value_driven_strategy = $_POST['value_driven_strategy'];
+	$subscriptions = $_POST['subscriptions'];
+	
+	$sql = "INSERT INTO revenue_streams (canvas_id, market_type, value_driven_strategy, subscriptions) VALUES 
+	('$canvas_id', '$market_type', '$value_driven_strategy', '$subscriptions')";
+	
+	if (!mysql_query($sql)) {
+		die('ERROR: ' . mysql_error());
+	}
+}
+
 mysql_close();
+
 ?>
