@@ -11,6 +11,8 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
 	<script src="js/colResizable-1.3.min.js"></script>
 	<script src="js/jquery.mjs.nestedSortable.js"></script>
+	 <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 	
 </head>
 <body>
@@ -21,7 +23,8 @@
 		<div id="Customer_Segments" class="canvas_section">
 			<img class="section_background" src="img/customer-section.png">
 				<div class="canvas_content">
-					<button type="button" onclick="alert('Add more')">Add More</button>
+					<!--<button type="button" onclick="alert('Add more')">Add More</button>-->
+					<button id="create-user">Create new user</button>
 				<ol class="sortable">
 					<ol class="hidden">
 					<li id="list_1"><div><span class="disclose"><span></span></span>Industries</div>
@@ -884,21 +887,72 @@
 		
 
 		<ul>
-		<li><a href="#Customer_Segments" class="Customer_Segments"><img class="section_icon" src="img/customer-icon.png"></a></li>
-		<li><a href="#Value_Proposition" class="Value_Proposition"><img class="section_icon" src="img/value-icon.png"></a></li>
-		<li><a href="#Customer_Relationships" class="Customer_Relationships"><img class="section_icon" src="img/relationships-icon.png"></a></li>
-		<li><a href="#Channels" class="Channels"><img class="section_icon" src="img/channels-icon.png"></a></li>
-		<li><a href="#Revenue_Streams" class="Revenue_Streams"><img class="section_icon" src="img/revenue-icon.png"></a></li>
-		<li><a href="#Key_Partners" class="Key_Partners"><img class="section_icon" src="img/partners-icon.png"></a></li>
-		<li><a href="#Key_Resources" class="Key_Resources"><img class="section_icon" src="img/resources-icon.png"></a></li>
-		<li><a href="#Key_Activities" class="Key_Activities"><img class="section_icon" src="img/activities-icon.png"></a></li>
-		<li><a href="#Cost_Structure" class="Cost_Structure"><img class="section_icon" src="img/costs-icon.png"></a></li>
+		<li>
+			<a href="#Customer_Segments" class="Customer_Segments">
+				<img class="section_icon_customer" src="img/customer-icon.png">
+			</a>
+		</li>
+		<li>
+			<a href="#Value_Proposition" class="Value_Proposition">
+				<img class="section_icon_value" src="img/value-icon.png">
+			</a>
+		</li>
+		<li>
+			<a href="#Customer_Relationships" class="Customer_Relationships">
+				<img class="section_icon_relasionships" src="img/relationships-icon.png">
+			</a>
+		</li>
+		<li>
+			<a href="#Channels" class="Channels">
+				<img class="section_icon_channsls" src="img/channels-icon.png">
+			</a>
+		</li>
+		<li>
+			<a href="#Revenue_Streams" class="Revenue_Streams">
+				<img class="section_icon_revenue" src="img/revenue-icon.png">
+			</a>
+		</li>
+		<li>
+			<a href="#Key_Partners" class="Key_Partners">
+				<img class="section_icon_partners" src="img/partners-icon.png">
+			</a>
+		</li>
+		<li>
+			<a href="#Key_Resources" class="Key_Resources">
+				<img class="section_icon_resources" src="img/resources-icon.png">
+			</a>
+		</li>
+		<li>
+			<a href="#Key_Activities" class="Key_Activities">
+				<img class="section_icon_activities" src="img/activities-icon.png">
+			</a>
+		</li>
+		<li>
+			<a href="#Cost_Structure" class="Cost_Structure">
+				<img class="section_icon_costs" src="img/costs-icon.png">
+			</a>
+		</li>
 
 		</ul>
 
 		
 	</div>	
 	<div id="notifications"></div>
+
+	//~form input
+	<div id="dialog-form" title="Create new user">
+		<p class="validateTips">All form fields are required.</p>
+		<form>
+			<fieldset>
+				<label for="name">Name</label>
+				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+				<label for="email">Email</label>
+				<input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all">
+				<label for="password">Password</label>
+				<input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all">
+			</fieldset>
+		</form>
+	</div>
 	
 
 		<script>
@@ -1011,7 +1065,10 @@
 					$('.canvas_focused').removeClass('canvas_focused');
 					$('.canvas_blocker').show();		
 					$('#Key_Partners').addClass('canvas_focused');	
-					$('.Key_Partners_Tool').show('slide', {direction: 'left'}, 750);	
+					$('.Key_Partners_Tool').show('slide', {direction: 'left'}, 750);
+					//~Thea messing
+					$('.section_icon_partners').removeClass('section_icon_partners').addClass('section_icon_selected_partners');	
+					//$('.section_icon_selected_key').show();	
 			
 				}
 
@@ -1123,6 +1180,8 @@
 		var onSampleResized = function(e){  
 			var table = $(e.currentTarget); //reference to the resized table
 		 }; 
+
+		 //seems to just hide everything ~Thea
   
 		function GoToModel(){
 			$('.canvas_blocker').hide();
@@ -1168,6 +1227,10 @@
 			$('#Resources_Financial').hide();	;	
 			$('#Resources_Human').hide();	
 			$('#Resources_Intellectual').hide();	
+
+			//~Thea 
+
+			$('.section_icon_selected_partners').removeClass('section_icon_selected_partners').addClass('section_icon_partners')
 		
 		}
 		
@@ -1182,7 +1245,84 @@
 			this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + 
 														$(window).scrollLeft()) + "px");
 			return this;
+
+
 		}
+
+	$(function() {
+		var name = $( "#name" ),
+		email = $( "#email" ),
+		password = $( "#password" ),
+		allFields = $( [] ).add( name ).add( email ).add( password ),
+		tips = $( ".validateTips" );
+	function updateTips( t ) {
+		tips
+		.text( t )
+		.addClass( "ui-state-highlight" );
+		setTimeout(function() {
+			tips.removeClass( "ui-state-highlight", 1500 );
+		}, 500 );
+	}
+	function checkLength( o, n, min, max ) {
+		if ( o.val().length > max || o.val().length < min ) {
+			o.addClass( "ui-state-error" );
+			updateTips( "Length of " + n + " must be between " +
+			min + " and " + max + "." );
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	function checkRegexp( o, regexp, n ) {
+		if ( !( regexp.test( o.val() ) ) ) {
+			o.addClass( "ui-state-error" );
+			updateTips( n );
+			return false;
+		} 
+		else {
+			return true;
+		}
+	}
+	$( "#dialog-form" ).dialog({
+		autoOpen: false,
+		height: 300,
+		width: 350,
+		modal: true,
+		buttons: {
+			"Create an account": function() {
+				var bValid = true;
+				allFields.removeClass( "ui-state-error" );
+				bValid = bValid && checkLength( name, "username", 3, 16 );
+				bValid = bValid && checkLength( email, "email", 6, 80 );
+				bValid = bValid && checkLength( password, "password", 5, 16 );
+				bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
+				// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
+				bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
+				bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
+		if ( bValid ) {
+			$( "#users tbody" ).append( "<tr>" +
+				"<td>" + name.val() + "</td>" +
+				"<td>" + email.val() + "</td>" +
+				"<td>" + password.val() + "</td>" +
+				"</tr>" );
+			$( this ).dialog( "close" );
+		}
+	},
+		Cancel: function() {
+			$( this ).dialog( "close" );
+		}
+	},
+	close: function() {
+		allFields.val( "" ).removeClass( "ui-state-error" );
+	}
+	});
+	$( "#create-user" )
+		.button()
+		.click(function() {
+	$( "#dialog-form" ).dialog( "open" );
+		});
+	});
 	</script>
 </body>
 </html>
