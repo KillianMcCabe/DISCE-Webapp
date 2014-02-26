@@ -155,6 +155,7 @@ a:hover, a:active {
 	background: #B2B2B2;
 	opacity: 0.7;
 }
+
 #canvas_focused_element{
 	display: none;
 	position: relative;
@@ -636,9 +637,45 @@ a:hover, a:active {
 			width: 48% !important;
 			height: 59% !important;
 		}
-		
+		//changed by thea to make highlighting work
 		.section_icon{
 			background-color: white;
+			width: 70px;
+		}
+		.section_icon_customer{
+			background-color: white;
+			width: 70px;
+		}
+		.section_icon_relationships{
+			background-color: white;
+			width: 70px;
+		}
+		.section_icon_value{
+			background-color: white;
+			width: 70px;
+		}
+		.section_icon_activites{
+			background-color: white;
+			width: 70px;
+		}
+		.section_icon_resources{
+			background-color: white;
+			width: 70px;
+		}
+		.section_icon_partners{
+			background-color: white;
+			width: 70px;
+		}
+		.section_icon_cost{
+			background-color: white;
+			width: 70px;
+		}
+		.section_icon_revenu{
+			background-color: white;
+			width: 70px;
+		}
+		.section_icon_selected_partners{
+			background-color: green;
 			width: 70px;
 		}
 		.page_logo{
