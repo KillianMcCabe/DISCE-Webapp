@@ -645,8 +645,8 @@ a:hover, a:active {
 			width: 48% !important;
 			height: 59% !important;
 		}
-		//changed by thea to make highlighting work
-		.section_icon{
+		/*changed by thea to make highlighting work*/
+		.section_icon_channels{
 			background-color: white;
 			width: 70px;
 		}
@@ -682,7 +682,39 @@ a:hover, a:active {
 			background-color: white;
 			width: 70px;
 		}
+		/*added by Thea for highlighting */
 		.section_icon_selected_partners{
+			background-color: green;
+			width: 70px;
+		}
+		.section_icon_selected_channels{
+			background-color: green;
+			width: 70px;
+		}
+		.section_icon_selected_customer{
+			background-color: green;
+			width: 70px;
+		}
+		.section_icon_selected_relationships{
+			background-color: green;
+			width: 70px;
+		}
+		.section_icon_selected_value{
+			background-color: green;
+			width: 70px;
+		}
+		.section_icon_selected_activites{
+			background-color: green;
+			width: 70px;
+		}
+		.section_icon_selected_resources{
+			background-color: green;
+			width: 70px		}
+		.section_icon_selected_cost{
+			background-color: green;
+			width: 70px;
+		}
+		.section_icon_selected_revenu{
 			background-color: green;
 			width: 70px;
 		}

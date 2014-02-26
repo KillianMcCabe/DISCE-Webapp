@@ -886,11 +886,11 @@
 		
 	</div>
 	
-	
 	<div class="canvas_blocker"></div>	
 	<div id="page_logo">
 			<img class="page_logo" src="http://disce.ie/wp-content/uploads/2013/09/logo5-hi-res-black-with-TM--300x300.png">
 	</div>
+	<!-- menu section -->
 	<div id="menu">
 		
 
@@ -907,17 +907,17 @@
 		</li>
 		<li>
 			<a href="#Customer_Relationships" class="Customer_Relationships">
-				<img class="section_icon_relasionships" src="img/relationships-icon.png">
+				<img class="section_icon_relationships" src="img/relationships-icon.png">
 			</a>
 		</li>
 		<li>
 			<a href="#Channels" class="Channels">
-				<img class="section_icon_channsls" src="img/channels-icon.png">
+				<img class="section_icon_channels" src="img/channels-icon.png">
 			</a>
 		</li>
 		<li>
 			<a href="#Revenue_Streams" class="Revenue_Streams">
-				<img class="section_icon_revenue" src="img/revenue-icon.png">
+				<img class="section_icon_revenu" src="img/revenue-icon.png">
 			</a>
 		</li>
 		<li>
@@ -932,12 +932,12 @@
 		</li>
 		<li>
 			<a href="#Key_Activities" class="Key_Activities">
-				<img class="section_icon_activities" src="img/activities-icon.png">
+				<img class="section_icon_activites" src="img/activities-icon.png">
 			</a>
 		</li>
 		<li>
 			<a href="#Cost_Structure" class="Cost_Structure">
-				<img class="section_icon_costs" src="img/costs-icon.png">
+				<img class="section_icon_cost" src="img/costs-icon.png">
 			</a>
 		</li>
 
@@ -1033,8 +1033,7 @@
 				$(this).closest('li').toggleClass('mjs-nestedSortable-collapsed').toggleClass('mjs-nestedSortable-expanded');
 			})
 
-
-			
+			// functions for menu
 			$('.Customer_Segments').on('click', function() {	
 					
 				if($('#Customer_Segments').hasClass('canvas_focused')){
@@ -1044,7 +1043,9 @@
 					$('.canvas_focused').removeClass('canvas_focused');
 					$('.canvas_blocker').show();	
 					$('#Customer_Segments').addClass('canvas_focused');	
-					$('.Customer_Segments_Tool').show('slide', {direction: 'left'}, 750);				
+					$('.Customer_Segments_Tool').show('slide', {direction: 'left'}, 750);
+					//~Thea adding highlighting
+					$('.section_icon_customer').removeClass('section_icon_customer').addClass('section_icon_selected_customer');				
 				}
 			})	
 
@@ -1062,6 +1063,8 @@
 					$('#Value_Proposition').addClass('value_canvas_focused');	
 					$('.PitchValueSelect').show();
 					$('.PitchValue').hide();
+					//~Thea adding highlighting
+					$('.section_icon_value').removeClass('section_icon_value').addClass('section_icon_selected_value');
 					
 				}
 
@@ -1075,7 +1078,10 @@
 					GoToModel();
 					$('.canvas_focused').removeClass('canvas_focused');
 					$('.canvas_blocker').show();		
+					$('#Customer_Relationships').addClass('canvas_focused');
 					$('.Customer_Relationships_Tool').show('slide', {direction: 'left'}, 750);
+					//~Thea adding highlighting
+					$('.section_icon_relationships').removeClass('section_icon_relationships').addClass('section_icon_selected_relationships');
 				
 				}
 
@@ -1091,7 +1097,9 @@
 					$('.canvas_blocker').show();		
 					$('#Channels').addClass('canvas_focused');	
 					$('.Channels_Tool').show('slide', {direction: 'left'}, 750);	
-					init_Chan_eco();			
+					init_Chan_eco();	
+					//~Thea adding highlighting
+					$('.section_icon_channels').removeClass('section_icon_channels').addClass('section_icon_selected_channels');		
 				}
 
 			})			
@@ -1103,8 +1111,11 @@
 				}else{
 					GoToModel();
 					$('.canvas_focused').removeClass('canvas_focused');
-					$('.canvas_blocker').show();		
-					$('.Revenue_Streams_Tool').show('slide', {direction: 'left'}, 750);				
+					$('.canvas_blocker').show();	
+					$('#Revenue_Streams').addClass('canvas_focused');	
+					$('.Revenue_Streams_Tool').show('slide', {direction: 'left'}, 750);			
+					//~Thea adding highlighting
+					$('.section_icon_revenu').removeClass('section_icon_revenu').addClass('section_icon_selected_revenu');	
 				}
 
 			})			
@@ -1119,9 +1130,8 @@
 					$('.canvas_blocker').show();		
 					$('#Key_Partners').addClass('canvas_focused');	
 					$('.Key_Partners_Tool').show('slide', {direction: 'left'}, 750);
-					//~Thea messing
-					$('.section_icon_partners').removeClass('section_icon_partners').addClass('section_icon_selected_partners');	
-					//$('.section_icon_selected_key').show();	
+					//~Thea adding highlighting
+					$('.section_icon_partners').removeClass('section_icon_partners').addClass('section_icon_selected_partners');
 			
 				}
 
@@ -1135,7 +1145,10 @@
 					GoToModel();
 					$('.canvas_focused').removeClass('canvas_focused');
 					$('.canvas_blocker').show();		
+					$('#Key_Resources').addClass('canvas_focused');
 					$('.Key_Resources_Tool').show('slide', {direction: 'left'}, 750);		
+					//~Thea adding highlighting
+					$('.section_icon_resources').removeClass('section_icon_resources').addClass('section_icon_selected_resources');
 			
 				}
 
@@ -1143,13 +1156,16 @@
 			
 			$('.Key_Activities').on('click', function() {
 					
-				if($('#Channels').hasClass('canvas_focused')){
+				if($('#Key_Activities').hasClass('canvas_focused')){
 					GoToModel();					
 				}else{
 					GoToModel();
 					$('.canvas_focused').removeClass('canvas_focused');
-					$('.canvas_blocker').show();						
-					$('.Key_Activities_Tool').show('slide', {direction: 'left'}, 750);				
+					$('.canvas_blocker').show();	
+					$('#Key_Activities').addClass('canvas_focused');					
+					$('.Key_Activities_Tool').show('slide', {direction: 'left'}, 750);	
+					//~Thea adding highlighting			
+					$('.section_icon_activites').removeClass('section_icon_activites').addClass('section_icon_selected_activites');
 				}
 
 			})	
@@ -1164,7 +1180,9 @@
 					$('.canvas_focused').removeClass('canvas_focused');
 					$('.canvas_blocker').show();		
 					$('#Cost_Structure').addClass('canvas_focused');	
-					$('.Cost_Structure_Tool').show('slide', {direction: 'left'}, 750);						
+					$('.Cost_Structure_Tool').show('slide', {direction: 'left'}, 750);	
+					//~Thea adding highlighting
+					$('.section_icon_cost').removeClass('section_icon_cost').addClass('section_icon_selected_cost');					
 				}
 
 			})	
@@ -1281,9 +1299,17 @@
 			$('#Resources_Human').hide();	
 			$('#Resources_Intellectual').hide();	
 
-			//~Thea 
+			//~Thea adding highlighting
 
-			$('.section_icon_selected_partners').removeClass('section_icon_selected_partners').addClass('section_icon_partners')
+			$('.section_icon_selected_partners').removeClass('section_icon_selected_partners').addClass('section_icon_partners');
+			$('.section_icon_selected_channels').removeClass('section_icon_selected_channels').addClass('section_icon_channels');
+			$('.section_icon_selected_customer').removeClass('section_icon_selected_customer').addClass('section_icon_customer');
+			$('.section_icon_selected_relationships').removeClass('section_icon_selected_relationships').addClass('section_icon_relationships');
+			$('.section_icon_selected_value').removeClass('section_icon_selected_value').addClass('section_icon_value');
+			$('.section_icon_selected_activites').removeClass('section_icon_selected_activites').addClass('section_icon_activites');
+			$('.section_icon_selected_resources').removeClass('section_icon_selected_resources').addClass('section_icon_resources');
+			$('.section_icon_selected_cost').removeClass('section_icon_selected_cost').addClass('section_icon_cost');
+			$('.section_icon_selected_revenu').removeClass('section_icon_selected_revenu').addClass('section_icon_revenu');
 		
 		}
 		
