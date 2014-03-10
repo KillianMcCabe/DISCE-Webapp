@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 25, 2014 at 11:53 PM
+-- Generation Time: Mar 09, 2014 at 05:58 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `firstname` varchar(30) NOT NULL,
   `surname` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `users`
