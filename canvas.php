@@ -1,5 +1,10 @@
 <!--coment to see if commits work-->
-<!doctype html>
+
+<?php
+require 'connect.inc.php';
+?>
+
+
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -13,7 +18,9 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
 	<script src="js/colResizable-1.3.min.js"></script>
 	<script src="js/jquery.mjs.nestedSortable.js"></script>
-	<script src="//code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="js/canvas_buttons.js"></script>
+	<!-- stops side nav buttons from working in php -->
+	<!--<script src="//code.jquery.com/jquery-1.9.1.js"></script>-->
 	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 	
 </head>
@@ -69,6 +76,8 @@
 			</div>
 		</div>
 		
+		
+		<!--
 		<div id="Customer_personas" class="Customer_Segments_Tool canvas_depth">
 			<br>
 			<h1>Start-Up Personas</h1>
@@ -100,7 +109,7 @@
 						</tr>
 						<tr>
 							<td>income</td>
-							<td>â‚¬30,000</td>
+							<td>€30,000</td>
 						</tr>
 						<tr>
 							<td>occupation</td>
@@ -110,6 +119,71 @@
 							<td>education</td>
 							<td>post-graduate</td>
 						</tr>
+				</table>
+
+			</div>
+		</div>
+		-->
+		<?php
+			$query = "SELECT * FROM customer_persona WHERE id = '1'";
+			if($query_run = mysql_query($query)){
+				$query_num_rows = mysql_num_rows($query_run);
+				if($query_num_rows == 0){
+					die('Table SELECT failed.');
+				}
+				else{
+					$name = mysql_result($query_run, 0, 'persona_name');
+					$location = mysql_result($query_run, 0, 'location');
+					$age = mysql_result($query_run, 0, 'age');
+					$gender = mysql_result($query_run, 0, 'gender');
+					$family_size = mysql_result($query_run, 0, 'family_size');
+					$income = mysql_result($query_run, 0, 'income');
+					$occupation = mysql_result($query_run, 0, 'occupation');
+					$education = mysql_result($query_run, 0, 'education');
+				}
+			}
+		?>
+		<div id="Customer_personas" class="Customer_Segments_Tool canvas_depth">
+			<br>
+			<h1>Start-Up Personas</h1>
+			<div class="canvas_content">
+				<table border="1">
+					<tr>
+						<td>name</td>
+						<td><?php echo $name; ?></td>
+					</tr>
+					<tr>
+						<td>photo</td>
+						<td><img src="img/start-up-sam.jpg"></td>
+					</tr>
+					<tr>
+						<td>Location</td>
+						<td><?php echo $location; ?></td>
+					</tr>
+					<tr>
+						<td>age</td>
+						<td><?php echo $age; ?></td>
+					</tr>
+					<tr>
+						<td>gender</td>
+						<td><?php echo $gender; ?></td>
+					</tr>
+					<tr>
+						<td>family size</td>
+						<td><?php echo $family_size; ?></td>
+					</tr>
+					<tr>
+						<td>income</td>
+						<td><?php echo $income; ?></td>
+					</tr>
+					<tr>
+						<td>occupation</td>
+						<td><?php echo $occupation; ?></td>
+					</tr>
+					<tr>
+						<td>education</td>
+						<td><?php echo $education; ?></td>
+					</tr>
 				</table>
 
 			</div>
@@ -259,13 +333,13 @@
 							<td>Open Innovation Web Platform</td>
 						</tr>
 						<tr>
-							<td>Disruptive business model generation software â€“ export to business plan/slide deck</td>
+							<td>Disruptive business model generation software – export to business plan/slide deck</td>
 						</tr>
 						<tr>
-							<td>Open Innovation marketplace â€“ access to local/regional resources</td>
+							<td>Open Innovation marketplace – access to local/regional resources</td>
 						</tr>
 						<tr>
-							<td>Business Model Hubâ„¢</td>
+							<td>Business Model Hub™</td>
 						</tr>
 						<tr>
 							<td>Visualised customer archetypes</td>
@@ -286,7 +360,7 @@
 							<td>Alternative business model strategy suggestions</td>
 						</tr>
 						<tr>
-							<td>Innovation Marketplaceâ„¢</td>
+							<td>Innovation Marketplace™</td>
 						</tr>
 						<tr>
 							<td>Access to talent through IA network</td>
@@ -643,8 +717,8 @@
 					<ol>
 						<li id="list_2"><div><span class="disclose"><span></span></span>Monthly/Yearly</div>
 						<ol>
-							<li id="list_3"><div><span class="disclose"><span></span></span>Start-Ups â‚¬150/year</div>
-							<li id="list_3"><div><span class="disclose"><span></span></span>SMEs (under 50) â‚¬300+/year</div>
+							<li id="list_3"><div><span class="disclose"><span></span></span>Start-Ups €150/year</div>
+							<li id="list_3"><div><span class="disclose"><span></span></span>SMEs (under 50) €300+/year</div>
 						</ol>
 					</ol>
 				</ol>
@@ -703,8 +777,8 @@
 					<ol>
 						<li id="list_2"><div><span class="disclose"><span></span></span>Monthly/Yearly</div>
 						<ol>
-							<li id="list_3"><div><span class="disclose"><span></span></span>Start-Ups â‚¬150/year</div>
-							<li id="list_3"><div><span class="disclose"><span></span></span>SMEs (under 50) â‚¬300+/year</div>
+							<li id="list_3"><div><span class="disclose"><span></span></span>Start-Ups €150/year</div>
+							<li id="list_3"><div><span class="disclose"><span></span></span>SMEs (under 50) €300+/year</div>
 						</ol>
 					</ol>
 					</ol>
@@ -726,7 +800,7 @@
 					<li id="list_1"><div><span class="disclose"><span></span></span>Advisors: Prof. Majella Giblins</div>
 					<li id="list_1"><div><span class="disclose"><span></span></span>Mentors: Ruth Kearney, Sean Blanchfield</div>
 					<li id="list_1"><div><span class="disclose"><span></span></span>Employees: Lead Developer, Lead Designer</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>DISCEâ„¢ Prototype/platform</div>
+					<li id="list_1"><div><span class="disclose"><span></span></span>DISCE™ Prototype/platform</div>
 					
 				</ol>
 			</div>
@@ -770,7 +844,7 @@
 			<h1>Intellectual</h1>
 			<div class="canvas_content">
 				<ol class="sortable">
-					<li id="list_1"><div><span class="disclose"><span></span></span>DISCEâ„¢ Prototype/platform</div>
+					<li id="list_1"><div><span class="disclose"><span></span></span>DISCE™ Prototype/platform</div>
 					
 				</ol>
 			</div>
@@ -866,10 +940,10 @@
 			<!--cost button-->
 					<button id="create-cost">Create cost</button>
 				<ol class="sortable">
-					<li id="list_1"><div><span class="disclose"><span></span></span>Prototype - â‚¬3,000 <img class="selected_element" src="img/arrow.png" height="20"></div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Minimal Viable Product (MVP)- â‚¬150,000</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Start-up - â‚¬280,000</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Scale-up - â‚¬250,000</div>
+					<li id="list_1"><div><span class="disclose"><span></span></span>Prototype - €3,000 <img class="selected_element" src="img/arrow.png" height="20"></div>
+					<li id="list_1"><div><span class="disclose"><span></span></span>Minimal Viable Product (MVP)- €150,000</div>
+					<li id="list_1"><div><span class="disclose"><span></span></span>Start-up - €280,000</div>
+					<li id="list_1"><div><span class="disclose"><span></span></span>Scale-up - €250,000</div>
 				</ol>
 			</div>
 		</div>
@@ -880,8 +954,8 @@
 			<div class="canvas_content">
 				<strong>Fixed Costs:</strong><br>
 					<ol class="sortable">
-						<li id="list_1"><div><span class="disclose"><span></span></span>Developer - â‚¬2,500</div>
-						<li id="list_1"><div><span class="disclose"><span></span></span>Designer - â‚¬500</div>
+						<li id="list_1"><div><span class="disclose"><span></span></span>Developer - €2,500</div>
+						<li id="list_1"><div><span class="disclose"><span></span></span>Designer - €500</div>
 					</ol>
 				<br><br>
 				<br><br>
@@ -1061,7 +1135,7 @@
 		</form>
 	</div>
 
-				<div id="create_revenue_stream_form" title="Create new revenue stream">
+	<div id="create_revenue_stream_form" title="Create new revenue stream">
 		<p class="validateTips">All form fields are required.</p>
 		<form>
 			<fieldset>
@@ -1075,725 +1149,6 @@
 		</form>
 	</div>
 
-
-
-
 	
-
-		<script>
-
-		$(document).ready(function(){
-
-			$('ol.sortable').nestedSortable({
-				forcePlaceholderSize: true,
-				handle: 'div',
-				helper:	'clone',
-				items: 'li',
-				opacity: .6,
-				placeholder: 'placeholder',
-				revert: 250,
-				tabSize: 25,
-				tolerance: 'pointer',
-				toleranceElement: '> div',
-				maxLevels: 3,
-				isTree: true,
-				expandOnHover: 700,
-				startCollapsed: true
-			});
-
-			$('.disclose').on('click', function() {
-				$(this).closest('li').toggleClass('mjs-nestedSortable-collapsed').toggleClass('mjs-nestedSortable-expanded');
-			})
-
-			// functions for menu
-			$('.Customer_Segments').on('click', function() {	
-					
-				if($('#Customer_Segments').hasClass('canvas_focused')){
-					GoToModel();								
-				}else{
-					GoToModel();
-					$('.canvas_focused').removeClass('canvas_focused');
-					$('.canvas_blocker').show();	
-					$('#Customer_Segments').addClass('canvas_focused');	
-					$('.Customer_Segments_Tool').show('slide', {direction: 'left'}, 750);
-					//~Thea adding highlighting
-					$('.section_icon_customer').removeClass('section_icon_customer').addClass('section_icon_selected_customer');				
-				}
-			})	
-
-			
-			$('.Value_Proposition').on('click', function() {
-										
-				if($('#Value_Proposition').hasClass('value_canvas_focused')){
-					GoToModel();				
-				}else{
-					GoToModel();
-					$('.canvas_focused').removeClass('canvas_focused');
-					$('.canvas_blocker').show();	
-					$('.Value_Proposition_Tool').show('slide', {direction: 'left'}, 750);						
-					$('.Value_product_heading').show();									
-					$('#Value_Proposition').addClass('value_canvas_focused');	
-					$('.PitchValueSelect').show();
-					$('.PitchValue').hide();
-					//~Thea adding highlighting
-					$('.section_icon_value').removeClass('section_icon_value').addClass('section_icon_selected_value');
-					
-				}
-
-			})	
-			
-			$('.Customer_Relationships').on('click', function() {
-					
-				if($('#Customer_Relationships').hasClass('canvas_focused')){
-					GoToModel();						
-				}else{
-					GoToModel();
-					$('.canvas_focused').removeClass('canvas_focused');
-					$('.canvas_blocker').show();		
-					$('#Customer_Relationships').addClass('canvas_focused');
-					$('.Customer_Relationships_Tool').show('slide', {direction: 'left'}, 750);
-					//~Thea adding highlighting
-					$('.section_icon_relationships').removeClass('section_icon_relationships').addClass('section_icon_selected_relationships');
-				
-				}
-
-			})		
-			
-			$('.Channels').on('click', function() {
-					
-				if($('#Channels').hasClass('canvas_focused')){
-					GoToModel();					
-				}else{
-					GoToModel();
-					$('.canvas_focused').removeClass('canvas_focused');
-					$('.canvas_blocker').show();		
-					$('#Channels').addClass('canvas_focused');	
-					$('.Channels_Tool').show('slide', {direction: 'left'}, 750);	
-					init_Chan_eco();	
-					//~Thea adding highlighting
-					$('.section_icon_channels').removeClass('section_icon_channels').addClass('section_icon_selected_channels');		
-				}
-
-			})			
-			
-			$('.Revenue_Streams').on('click', function() {
-					
-				if($('#Revenue_Streams').hasClass('canvas_focused')){
-					GoToModel();					
-				}else{
-					GoToModel();
-					$('.canvas_focused').removeClass('canvas_focused');
-					$('.canvas_blocker').show();	
-					$('#Revenue_Streams').addClass('canvas_focused');	
-					$('.Revenue_Streams_Tool').show('slide', {direction: 'left'}, 750);			
-					//~Thea adding highlighting
-					$('.section_icon_revenu').removeClass('section_icon_revenu').addClass('section_icon_selected_revenu');	
-				}
-
-			})			
-			
-			$('.Key_Partners').on('click', function() {
-					
-				if($('#Key_Partners').hasClass('canvas_focused')){
-					GoToModel();					
-				}else{
-					GoToModel();
-					$('.canvas_focused').removeClass('canvas_focused');
-					$('.canvas_blocker').show();		
-					$('#Key_Partners').addClass('canvas_focused');	
-					$('.Key_Partners_Tool').show('slide', {direction: 'left'}, 750);
-					//~Thea adding highlighting
-					$('.section_icon_partners').removeClass('section_icon_partners').addClass('section_icon_selected_partners');
-			
-				}
-
-			})			
-			
-			$('.Key_Resources').on('click', function() {
-					
-				if($('#Key_Resources').hasClass('canvas_focused')){
-					GoToModel();					
-				}else{
-					GoToModel();
-					$('.canvas_focused').removeClass('canvas_focused');
-					$('.canvas_blocker').show();		
-					$('#Key_Resources').addClass('canvas_focused');
-					$('.Key_Resources_Tool').show('slide', {direction: 'left'}, 750);		
-					//~Thea adding highlighting
-					$('.section_icon_resources').removeClass('section_icon_resources').addClass('section_icon_selected_resources');
-			
-				}
-
-			})	
-			
-			$('.Key_Activities').on('click', function() {
-					
-				if($('#Key_Activities').hasClass('canvas_focused')){
-					GoToModel();					
-				}else{
-					GoToModel();
-					$('.canvas_focused').removeClass('canvas_focused');
-					$('.canvas_blocker').show();	
-					$('#Key_Activities').addClass('canvas_focused');					
-					$('.Key_Activities_Tool').show('slide', {direction: 'left'}, 750);	
-					//~Thea adding highlighting			
-					$('.section_icon_activites').removeClass('section_icon_activites').addClass('section_icon_selected_activites');
-				}
-
-			})	
-			
-			
-			$('.Cost_Structure').on('click', function() {
-					
-				if($('#Cost_Structure').hasClass('canvas_focused')){
-					GoToModel();					
-				}else{
-					GoToModel();
-					$('.canvas_focused').removeClass('canvas_focused');
-					$('.canvas_blocker').show();		
-					$('#Cost_Structure').addClass('canvas_focused');	
-					$('.Cost_Structure_Tool').show('slide', {direction: 'left'}, 750);	
-					//~Thea adding highlighting
-					$('.section_icon_cost').removeClass('section_icon_cost').addClass('section_icon_selected_cost');					
-				}
-
-			})	
-			
-			$('.canvas_blocker').on('click', function() {
-				GoToModel();
-			})
-			
-			$( ".CAC" ).change(function() {
-			
-				if($('#CAC_cost').val()==0 | $('#CAC_audience').val()==0 | $('#CAC_sales').val()==0){
-				
-				}else{
-						$('#CustomerAcquisitionCost').val(($('#CAC_cost').val()*$('#CAC_audience').val())/(($('#CAC_audience').val()*$('#CAC_sales').val())/100));
-						$('#Lifetime_profit').val($('#LifetimeValue').val()-$('#CustomerAcquisitionCost').val());		
-				}
-			
-
-			});
-			
-			$( ".LV" ).change(function() {
-				$('#LifetimeValue').val($('#LV_lifetime').val()*$('#LV_payment').val());
-				$('#Lifetime_profit').val($('#LifetimeValue').val()-$('#CustomerAcquisitionCost').val());
-			}); 
-			
-
-
-		});
-		function init_Chan_eco(){
-			$("#Channel_Eco_Direct").colResizable({
-				liveDrag:true,
-				gripInnerHtml:"<div class='grip'></div>", 
-				draggingClass:"Chan_Eco_dragging", 
-				onResize:onSampleResized,
-				onDrag: onChan_Eco_Drag
-			 });
-			$("#Channel_Eco_OEM").colResizable({
-				liveDrag:true,
-				gripInnerHtml:"<div class='grip'></div>", 
-				draggingClass:"Chan_Eco_dragging", 
-				onResize:onSampleResized,
-				onDrag: onChan_Eco_Drag
-			 });
-			 $("#Channel_Eco_Indirect").colResizable({
-				liveDrag:true,
-				gripInnerHtml:"<div class='grip'></div>", 
-				draggingClass:"Chan_Eco_dragging", 
-				onResize:onSampleResized,
-				onDrag: onChan_Eco_Drag
-			 });
-		}
-		
-		var onChan_Eco_Drag = function(e){  
-			var table = $(e.currentTarget).attr('id'); //reference to the resized table
-			var width = $(e.currentTarget).width();
-			$('.'+table).each(function() {
-			  var list_price = $('#Chan_Eco_list_price').val();
-			  var this_width = $( this ).width();
-			  var percentage = (this_width/width);
-			  var cost = list_price*percentage;
-			  $(this).children('.chan_eco_value').text(Math.round((cost*10))/10);
-			});
-
-		 }; 	
-		 
-		var onSampleResized = function(e){  
-			var table = $(e.currentTarget); //reference to the resized table
-		 }; 
-
-		 //seems to just hide everything ~Thea
-  
-		function GoToModel(){
-			$('.canvas_blocker').hide();
-			$('.canvas_focused').removeClass('canvas_focused');
-			$('#Value_Proposition').removeClass('value_canvas_focused');
-			$('#Customer_Relationships').removeClass('relationship_canvas_focused');	
-			$('.relationship_contents').children('li').removeClass('relationshipLists');
-			$('#Value_Pains').hide();	
-			$('#Value_Gains').hide();
-			$('#Value_Features').hide();					
-			$('#Value_Comp').hide();					
-			$('#Relationship_cost').hide();					
-			$('#Value_flow').hide();	
-			$('.Value_product_heading').hide();	
-			$('.PitchValueSelect').hide();
-			$('.PitchValueSelect').each(function() {
-			  $value = $( this ).val()
-			  $( this ).prev().html($value );
-			});
-			$('.PitchValue').show();
-			$('#Channels').removeClass('canvas_focused');	
-			$('#Customer_Segments').removeClass('canvas_focused');	
-			$('#Customer_personas').hide();		
-			$('#Customer_Relationships').removeClass('canvas_focused');		
-			$('#Channel_economics').hide();	
-			$("#Channel_Eco_OEM").colResizable({
-				disable:true
-			 });
-			$('#Relationship_Get').hide();	
-			$('#Relationship_Keep').hide();
-			$('#Relationship_Grow').hide();	
-			$('#Revenue_Strategy').hide();
-			$('#Revenue_Type').hide();
-			$('#Revenue_Total_Market').hide();
-			$('#Revenue_Pricing').hide();	
-			
-			$('#Key_Partners_Details').hide();	
-			
-			$('.Key_Activities_Tool').hide();	
-			
-			$('#Cost_Breakdown').hide();	
-			
-			$('#Resources_Financial').hide();	;	
-			$('#Resources_Human').hide();	
-			$('#Resources_Intellectual').hide();	
-
-			//~Thea adding highlighting
-
-			$('.section_icon_selected_partners').removeClass('section_icon_selected_partners').addClass('section_icon_partners');
-			$('.section_icon_selected_channels').removeClass('section_icon_selected_channels').addClass('section_icon_channels');
-			$('.section_icon_selected_customer').removeClass('section_icon_selected_customer').addClass('section_icon_customer');
-			$('.section_icon_selected_relationships').removeClass('section_icon_selected_relationships').addClass('section_icon_relationships');
-			$('.section_icon_selected_value').removeClass('section_icon_selected_value').addClass('section_icon_value');
-			$('.section_icon_selected_activites').removeClass('section_icon_selected_activites').addClass('section_icon_activites');
-			$('.section_icon_selected_resources').removeClass('section_icon_selected_resources').addClass('section_icon_resources');
-			$('.section_icon_selected_cost').removeClass('section_icon_selected_cost').addClass('section_icon_cost');
-			$('.section_icon_selected_revenu').removeClass('section_icon_selected_revenu').addClass('section_icon_revenu');
-		
-		}
-		
-	
-		
-
-		jQuery.fn.center = function () {
-			this.css("position","absolute");
-			this.css("position","absolute");
-			this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + 
-														$(window).scrollTop()) + "px");
-			this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + 
-														$(window).scrollLeft()) + "px");
-			return this;
-
-
-		}
-
-	$(function() {
-		var name = $( "#name" ),
-		email = $( "#email" ),
-		password = $( "#password" ),
-		allFields = $( [] ).add( name ).add( email ).add( password ),
-		tips = $( ".validateTips" );
-	function updateTips( t ) {
-		tips
-		.text( t )
-		.addClass( "ui-state-highlight" );
-		setTimeout(function() {
-			tips.removeClass( "ui-state-highlight", 1500 );
-		}, 500 );
-	}
-	function checkLength( o, n, min, max ) {
-		if ( o.val().length > max || o.val().length < min ) {
-			o.addClass( "ui-state-error" );
-			updateTips( "Length of " + n + " must be between " +
-			min + " and " + max + "." );
-			return false;
-		}
-		else {
-			return true;
-		}
-	}
-	function checkRegexp( o, regexp, n ) {
-		if ( !( regexp.test( o.val() ) ) ) {
-			o.addClass( "ui-state-error" );
-			updateTips( n );
-			return false;
-		} 
-		else {
-			return true;
-		}
-	}
-	/*$( "#dialog-form" ).dialog({
-		autoOpen: false,
-		height: 300,
-		width: 350,
-		modal: true,
-		buttons: {
-			"Create an account": function() {
-				var bValid = true;
-				allFields.removeClass( "ui-state-error" );
-				bValid = bValid && checkLength( name, "username", 3, 16 );
-				bValid = bValid && checkLength( email, "email", 6, 80 );
-				bValid = bValid && checkLength( password, "password", 5, 16 );
-				bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-				// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-				bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-				bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-			if ( bValid ) {
-				$( "#users tbody" ).append( "<tr>" +
-					"<td>" + name.val() + "</td>" +
-					"<td>" + email.val() + "</td>" +
-					"<td>" + password.val() + "</td>" +
-					"</tr>" );
-				$( this ).dialog( "close" );
-			}
-		},
-			Cancel: function() {
-				$( this ).dialog( "close" );
-			}
-		},
-		close: function() {
-			allFields.val( "" ).removeClass( "ui-state-error" );
-		}
-	});
-	$( "#create-user" )
-		.button()
-		.click(function() {
-	$( "#dialog-form" ).dialog( "open" );
-		});
-	});*/
-
-	$( "#create_customer_form" ).dialog({
-		autoOpen: false,
-		height: 300,
-		width: 350,
-		modal: true,
-		buttons: {
-			"Create an account": function() {
-				var bValid = true;
-				allFields.removeClass( "ui-state-error" );
-				bValid = bValid && checkLength( name, "name", 3, 16 );
-				bValid = bValid && checkLength( email, "email", 6, 80 );
-				bValid = bValid && checkLength( password, "password", 5, 16 );
-				bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "feilds may consist of a-z, 0-9, underscores, begin with a letter." );
-				// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-				bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-				bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-			if ( bValid ) {
-				$( "#users tbody" ).append( "<tr>" +
-					"<td>" + name.val() + "</td>" +
-					"<td>" + email.val() + "</td>" +
-					"<td>" + password.val() + "</td>" +
-					"</tr>" );
-				$( this ).dialog( "close" );
-			}
-		},
-			Cancel: function() {
-				$( this ).dialog( "close" );
-			}
-		},
-		close: function() {
-			allFields.val( "" ).removeClass( "ui-state-error" );
-		}
-	});
-	$( "#create-customer" )
-		.button()
-		.click(function() {
-			$( "#create_customer_form" ).dialog( "open" );
-		});
-
-$( "#create_relationship_form" ).dialog({
-		autoOpen: false,
-		height: 300,
-		width: 350,
-		modal: true,
-		buttons: {
-			"Create an account": function() {
-				var bValid = true;
-				allFields.removeClass( "ui-state-error" );
-				bValid = bValid && checkLength( name, "username", 3, 16 );
-				bValid = bValid && checkLength( email, "email", 6, 80 );
-				bValid = bValid && checkLength( password, "password", 5, 16 );
-				bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-				// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-				bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-				bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-			if ( bValid ) {
-				$( "#users tbody" ).append( "<tr>" +
-					"<td>" + name.val() + "</td>" +
-					"<td>" + email.val() + "</td>" +
-					"<td>" + password.val() + "</td>" +
-					"</tr>" );
-				$( this ).dialog( "close" );
-			}
-		},
-			Cancel: function() {
-				$( this ).dialog( "close" );
-			}
-		},
-		close: function() {
-			allFields.val( "" ).removeClass( "ui-state-error" );
-		}
-	});
-	$( "#create-relationship" )
-		.button()
-		.click(function() {
-	$( "#create_relationship_form" ).dialog( "open" );
-		});
-	});
-
-$( "#create_channel_form" ).dialog({
-		autoOpen: false,
-		height: 300,
-		width: 350,
-		modal: true,
-		buttons: {
-			"Create an account": function() {
-				var bValid = true;
-				allFields.removeClass( "ui-state-error" );
-				bValid = bValid && checkLength( name, "username", 3, 16 );
-				bValid = bValid && checkLength( email, "email", 6, 80 );
-				bValid = bValid && checkLength( password, "password", 5, 16 );
-				bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-				// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-				bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-				bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-			if ( bValid ) {
-				$( "#users tbody" ).append( "<tr>" +
-					"<td>" + name.val() + "</td>" +
-					"<td>" + email.val() + "</td>" +
-					"<td>" + password.val() + "</td>" +
-					"</tr>" );
-				$( this ).dialog( "close" );
-			}
-		},
-			Cancel: function() {
-				$( this ).dialog( "close" );
-			}
-		},
-		close: function() {
-			allFields.val( "" ).removeClass( "ui-state-error" );
-		}
-	});
-	$( "#create-channel" )
-		.button()
-		.click(function() {
-	$( "#create_channel_form" ).dialog( "open" );
-		});
-
-$( "#create_cost_form" ).dialog({
-		autoOpen: false,
-		height: 300,
-		width: 350,
-		modal: true,
-		buttons: {
-			"Create an account": function() {
-				var bValid = true;
-				allFields.removeClass( "ui-state-error" );
-				bValid = bValid && checkLength( name, "username", 3, 16 );
-				bValid = bValid && checkLength( email, "email", 6, 80 );
-				bValid = bValid && checkLength( password, "password", 5, 16 );
-				bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-				// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-				bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-				bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-			if ( bValid ) {
-				$( "#users tbody" ).append( "<tr>" +
-					"<td>" + name.val() + "</td>" +
-					"<td>" + email.val() + "</td>" +
-					"<td>" + password.val() + "</td>" +
-					"</tr>" );
-				$( this ).dialog( "close" );
-			}
-		},
-			Cancel: function() {
-				$( this ).dialog( "close" );
-			}
-		},
-		close: function() {
-			allFields.val( "" ).removeClass( "ui-state-error" );
-		}
-	});
-	$( "#create-cost" )
-		.button()
-		.click(function() {
-	$( "#create_cost_form" ).dialog( "open" );
-		});
-
-
-$( "#create_activity_form" ).dialog({
-		autoOpen: false,
-		height: 300,
-		width: 350,
-		modal: true,
-		buttons: {
-			"Create an account": function() {
-				var bValid = true;
-				allFields.removeClass( "ui-state-error" );
-				bValid = bValid && checkLength( name, "username", 3, 16 );
-				bValid = bValid && checkLength( email, "email", 6, 80 );
-				bValid = bValid && checkLength( password, "password", 5, 16 );
-				bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-				// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-				bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-				bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-			if ( bValid ) {
-				$( "#users tbody" ).append( "<tr>" +
-					"<td>" + name.val() + "</td>" +
-					"<td>" + email.val() + "</td>" +
-					"<td>" + password.val() + "</td>" +
-					"</tr>" );
-				$( this ).dialog( "close" );
-			}
-		},
-			Cancel: function() {
-				$( this ).dialog( "close" );
-			}
-		},
-		close: function() {
-			allFields.val( "" ).removeClass( "ui-state-error" );
-		}
-	});
-	$( "#create-activity" )
-		.button()
-		.click(function() {
-	$( "#create_activity_form" ).dialog( "open" );
-		});
-
-
-
-$( "#create_resource_form" ).dialog({
-			autoOpen: false,
-			height: 300,
-			width: 350,
-			modal: true,
-			buttons: {
-				"Create an account": function() {
-					var bValid = true;
-					allFields.removeClass( "ui-state-error" );
-					bValid = bValid && checkLength( name, "username", 3, 16 );
-					bValid = bValid && checkLength( email, "email", 6, 80 );
-					bValid = bValid && checkLength( password, "password", 5, 16 );
-					bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-					// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-					bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-					bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-				if ( bValid ) {
-					$( "#users tbody" ).append( "<tr>" +
-						"<td>" + name.val() + "</td>" +
-						"<td>" + email.val() + "</td>" +
-						"<td>" + password.val() + "</td>" +
-						"</tr>" );
-					$( this ).dialog( "close" );
-				}
-			},
-				Cancel: function() {
-					$( this ).dialog( "close" );
-				}
-			},
-			close: function() {
-				allFields.val( "" ).removeClass( "ui-state-error" );
-			}
-		});
-		$( "#create-resource" )
-			.button()
-			.click(function() {
-		$( "#create_resource_form" ).dialog( "open" );
-			});
-	
-	$( "#create_partner_form" ).dialog({
-			autoOpen: false,
-			height: 300,
-			width: 350,
-			modal: true,
-			buttons: {
-				"Create an account": function() {
-					var bValid = true;
-					allFields.removeClass( "ui-state-error" );
-					bValid = bValid && checkLength( name, "username", 3, 16 );
-					bValid = bValid && checkLength( email, "email", 6, 80 );
-					bValid = bValid && checkLength( password, "password", 5, 16 );
-					bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-					// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-					bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-					bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-				if ( bValid ) {
-					$( "#users tbody" ).append( "<tr>" +
-						"<td>" + name.val() + "</td>" +
-						"<td>" + email.val() + "</td>" +
-						"<td>" + password.val() + "</td>" +
-						"</tr>" );
-					$( this ).dialog( "close" );
-				}
-			},
-				Cancel: function() {
-					$( this ).dialog( "close" );
-				}
-			},
-			close: function() {
-				allFields.val( "" ).removeClass( "ui-state-error" );
-			}
-		});
-		$( "#create-partner" )
-			.button()
-			.click(function() {
-		$( "#create_partner_form" ).dialog( "open" );
-			});
-
-
-				$( "#create_revenue_stream_form" ).dialog({
-			autoOpen: false,
-			height: 300,
-			width: 350,
-			modal: true,
-			buttons: {
-				"Create an account": function() {
-					var bValid = true;
-					allFields.removeClass( "ui-state-error" );
-					bValid = bValid && checkLength( name, "username", 3, 16 );
-					bValid = bValid && checkLength( email, "email", 6, 80 );
-					bValid = bValid && checkLength( password, "password", 5, 16 );
-					bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-					// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-					bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-					bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-				if ( bValid ) {
-					$( "#users tbody" ).append( "<tr>" +
-						"<td>" + name.val() + "</td>" +
-						"<td>" + email.val() + "</td>" +
-						"<td>" + password.val() + "</td>" +
-						"</tr>" );
-					$( this ).dialog( "close" );
-				}
-			},
-				Cancel: function() {
-					$( this ).dialog( "close" );
-				}
-			},
-			close: function() {
-				allFields.val( "" ).removeClass( "ui-state-error" );
-			}
-		});
-		$( "#create-revenue-stream" )
-			.button()
-			.click(function() {
-		$( "#create_revenue_stream_form" ).dialog( "open" );
-			});
-
-
-	
-	</script>
 </body>
 </html>
