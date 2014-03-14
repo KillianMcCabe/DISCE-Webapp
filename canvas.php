@@ -2,6 +2,7 @@
 
 <?php
 require 'php/connect.inc.php';
+$canvas_id = 0;
 ?>
 
 
@@ -28,14 +29,16 @@ require 'php/connect.inc.php';
 
 
 	<div id="canvas">
+
 	
 		<div id="Customer_Segments" class="canvas_section">
 			<img class="section_background" src="img/customer-section.png">
 				<div class="canvas_content">
 					<!--<button type="button" onclick="alert('Add more')">Add More</button>-->
-					<button id="create-customer">Create customer</button>
+					<button id="create-customer">Create Segment</button>
 				<ol class="sortable">
 					<ol class="hidden">
+
 					<li id="list_1"><div><span class="disclose"><span></span></span>Industries</div>
 					<ol>
 						<li id="list_2"><div><span class="disclose"><span></span></span>Manufacturing</div>
@@ -51,6 +54,7 @@ require 'php/connect.inc.php';
 						<li id="list_2"><div><span class="disclose"><span></span></span>Individual Employees</div>
 					</ol>
 					</ol>
+<!--				
 					<li id="list_1"><div><span class="disclose"><span></span></span>First-Time Entrepreneurs (single user)</div>
 					<li id="list_1"><div><span class="disclose"><span></span></span>Early-Stage Startups (Teams)</div>
 					<ol>
@@ -60,6 +64,30 @@ require 'php/connect.inc.php';
 						<li id="list_2"><div><span class="disclose"><span></span></span>High-Potential Start-Ups</div>
 					</ol>
 					<li id="list_1"><div><span class="disclose"><span></span></span>Private Investors </div>
+-->				
+					<?php
+						/* retrieve list of customer segments from customer_segments table and display results in html */
+						$query = "SELECT * FROM customer_segments WHERE canvas_id = '$canvas_id'";
+						if($query_run = mysql_query($query)){
+							
+							while ($row = mysql_fetch_array($query_run)) {
+								$segment_id = $row['id'];
+								$segment_name = $row['name'];
+								echo '<li id="list_1"><div><span class="disclose"><span></span></span>' . $segment_name . '</div>';
+								echo '<ol>';
+								$query2 = "SELECT * FROM customer_persona WHERE customer_segments_id = '$segment_id'";
+								if($query_run2 = mysql_query($query2)){
+									while ($row2 = mysql_fetch_array($query_run2)) {
+										$customer_name = $row2['name'];
+										echo '<li id="list_2"><div><span class="disclose"><span></span></span>' . $customer_name . '</div>';
+									}
+								}
+								echo '<button id="create-customer">Create Customer</button>';
+								echo '</ol>';
+							}
+
+						}
+					?>
 										
 					<ol class="hidden">
 						<li id="list_1"><div><span class="disclose"><span></span></span>Consultants</div>
@@ -70,13 +98,14 @@ require 'php/connect.inc.php';
 						<li id="list_2"><div><span class="disclose"><span></span></span>IT</div>
 						<li id="list_2"><div><span class="disclose"><span></span></span>Marketing</div>
 					</ol>
-					</ol>
+					</ol>	
 
 				</ol>
 			</div>
 		</div>
 		
 		<?php
+			/* retrieve contents of customer_persona table and display results in html */
 			$query = "SELECT * FROM customer_persona WHERE id = '1'";
 			if($query_run = mysql_query($query)){
 				$query_num_rows = mysql_num_rows($query_run);
