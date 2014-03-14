@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.5
+-- version 4.1.6
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Mar 10, 2014 at 11:27 PM
--- Server version: 5.5.16
--- PHP Version: 5.3.8
+-- Host: 127.0.0.1
+-- Generation Time: Mar 14, 2014 at 03:34 PM
+-- Server version: 5.5.36
+-- PHP Version: 5.4.25
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `customer_persona` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_segments_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `persona_name` varchar(225) NOT NULL,
+  `persona_name` varchar(255) NOT NULL,
   `image_name` varchar(255) NOT NULL,
   `location` varchar(255) NOT NULL,
   `age` int(11) NOT NULL,
@@ -114,8 +114,7 @@ CREATE TABLE IF NOT EXISTS `customer_persona` (
 --
 
 INSERT INTO `customer_persona` (`id`, `customer_segments_id`, `name`, `persona_name`, `image_name`, `location`, `age`, `gender`, `family_size`, `income`, `occupation`, `education`) VALUES
-(1, 0, 'graduate entrepreneur', 'Start-up Sam', 'default', 'dublin', 30, 'male', 2, 30000, 'IT entrepreneur', 'post-grad'),
-(2, 0, '', '0', 'default', '', 0, '', 0, 0, '', '');
+(1, 0, 'graduate entrepreneur', 'Start-up Sam', 'default', 'dublin', 30, 'male', 2, 30000, 'IT entrepreneur', 'post-grad');
 
 -- --------------------------------------------------------
 
