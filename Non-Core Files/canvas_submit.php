@@ -1,20 +1,6 @@
 <?php
 
-define('DB_NAME', 'disce');
-define('DB_USER', 'root');
-define('DB_PASSWORD', '');
-define('DB_HOST', 'localhost');
-
-$link = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
-
-if (!$link) {
-	die('Could not connect: ' . mysql_error());
-}
-
-$db_selected = mysql_select_db(DB_NAME, $link);
-
-if (!$db_selected) {
-	die('Can\'t use ' . DB_NAME . ': ' . mysql_error());
+if($_POST['action'] == 'segment_submit') {
 }
 
 //
@@ -32,7 +18,7 @@ if (!empty($_POST['customer_segment-submit'])) {
 		die('ERROR: ' . mysql_error());
 	}
 }
-
+/*
 if (!empty($_POST['customer_persona-submit'])) {
    $name = $_POST['name'];
    $persona_name = $_POST['persona_name'];
@@ -40,8 +26,8 @@ if (!empty($_POST['customer_persona-submit'])) {
    $location = $_POST['location'];
    $age = $_POST['age'];
    $gender = $_POST['gender'];
-   $family_size = $_POST['family_size'];;
-   $income = $_POST['income'];;
+   $family_size = $_POST['family_size'];
+   $income = $_POST['income'];
    $occupation = $_POST['occupation'];
    $education = $_POST['education'];
    
@@ -53,7 +39,7 @@ if (!empty($_POST['customer_persona-submit'])) {
 		die('ERROR: ' . mysql_error());
 	}
 }
-
+*/
 if (!empty($_POST['customer_relationship_paid-submit'])) {
    $canvas_id = 0;
    $type = 'paid';
@@ -153,7 +139,5 @@ if (!empty($_POST['revenue_streams-submit'])){
 		die('ERROR: ' . mysql_error());
 	}
 }
-
-mysql_close();
 
 ?>

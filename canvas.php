@@ -5,6 +5,17 @@ require 'php/connect.inc.php';
 $canvas_id = 0;
 ?>
 
+<?php	
+	if (!empty($_POST['customer_segment-submit'])) {
+	   $value = $_POST['name'];
+	   
+	   $sql = "INSERT INTO customer_segments (canvas_id, name) VALUES ('$canvas_id', '$value')";
+
+		if (!mysql_query($sql)) {
+			die('ERROR: ' . mysql_error());
+		}
+	}
+?>
 
 <html lang="en">
 <head>
@@ -35,8 +46,9 @@ $canvas_id = 0;
 			<img class="section_background" src="img/customer-section.png">
 				<div class="canvas_content">
 					<!--<button type="button" onclick="alert('Add more')">Add More</button>-->
-					<button id="create-customer">Create Segment</button>
+					<button id="create-segment">Create Segment</button>
 				<ol class="sortable">
+<!--
 					<ol class="hidden">
 
 					<li id="list_1"><div><span class="disclose"><span></span></span>Industries</div>
@@ -54,7 +66,7 @@ $canvas_id = 0;
 						<li id="list_2"><div><span class="disclose"><span></span></span>Individual Employees</div>
 					</ol>
 					</ol>
-<!--				
+
 					<li id="list_1"><div><span class="disclose"><span></span></span>First-Time Entrepreneurs (single user)</div>
 					<li id="list_1"><div><span class="disclose"><span></span></span>Early-Stage Startups (Teams)</div>
 					<ol>
@@ -62,9 +74,10 @@ $canvas_id = 0;
 						<li id="list_2"><div><span class="disclose"><span></span></span>Writing for Tiny</div>
 						<li id="list_2"><div><span class="disclose"><span></span></span>Campus Company Spin-Outs</div>
 						<li id="list_2"><div><span class="disclose"><span></span></span>High-Potential Start-Ups</div>
+						<button id="create-customer">Create Customer</button>
 					</ol>
 					<li id="list_1"><div><span class="disclose"><span></span></span>Private Investors </div>
--->				
+-->			
 					<?php
 						/* retrieve list of customer segments from customer_segments table and display results in html */
 						$query = "SELECT * FROM customer_segments WHERE canvas_id = '$canvas_id'";
@@ -1016,6 +1029,18 @@ $canvas_id = 0;
 	<div id="notifications"></div>
 
 	<!-- forms input -->
+	
+	<div id="create_segment_form" title="Create new segment">
+		<p class="validateTips">All form fields are required.</p>
+		<form name="create_segment_form" action="canvas.php" method="post">
+			<fieldset>
+				<label for="name">Name</label>
+				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+			</fieldset>
+			<input type="submit" name = "customer_segment-submit" value="Submit" />
+		</form>
+	</div>
+	
 	<div id="create_customer_form" title="Create new customer">
 		<p class="validateTips">All form fields are required.</p>
 		<form>
@@ -1130,6 +1155,7 @@ $canvas_id = 0;
 			</fieldset>
 		</form>
 	</div>
+
 		<script>
 		
 		
@@ -1486,30 +1512,39 @@ $canvas_id = 0;
 			return true;
 		}
 	}
-	/*$( "#dialog-form" ).dialog({
+	
+	function myAjax() {
+		$.ajax({
+			type: 'POST',
+			url: 'canvas_submit.php',
+			data: {action:'segment_submit'},
+			success: function(data){
+				alert(data);//data returned from php
+		   }
+		});
+	}
+	
+	/*
+	 * Canvas Buttons
+	 */
+	$( "#create_segment_form" ).dialog({
 		autoOpen: false,
 		height: 300,
 		width: 350,
 		modal: true,
 		buttons: {
-			"Create an account": function() {
+			"Submit": function() {
 				var bValid = true;
 				allFields.removeClass( "ui-state-error" );
-				bValid = bValid && checkLength( name, "username", 3, 16 );
-				bValid = bValid && checkLength( email, "email", 6, 80 );
-				bValid = bValid && checkLength( password, "password", 5, 16 );
-				bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-				// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-				bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-				bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-			if ( bValid ) {
-				$( "#users tbody" ).append( "<tr>" +
-					"<td>" + name.val() + "</td>" +
-					"<td>" + email.val() + "</td>" +
-					"<td>" + password.val() + "</td>" +
-					"</tr>" );
-				$( this ).dialog( "close" );
-			}
+				bValid = bValid && checkLength( name, "name", 0, 255 );
+				bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "feilds may consist of a-z, 0-9, underscores, begin with a letter." );
+				if ( bValid ) {
+					//myAjax();
+					//document.location.href = '/canvas_submit.php';
+					//document.create_segment_form.submit();
+					document.getElementById("customer_segment-submit").submit();
+					$( this ).dialog( "close" );
+				}
 		},
 			Cancel: function() {
 				$( this ).dialog( "close" );
@@ -1519,38 +1554,38 @@ $canvas_id = 0;
 			allFields.val( "" ).removeClass( "ui-state-error" );
 		}
 	});
-	$( "#create-user" )
+	$( "#create-segment" )
 		.button()
 		.click(function() {
-	$( "#dialog-form" ).dialog( "open" );
+			$( "#create_segment_form" ).dialog( "open" );
 		});
-	});*/
-
+	
 	$( "#create_customer_form" ).dialog({
 		autoOpen: false,
 		height: 300,
 		width: 350,
 		modal: true,
 		buttons: {
-			"Create an account": function() {
+			"Submit": function() {
 				var bValid = true;
 				allFields.removeClass( "ui-state-error" );
-				bValid = bValid && checkLength( name, "name", 3, 16 );
-				bValid = bValid && checkLength( email, "email", 6, 80 );
-				bValid = bValid && checkLength( password, "password", 5, 16 );
-				bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "feilds may consist of a-z, 0-9, underscores, begin with a letter." );
-				// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-				bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-				bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-			if ( bValid ) {
-				$( "#users tbody" ).append( "<tr>" +
-					"<td>" + name.val() + "</td>" +
-					"<td>" + email.val() + "</td>" +
-					"<td>" + password.val() + "</td>" +
-					"</tr>" );
-				$( this ).dialog( "close" );
-			}
-		},
+				bValid = bValid && checkLength( name, "name", 0, 255 );
+				bValid = bValid && checkLength( age, "age", 0, 255 );
+				bValid = bValid && checkLength( location, "location", 0, 255 );
+				bValid = bValid && checkLength( gender, "gender", 0, 255 );
+				bValid = bValid && checkLength( age, "age", 0, 255 );
+				bValid = bValid && checkLength( income, "income", 0, 255 );
+				bValid = bValid && checkLength( occupation, "occupation", 0, 255 );
+				bValid = bValid && checkLength( education, "education", 0, 255 );
+				if ( bValid ) {
+					$( "#users tbody" ).append( "<tr>" +
+						"<td>" + name.val() + "</td>" +
+						"<td>" + email.val() + "</td>" +
+						"<td>" + password.val() + "</td>" +
+						"</tr>" );
+					$( this ).dialog( "close" );
+				}
+			},
 			Cancel: function() {
 				$( this ).dialog( "close" );
 			}
