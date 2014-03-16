@@ -328,13 +328,13 @@ $canvas_id = 0;
 							<td>Open Innovation Web Platform</td>
 						</tr>
 						<tr>
-							<td>Disruptive business model generation software – export to business plan/slide deck</td>
+							<td>Disruptive business model generation software â€“ export to business plan/slide deck</td>
 						</tr>
 						<tr>
-							<td>Open Innovation marketplace – access to local/regional resources</td>
+							<td>Open Innovation marketplace â€“ access to local/regional resources</td>
 						</tr>
 						<tr>
-							<td>Business Model Hub™</td>
+							<td>Business Model Hubâ„¢</td>
 						</tr>
 						<tr>
 							<td>Visualised customer archetypes</td>
@@ -355,7 +355,7 @@ $canvas_id = 0;
 							<td>Alternative business model strategy suggestions</td>
 						</tr>
 						<tr>
-							<td>Innovation Marketplace™</td>
+							<td>Innovation Marketplaceâ„¢</td>
 						</tr>
 						<tr>
 							<td>Access to talent through IA network</td>
@@ -712,8 +712,8 @@ $canvas_id = 0;
 					<ol>
 						<li id="list_2"><div><span class="disclose"><span></span></span>Monthly/Yearly</div>
 						<ol>
-							<li id="list_3"><div><span class="disclose"><span></span></span>Start-Ups €150/year</div>
-							<li id="list_3"><div><span class="disclose"><span></span></span>SMEs (under 50) €300+/year</div>
+							<li id="list_3"><div><span class="disclose"><span></span></span>Start-Ups â‚¬150/year</div>
+							<li id="list_3"><div><span class="disclose"><span></span></span>SMEs (under 50) â‚¬300+/year</div>
 						</ol>
 					</ol>
 				</ol>
@@ -772,8 +772,8 @@ $canvas_id = 0;
 					<ol>
 						<li id="list_2"><div><span class="disclose"><span></span></span>Monthly/Yearly</div>
 						<ol>
-							<li id="list_3"><div><span class="disclose"><span></span></span>Start-Ups €150/year</div>
-							<li id="list_3"><div><span class="disclose"><span></span></span>SMEs (under 50) €300+/year</div>
+							<li id="list_3"><div><span class="disclose"><span></span></span>Start-Ups â‚¬150/year</div>
+							<li id="list_3"><div><span class="disclose"><span></span></span>SMEs (under 50) â‚¬300+/year</div>
 						</ol>
 					</ol>
 					</ol>
@@ -795,7 +795,7 @@ $canvas_id = 0;
 					<li id="list_1"><div><span class="disclose"><span></span></span>Advisors: Prof. Majella Giblins</div>
 					<li id="list_1"><div><span class="disclose"><span></span></span>Mentors: Ruth Kearney, Sean Blanchfield</div>
 					<li id="list_1"><div><span class="disclose"><span></span></span>Employees: Lead Developer, Lead Designer</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>DISCE™ Prototype/platform</div>
+					<li id="list_1"><div><span class="disclose"><span></span></span>DISCEâ„¢ Prototype/platform</div>
 					
 				</ol>
 			</div>
@@ -839,7 +839,7 @@ $canvas_id = 0;
 			<h1>Intellectual</h1>
 			<div class="canvas_content">
 				<ol class="sortable">
-					<li id="list_1"><div><span class="disclose"><span></span></span>DISCE™ Prototype/platform</div>
+					<li id="list_1"><div><span class="disclose"><span></span></span>DISCEâ„¢ Prototype/platform</div>
 					
 				</ol>
 			</div>
@@ -935,10 +935,10 @@ $canvas_id = 0;
 			<!--cost button-->
 					<button id="create-cost">Create cost</button>
 				<ol class="sortable">
-					<li id="list_1"><div><span class="disclose"><span></span></span>Prototype - €3,000 <img class="selected_element" src="img/arrow.png" height="20"></div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Minimal Viable Product (MVP)- €150,000</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Start-up - €280,000</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Scale-up - €250,000</div>
+					<li id="list_1"><div><span class="disclose"><span></span></span>Prototype - â‚¬3,000 <img class="selected_element" src="img/arrow.png" height="20"></div>
+					<li id="list_1"><div><span class="disclose"><span></span></span>Minimal Viable Product (MVP)- â‚¬150,000</div>
+					<li id="list_1"><div><span class="disclose"><span></span></span>Start-up - â‚¬280,000</div>
+					<li id="list_1"><div><span class="disclose"><span></span></span>Scale-up - â‚¬250,000</div>
 				</ol>
 			</div>
 		</div>
@@ -949,8 +949,8 @@ $canvas_id = 0;
 			<div class="canvas_content">
 				<strong>Fixed Costs:</strong><br>
 					<ol class="sortable">
-						<li id="list_1"><div><span class="disclose"><span></span></span>Developer - €2,500</div>
-						<li id="list_1"><div><span class="disclose"><span></span></span>Designer - €500</div>
+						<li id="list_1"><div><span class="disclose"><span></span></span>Developer - â‚¬2,500</div>
+						<li id="list_1"><div><span class="disclose"><span></span></span>Designer - â‚¬500</div>
 					</ol>
 				<br><br>
 				<br><br>
@@ -1044,6 +1044,11 @@ $canvas_id = 0;
 	<div id="create_customer_form" title="Create new customer">
 		<p class="validateTips">All form fields are required.</p>
 		<form>
+				<!-- Thea adding drop down menu -->
+				<select name ="customer_dropdown">
+					<option value="startup">Start Up</option>
+					<option value="established">Established company</option>
+				</select>
 			<fieldset>
 				<label for="name">Name</label>
 				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
@@ -1066,6 +1071,11 @@ $canvas_id = 0;
 	<div id="create_relationship_form" title="Create new relationship">
 		<p class="validateTips">All form fields are required.</p>
 		<form>
+				<!-- Thea adding drop down menu -->
+				<select name ="customer_dropdown">
+					<option value="paid">paid</option>
+					<option value="earned">Earned</option>
+				</select>
 			<fieldset>
 				<label for="get">Get</label>
 				<input type="text" name="get" id="get" class="text ui-widget-content ui-corner-all">
@@ -1606,7 +1616,7 @@ $( "#create_relationship_form" ).dialog({
 		width: 350,
 		modal: true,
 		buttons: {
-			"Create an account": function() {
+			"Create an customer": function() {
 				var bValid = true;
 				allFields.removeClass( "ui-state-error" );
 				bValid = bValid && checkLength( name, "username", 3, 16 );
@@ -1646,7 +1656,7 @@ $( "#create_channel_form" ).dialog({
 		width: 350,
 		modal: true,
 		buttons: {
-			"Create an account": function() {
+			"Create an channel": function() {
 				var bValid = true;
 				allFields.removeClass( "ui-state-error" );
 				bValid = bValid && checkLength( name, "username", 3, 16 );
@@ -1685,7 +1695,7 @@ $( "#create_cost_form" ).dialog({
 		width: 350,
 		modal: true,
 		buttons: {
-			"Create an account": function() {
+			"Create a new cost": function() {
 				var bValid = true;
 				allFields.removeClass( "ui-state-error" );
 				bValid = bValid && checkLength( name, "username", 3, 16 );
@@ -1725,7 +1735,7 @@ $( "#create_activity_form" ).dialog({
 		width: 350,
 		modal: true,
 		buttons: {
-			"Create an account": function() {
+			"Create an activity": function() {
 				var bValid = true;
 				allFields.removeClass( "ui-state-error" );
 				bValid = bValid && checkLength( name, "username", 3, 16 );
@@ -1766,7 +1776,7 @@ $( "#create_resource_form" ).dialog({
 			width: 350,
 			modal: true,
 			buttons: {
-				"Create an account": function() {
+				"Create a new resource": function() {
 					var bValid = true;
 					allFields.removeClass( "ui-state-error" );
 					bValid = bValid && checkLength( name, "username", 3, 16 );
@@ -1805,7 +1815,7 @@ $( "#create_resource_form" ).dialog({
 			width: 350,
 			modal: true,
 			buttons: {
-				"Create an account": function() {
+				"Create a new partner": function() {
 					var bValid = true;
 					allFields.removeClass( "ui-state-error" );
 					bValid = bValid && checkLength( name, "username", 3, 16 );
@@ -1845,7 +1855,7 @@ $( "#create_resource_form" ).dialog({
 			width: 350,
 			modal: true,
 			buttons: {
-				"Create an account": function() {
+				"Create a new revenue stream": function() {
 					var bValid = true;
 					allFields.removeClass( "ui-state-error" );
 					bValid = bValid && checkLength( name, "username", 3, 16 );
