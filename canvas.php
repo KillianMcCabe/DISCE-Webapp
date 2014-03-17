@@ -2,7 +2,9 @@
 
 <?php
 require 'php/connect.inc.php';
+
 $canvas_id = 0;
+$customer_persona_selected = false;
 ?>
 
 <?php	
@@ -14,6 +16,11 @@ $canvas_id = 0;
 		if (!mysql_query($sql)) {
 			die('ERROR: ' . mysql_error());
 		}
+	}
+	
+	if (!empty($_POST['customer_persona-view'])) {
+		$customer_persona_selected = true;
+		$customer_persona_id = $_POST['customer_persona-view'];
 	}
 ?>
 
@@ -78,7 +85,7 @@ $canvas_id = 0;
 					</ol>
 					<li id="list_1"><div><span class="disclose"><span></span></span>Private Investors </div>
 -->			
-					<?php
+										<?php
 						/* retrieve list of customer segments from customer_segments table and display results in html */
 						$query = "SELECT * FROM customer_segments WHERE canvas_id = '$canvas_id'";
 						if($query_run = mysql_query($query)){
@@ -92,7 +99,9 @@ $canvas_id = 0;
 								if($query_run2 = mysql_query($query2)){
 									while ($row2 = mysql_fetch_array($query_run2)) {
 										$customer_name = $row2['name'];
+										$customer_id = $row2['id'];
 										echo '<li id="list_2"><div><span class="disclose"><span></span></span>' . $customer_name . '</div>';
+										echo '<form action="canvas.php" method="post"> <button name="customer_persona-view" type="submit" value="' . $customer_id . '">View</button> </form>';
 									}
 								}
 								echo '<button id="create-customer">Create Customer</button>';
@@ -118,25 +127,37 @@ $canvas_id = 0;
 		</div>
 		
 		<?php
-			/* retrieve contents of customer_persona table and display results in html */
-			$query = "SELECT * FROM customer_persona WHERE id = '1'";
-			if($query_run = mysql_query($query)){
-				$query_num_rows = mysql_num_rows($query_run);
-				if($query_num_rows == 0){
-					die('Table SELECT failed.');
+			if ($customer_persona_selected) {
+				/* retrieve contents of customer_persona table and display results in html */
+				$query = "SELECT * FROM customer_persona WHERE id = '$customer_persona_id'";
+				if($query_run = mysql_query($query)){
+					$query_num_rows = mysql_num_rows($query_run);
+					if($query_num_rows == 0){
+						die('Table SELECT failed.');
+					}
+					else{
+						$name = mysql_result($query_run, 0, 'persona_name');
+						$location = mysql_result($query_run, 0, 'location');
+						$age = mysql_result($query_run, 0, 'age');
+						$gender = mysql_result($query_run, 0, 'gender');
+						$family_size = mysql_result($query_run, 0, 'family_size');
+						$income = mysql_result($query_run, 0, 'income');
+						$occupation = mysql_result($query_run, 0, 'occupation');
+						$education = mysql_result($query_run, 0, 'education');
+					}
 				}
-				else{
-					$name = mysql_result($query_run, 0, 'persona_name');
-					$location = mysql_result($query_run, 0, 'location');
-					$age = mysql_result($query_run, 0, 'age');
-					$gender = mysql_result($query_run, 0, 'gender');
-					$family_size = mysql_result($query_run, 0, 'family_size');
-					$income = mysql_result($query_run, 0, 'income');
-					$occupation = mysql_result($query_run, 0, 'occupation');
-					$education = mysql_result($query_run, 0, 'education');
-				}
+			} else {
+				$name = "";
+				$location = "";
+				$age = "";
+				$gender = "";
+				$family_size = "";
+				$income = "";
+				$occupation = "";
+				$education = "";
 			}
 		?>
+
 		<div id="Customer_personas" class="Customer_Segments_Tool canvas_depth">
 			<br>
 			<h1>Start-Up Personas</h1>
