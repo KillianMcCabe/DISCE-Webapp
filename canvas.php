@@ -22,6 +22,16 @@ $customer_persona_selected = false;
 		$customer_persona_selected = true;
 		$customer_persona_id = $_POST['customer_persona-view'];
 	}
+	
+	if (!empty($_POST['customer_segment-delete'])) {
+		$customer_segment_id = $_POST['customer_segment-delete'];
+		
+		$sql = "DELETE FROM customer_segments WHERE id = '$customer_segment_id'";
+
+		if (!mysql_query($sql)) {
+			die('ERROR: ' . mysql_error());
+		}
+	}
 ?>
 
 <html lang="en">
@@ -104,6 +114,7 @@ $customer_persona_selected = false;
 										echo '<form action="canvas.php" method="post"> <button name="customer_persona-view" type="submit" value="' . $customer_id . '">View</button> </form>';
 									}
 								}
+								echo '<form action="canvas.php" method="post"> <button name="customer_segment-delete" type="submit" value="' . $segment_id . '">Delete Segment</button> </form>';
 								echo '<button id="create-customer">Create Customer</button>';
 								echo '</ol>';
 							}
