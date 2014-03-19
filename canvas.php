@@ -114,8 +114,17 @@ $customer_persona_selected = false;
 										echo '<form action="canvas.php" method="post"> <button name="customer_persona-view" type="submit" value="' . $customer_id . '">View</button> </form>';
 									}
 								}
-								echo '<form action="canvas.php" method="post"> <button name="customer_segment-delete" type="submit" value="' . $segment_id . '">Delete Segment</button> </form>';
-								echo '<button id="create-customer">Create Customer</button>';
+								echo '<form action="canvas.php" method="post"> 
+									<button name="customer_segment-delete" class ="delete_add_button" type="submit" value="' . $segment_id . '">
+										<img class ="delete_add" src="img/Delete_Icon.png">
+									</button> 
+								</form>
+								<button class ="delete_add_button" id="create-customer" >
+									<img class ="delete_add" src="img/plus.png">
+									</button>';
+								// echo '<button class ="delete_add_button" id="create-customer" >
+								// 	<img class ="delete_add" src="img/plus.png">
+								// 	</button>';
 								echo '</ol>';
 							}
 
