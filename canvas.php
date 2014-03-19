@@ -32,6 +32,17 @@ $customer_persona_selected = false;
 			die('ERROR: ' . mysql_error());
 		}
 	}
+	
+	if (!empty($_POST['get_relationship-submit'])) {
+		$value = $_POST['relationship_name'];
+		$type = $_POST['customer_dropdown'];
+	   
+		$sql = "INSERT INTO customer_relationships (canvas_id, type, name) VALUES ('$canvas_id', '$type', '$value')";
+
+		if (!mysql_query($sql)) {
+			die('ERROR: ' . mysql_error());
+		}
+	}
 ?>
 
 <html lang="en">
@@ -95,7 +106,7 @@ $customer_persona_selected = false;
 					</ol>
 					<li id="list_1"><div><span class="disclose"><span></span></span>Private Investors </div>
 -->			
-										<?php
+					<?php
 						/* retrieve list of customer segments from customer_segments table and display results in html */
 						$query = "SELECT * FROM customer_segments WHERE canvas_id = '$canvas_id'";
 						if($query_run = mysql_query($query)){
@@ -131,7 +142,7 @@ $customer_persona_selected = false;
 						}
 					?>
 										
-					<ol class="hidden">
+<!--					<ol class="hidden">
 						<li id="list_1"><div><span class="disclose"><span></span></span>Consultants</div>
 					<ol>
 						<li id="list_2"><div><span class="disclose"><span></span></span>Management</div>
@@ -141,7 +152,7 @@ $customer_persona_selected = false;
 						<li id="list_2"><div><span class="disclose"><span></span></span>Marketing</div>
 					</ol>
 					</ol>	
-
+-->
 				</ol>
 			</div>
 		</div>
@@ -473,6 +484,7 @@ $customer_persona_selected = false;
 			<img class="workflow_arrow workflow_arrow4" src="img/arrow.png" height="20">
 		</div>
 		
+
 		<div id="Customer_Relationships" class="Customer_Relationships_Tool canvas_section">
 			<img class="section_background" src="img/relationships-section.png">
 			<div class="canvas_content">
@@ -483,32 +495,62 @@ $customer_persona_selected = false;
 					<ol>
 						<li id="list_2"><div><span class="disclose"><span></span></span>Paid</div>
 						<ol>
-							<li id="list_2"><div><span class="disclose"><span></span></span>adverts <img class="cost_icon" src="img/euro_red.png" height="18" title="cost per customer?"></div>
-							<li id="list_2"><div><span class="disclose"><span></span></span>webinars <img class="cost_icon" src="img/euro_red.png" height="18" title="cost per customer?"></div>
-							<li id="list_2"><div><span class="disclose"><span></span></span>SEO <img class="cost_icon" src="img/euro_red.png" height="18" title="cost per customer?"></div>
-							<li id="list_2"><div><span class="disclose"><span></span></span>Sales Team <img class="cost_icon" src="img/euro_red.png" height="18" title="cost per customer?"></div>
+							<?php
+								/* retrieve customer_relations table and display results in html */
+								$query = "SELECT * FROM customer_relationships WHERE canvas_id = '$canvas_id' AND type = 'paid'";
+								if($query_run = mysql_query($query)){
+									
+									while ($row = mysql_fetch_array($query_run)) {
+										$relation_name = $row['name'];
+										echo '<li id="list_2"><div><span class="disclose"><span></span></span>' . $relation_name . ' <img class="cost_icon" src="img/euro_red.png" height="18" title="cost per customer?"></div>';
+									}
+
+								}
+							?>
 						</ol>
 						<li id="list_2"><div><span class="disclose"><span></span></span>Earned</div>
 						<ol>
-							<li id="list_2"><div><span class="disclose"><span></span></span>word of mouth</div>
-							<li id="list_2"><div><span class="disclose"><span></span></span>blogging</div>
-							<li id="list_2"><div><span class="disclose"><span></span></span>social media</div>
+							<?php
+								/* retrieve customer_relations table and display results in html */
+								$query = "SELECT * FROM customer_relationships WHERE canvas_id = '$canvas_id' AND type = 'earned'";
+								if($query_run = mysql_query($query)){
+									
+									while ($row = mysql_fetch_array($query_run)) {
+										$relation_name = $row['name'];
+										echo '<li id="list_2"><div><span class="disclose"><span></span></span>' . $relation_name . '</div>';
+									}
+
+								}
+							?>
 						</ol>
 					</ol>
 					<li id="list_1" class="list_keep"><div><span class="disclose"><span></span></span>Keep</div>
 					<ol>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Co-Creation</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Communities</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Client Relationship Managers</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Self-Service</div>
+						<?php
+								/* retrieve customer_relations table and display results in html */
+								$query = "SELECT * FROM customer_relationships WHERE canvas_id = '$canvas_id' AND type = 'keep'";
+								if($query_run = mysql_query($query)){
+									
+									while ($row = mysql_fetch_array($query_run)) {
+										$relation_name = $row['name'];
+										echo '<li id="list_2"><div><span class="disclose"><span></span></span>' . $relation_name . '</div>';
+									}
+
+								}
+						?>
 					</ol>
 					<li id="list_1" class="list_grow"><div><span class="disclose"><span></span></span>Grow</div>
 					<ol>
-						<li id="list_2"><div><span class="disclose"><span></span></span>New/Updated Features  <img class="cost_icon" src="img/euro_green.png" height="18" title="increased value per customer?"></div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Tiered Service Packages <img class="cost_icon" src="img/euro_green.png" height="18" title="increased value per customer?"></div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Larger Network available <img class="cost_icon" src="img/euro_green.png" height="18" title="increased value per customer?"></div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>New Partners <img class="cost_icon" src="img/euro_green.png" height="18" title="increased value per customer?"></div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>International Presence <img class="cost_icon" src="img/euro_green.png" height="18" title="increased value per customer?"></div>
+						<?php
+							/* retrieve customer_relations table and display results in html */
+							$query = "SELECT * FROM customer_relationships WHERE canvas_id = '$canvas_id' AND type = 'grow'";
+							if($query_run = mysql_query($query)){
+								while ($row = mysql_fetch_array($query_run)) {
+									$relation_name = $row['name'];
+									echo '<li id="list_2"><div><span class="disclose"><span></span></span>' . $relation_name . '<img class="cost_icon" src="img/euro_green.png" height="18" title="increased value per customer?"></div>';
+								}
+							}
+						?>
 					</ol>
 				</ol>
 			</div>
@@ -524,17 +566,36 @@ $customer_persona_selected = false;
 				<ol class="sortable relationship_contents ui-sortable">
 						<li id="list_2"><div><span class="disclose"><span></span></span>Paid</div>
 						<ol>
-							<li id="list_2"><div><span class="disclose"><span></span></span>adverts <img class="cost_icon" src="img/euro_red.png" height="18" title="cost per customer?"></div>
-							</li><li id="list_2"><div><span class="disclose"><span></span></span>webinars <img class="cost_icon" src="img/euro_red.png" height="18" title="cost per customer?"></div>
-							</li><li id="list_2"><div><span class="disclose"><span></span></span>SEO <img class="cost_icon" src="img/euro_red.png" height="18" title="cost per customer?"></div>
-							</li><li id="list_2"><div><span class="disclose"><span></span></span>Sales Team <img class="cost_icon" src="img/euro_red.png" height="18" title="cost per customer?"></div>
-						</li></ol>
+							<?php
+								/* retrieve customer_relations table and display results in html */
+								$query = "SELECT * FROM customer_relationships WHERE canvas_id = '$canvas_id' AND type = 'paid'";
+								if($query_run = mysql_query($query)){
+									
+									while ($row = mysql_fetch_array($query_run)) {
+										$relation_name = $row['name'];
+										echo '<li id="list_2"><div><span class="disclose"><span></span></span>' . $relation_name . ' <img class="cost_icon" src="img/euro_red.png" height="18" title="cost per customer?"></div></li>';
+										
+									}
+
+								}
+							?>
+						</ol>
 						</li><li id="list_2"><div><span class="disclose"><span></span></span>Earned</div>
 						<ol>
-							<li id="list_2"><div><span class="disclose"><span></span></span>word of mouth</div>
-							</li><li id="list_2"><div><span class="disclose"><span></span></span>blogging</div>
-							</li><li id="list_2"><div><span class="disclose"><span></span></span>social media</div>
-						</li></ol>
+							<?php
+								/* retrieve customer_relations table and display results in html */
+								$query = "SELECT * FROM customer_relationships WHERE canvas_id = '$canvas_id' AND type = 'earned'";
+								if($query_run = mysql_query($query)){
+									
+									while ($row = mysql_fetch_array($query_run)) {
+										$relation_name = $row['name'];
+										echo '<li id="list_2"><div><span class="disclose"><span></span></span>'. $relation_name .'</div></li>';
+										
+									}
+
+								}
+							?>
+						</ol>
 						</li>
 				</ol>
 			</div>
@@ -548,11 +609,19 @@ $customer_persona_selected = false;
 				<!--<btn1 type="button" onclick="alert('Add more')">Add More</btn1>-->
 				<button id="create-keep_relationship">Create Relationship</button>
 				<ol class="sortable relationship_contents ui-sortable">
-						<li id="list_2"><div><span class="disclose"><span></span></span>Co-Creation</div>
-						</li><li id="list_2"><div><span class="disclose"><span></span></span>Communities</div>
-						</li><li id="list_2"><div><span class="disclose"><span></span></span>personal assistance</div>
-						</li><li id="list_2"><div><span class="disclose"><span></span></span>Self-Service</div>
-						</li>
+						<?php
+							/* retrieve customer_relations table and display results in html */
+							$query = "SELECT * FROM customer_relationships WHERE canvas_id = '$canvas_id' AND type = 'keep'";
+							if($query_run = mysql_query($query)){
+								
+								while ($row = mysql_fetch_array($query_run)) {
+									$relation_name = $row['name'];
+									echo '<li id="list_2"><div><span class="disclose"><span></span></span>'.$relation_name.'</div></li>';
+									
+								}
+
+							}
+						?>
 				</ol>
 			</div>
 		</div>	
@@ -564,13 +633,19 @@ $customer_persona_selected = false;
 				<!--<btn1 type="button" onclick="alert('Add more')">Add More</btn1>-->
 				<button id="create-grow_relationship">Create Relationship</button>
 			<ol class="sortable relationship_contents ui-sortable">
+					<?php
+						/* retrieve customer_relations table and display results in html */
+						$query = "SELECT * FROM customer_relationships WHERE canvas_id = '$canvas_id' AND type = 'grow'";
+						if($query_run = mysql_query($query)){
+							
+							while ($row = mysql_fetch_array($query_run)) {
+								$relation_name = $row['name'];
+								echo '<li id="list_2"><div><span class="disclose"><span></span></span>'.$relation_name.' <img class="cost_icon" src="img/euro_green.png" height="18" title="increased value per customer?"></div></li>';
+								
+							}
 
-						<li id="list_2"><div><span class="disclose"><span></span></span>New/Updated Features  <img class="cost_icon" src="img/euro_green.png" height="18" title="increased value per customer?"></div>
-						</li><li id="list_2"><div><span class="disclose"><span></span></span>Tiered Service Packages <img class="cost_icon" src="img/euro_green.png" height="18" title="increased value per customer?"></div>
-						</li><li id="list_2"><div><span class="disclose"><span></span></span>Larger Network available <img class="cost_icon" src="img/euro_green.png" height="18" title="increased value per customer?"></div>
-						</li><li id="list_2"><div><span class="disclose"><span></span></span>New Partners <img class="cost_icon" src="img/euro_green.png" height="18" title="increased value per customer?"></div>
-						</li><li id="list_2"><div><span class="disclose"><span></span></span>Company life-cycle features <img class="cost_icon" src="img/euro_green.png" height="18" title="increased value per customer?"></div>
-						</li>
+						}
+					?>
 				</ol>
 			</div>
 		</div>
@@ -1113,16 +1188,17 @@ $customer_persona_selected = false;
 	
 	<div id="create_get_relationship_form" title="Create new relationship">
 		<p class="validateTips">All form fields are required.</p>
-		<form>
-				<!-- Thea adding drop down menu -->
-				<select name ="customer_dropdown">
-					<option value="paid">Paid</option>
-					<option value="earned">Earned</option>
-				</select>
+		<form name="create_get_relationship_form" action="canvas.php" method="post">
+			<!-- Thea adding drop down menu -->
+			<select name ="customer_dropdown">
+				<option value="paid">Paid</option>
+				<option value="earned">Earned</option>
+			</select>
 			<fieldset>
 				<label for="get">Relationship Name</label>
-				<input type="text" name="get" id="get" class="text ui-widget-content ui-corner-all">
+				<input type="text" name="relationship_name" id="relationship_name" class="text ui-widget-content ui-corner-all">
 			</fieldset>
+			<input type="submit" id="get_relationship-submit" name="get_relationship-submit" value="Submit" />
 		</form>
 	</div>
 	
@@ -1131,7 +1207,7 @@ $customer_persona_selected = false;
 		<form>
 			<fieldset>
 				<label for="keep">Relationship Name</label>
-				<input type="text" name="keep" id="keep" value="" class="text ui-widget-content ui-corner-all">
+				<input type="text" name="relationship_name" id="relationship_name" value="" class="text ui-widget-content ui-corner-all">
 			</fieldset>
 		</form>
 	</div>
@@ -1141,7 +1217,7 @@ $customer_persona_selected = false;
 		<form>
 			<fieldset>
 				<label for="grow">Relationship Name</label>
-				<input type="grow" name="grow" id="grow" value="" class="text ui-widget-content ui-corner-all">
+				<input type="text" name="relationship_name" id="relationship_name" value="" class="text ui-widget-content ui-corner-all">
 			</fieldset>
 		</form>
 	</div>
@@ -1545,20 +1621,14 @@ $customer_persona_selected = false;
 
 
 		}
-		
-	function myAjax() {
-		$.ajax({
-			type: 'POST',
-			url: 'canvas_submit.php',
-			data: {action:'segment_submit'},
-			success: function(data){
-				alert(data);//data returned from php
-		   }
-		});
-	}
 	
 
-	tips = $( ".validateTips" );
+	/*var name = $( "#name" ),
+	email = $( "#email" ),
+	password = $( "#password" ),
+	allFields = $( [] ).add( name ).add( email ).add( password ),
+	tips = $( ".validateTips" );*/
+	
 	function updateTips( t ) {
 		tips
 		.text( t )
@@ -1598,25 +1668,22 @@ $customer_persona_selected = false;
 		width: 350,
 		modal: true,
 		buttons: {
-			"Submit": function() {
+		/*	"Submit": function() {
 				var bValid = true;
 				allFields.removeClass( "ui-state-error" );
 				bValid = bValid && checkLength( name, "name", 0, 255 );
 				bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "feilds may consist of a-z, 0-9, underscores, begin with a letter." );
 				if ( bValid ) {
-					//myAjax();
-					//document.location.href = '/canvas_submit.php';
-					//document.create_segment_form.submit();
 					document.getElementById("customer_segment-submit").submit();
 					$( this ).dialog( "close" );
 				}
-		},
+		},*/
 			Cancel: function() {
 				$( this ).dialog( "close" );
 			}
 		},
 		close: function() {
-			allFields.val( "" ).removeClass( "ui-state-error" );
+			//allFields.val( "" ).removeClass( "ui-state-error" );
 		}
 	});
 	$( "#create-segment" )
@@ -1664,26 +1731,32 @@ $customer_persona_selected = false;
 		.click(function() {
 			$( "#create_customer_form" ).dialog( "open" );
 		});
-
+		
+		
+	function myAjax() {
+		$.ajax({
+			type: 'POST',
+			url: 'send-ajax-data.php',
+			data: {action:'_-submit'},
+			success: function(data){
+				alert(data);//data returned from php
+			}
+		});
+	}
+	
 	$( "#create_get_relationship_form" ).dialog({
 		autoOpen: false,
 		height: 300,
 		width: 350,
 		modal: true,
 		buttons: {
-			"Create Get Relationship": function() {
-				var bValid = true;
-				allFields.removeClass( "ui-state-error" );
-			if ( bValid ) {
-				$( this ).dialog( "close" );
-			}
-		},
+			
 			Cancel: function() {
 				$( this ).dialog( "close" );
 			}
 		},
 		close: function() {
-			allFields.val( "" ).removeClass( "ui-state-error" );
+			//allFields.val( "" ).removeClass( "ui-state-error" );
 		}
 	});
 	$( "#create-get_relationship" )
@@ -1691,7 +1764,6 @@ $customer_persona_selected = false;
 		.click(function() {
 			$( "#create_get_relationship_form" ).dialog( "open" );
 		});
-//	});
 
 	$( "#create_keep_relationship_form" ).dialog({
 		autoOpen: false,
