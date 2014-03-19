@@ -468,7 +468,7 @@ $customer_persona_selected = false;
 			<img class="section_background" src="img/relationships-section.png">
 			<div class="canvas_content">
 			<!--relationship button-->
-					<button id="create-relationship">Create relatoinship</button>
+					<!--<button id="create-relationship">Create relatoinship</button>-->
 				<ol class="sortable relationship_contents">
 					<li id="list_1" class="list_get"><div><span class="disclose"><span></span></span>Get</div>
 					<ol>
@@ -510,7 +510,8 @@ $customer_persona_selected = false;
 			<br>
 			<h1>Get</h1>
 			<div class="canvas_content">
-				<btn1 type="button" onclick="alert('Add more')">Add More</btn1>
+				<!--<btn1 type="button" onclick="alert('Add more')">Add More</btn1>-->
+				<button id="create-get_relationship">Create Relationship</button>
 				<ol class="sortable relationship_contents ui-sortable">
 						<li id="list_2"><div><span class="disclose"><span></span></span>Paid</div>
 						<ol>
@@ -535,7 +536,8 @@ $customer_persona_selected = false;
 			<h1>Keep</h1>
 			
 			<div class="canvas_content">
-				<btn1 type="button" onclick="alert('Add more')">Add More</btn1>
+				<!--<btn1 type="button" onclick="alert('Add more')">Add More</btn1>-->
+				<button id="create-keep_relationship">Create Relationship</button>
 				<ol class="sortable relationship_contents ui-sortable">
 						<li id="list_2"><div><span class="disclose"><span></span></span>Co-Creation</div>
 						</li><li id="list_2"><div><span class="disclose"><span></span></span>Communities</div>
@@ -550,10 +552,10 @@ $customer_persona_selected = false;
 			<br>
 			<h1>Grow</h1>
 			<div class="canvas_content">
-				<btn1 type="button" onclick="alert('Add more')">Add More</btn1>
+				<!--<btn1 type="button" onclick="alert('Add more')">Add More</btn1>-->
+				<button id="create-grow_relationship">Create Relationship</button>
 			<ol class="sortable relationship_contents ui-sortable">
 
-				
 						<li id="list_2"><div><span class="disclose"><span></span></span>New/Updated Features  <img class="cost_icon" src="img/euro_green.png" height="18" title="increased value per customer?"></div>
 						</li><li id="list_2"><div><span class="disclose"><span></span></span>Tiered Service Packages <img class="cost_icon" src="img/euro_green.png" height="18" title="increased value per customer?"></div>
 						</li><li id="list_2"><div><span class="disclose"><span></span></span>Larger Network available <img class="cost_icon" src="img/euro_green.png" height="18" title="increased value per customer?"></div>
@@ -1100,20 +1102,36 @@ $customer_persona_selected = false;
 		</form>
 	</div>
 	
-	<div id="create_relationship_form" title="Create new relationship">
+	<div id="create_get_relationship_form" title="Create new relationship">
 		<p class="validateTips">All form fields are required.</p>
 		<form>
 				<!-- Thea adding drop down menu -->
 				<select name ="customer_dropdown">
-					<option value="paid">paid</option>
+					<option value="paid">Paid</option>
 					<option value="earned">Earned</option>
 				</select>
 			<fieldset>
-				<label for="get">Get</label>
+				<label for="get">Relationship Name</label>
 				<input type="text" name="get" id="get" class="text ui-widget-content ui-corner-all">
-				<label for="keep">Kepp</label>
+			</fieldset>
+		</form>
+	</div>
+	
+		<div id="create_keep_relationship_form" title="Create new relationship">
+		<p class="validateTips">All form fields are required.</p>
+		<form>
+			<fieldset>
+				<label for="keep">Relationship Name</label>
 				<input type="text" name="keep" id="keep" value="" class="text ui-widget-content ui-corner-all">
-				<label for="grow">Grow</label>
+			</fieldset>
+		</form>
+	</div>
+	
+		<div id="create_grow_relationship_form" title="Create new relationship">
+		<p class="validateTips">All form fields are required.</p>
+		<form>
+			<fieldset>
+				<label for="grow">Relationship Name</label>
 				<input type="grow" name="grow" id="grow" value="" class="text ui-widget-content ui-corner-all">
 			</fieldset>
 		</form>
@@ -1518,13 +1536,20 @@ $customer_persona_selected = false;
 
 
 		}
+		
+	function myAjax() {
+		$.ajax({
+			type: 'POST',
+			url: 'canvas_submit.php',
+			data: {action:'segment_submit'},
+			success: function(data){
+				alert(data);//data returned from php
+		   }
+		});
+	}
+	
 
-	$(function() {
-		var name = $( "#name" ),
-		email = $( "#email" ),
-		password = $( "#password" ),
-		allFields = $( [] ).add( name ).add( email ).add( password ),
-		tips = $( ".validateTips" );
+	tips = $( ".validateTips" );
 	function updateTips( t ) {
 		tips
 		.text( t )
@@ -1553,17 +1578,6 @@ $customer_persona_selected = false;
 		else {
 			return true;
 		}
-	}
-	
-	function myAjax() {
-		$.ajax({
-			type: 'POST',
-			url: 'canvas_submit.php',
-			data: {action:'segment_submit'},
-			success: function(data){
-				alert(data);//data returned from php
-		   }
-		});
 	}
 	
 	/*
@@ -1642,28 +1656,16 @@ $customer_persona_selected = false;
 			$( "#create_customer_form" ).dialog( "open" );
 		});
 
-$( "#create_relationship_form" ).dialog({
+	$( "#create_get_relationship_form" ).dialog({
 		autoOpen: false,
 		height: 300,
 		width: 350,
 		modal: true,
 		buttons: {
-			"Create an customer": function() {
+			"Create Get Relationship": function() {
 				var bValid = true;
 				allFields.removeClass( "ui-state-error" );
-				bValid = bValid && checkLength( name, "username", 3, 16 );
-				bValid = bValid && checkLength( email, "email", 6, 80 );
-				bValid = bValid && checkLength( password, "password", 5, 16 );
-				bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-				// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-				bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-				bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
 			if ( bValid ) {
-				$( "#users tbody" ).append( "<tr>" +
-					"<td>" + name.val() + "</td>" +
-					"<td>" + email.val() + "</td>" +
-					"<td>" + password.val() + "</td>" +
-					"</tr>" );
 				$( this ).dialog( "close" );
 			}
 		},
@@ -1675,14 +1677,68 @@ $( "#create_relationship_form" ).dialog({
 			allFields.val( "" ).removeClass( "ui-state-error" );
 		}
 	});
-	$( "#create-relationship" )
+	$( "#create-get_relationship" )
 		.button()
 		.click(function() {
-	$( "#create_relationship_form" ).dialog( "open" );
+			$( "#create_get_relationship_form" ).dialog( "open" );
 		});
-	});
+//	});
 
-$( "#create_channel_form" ).dialog({
+	$( "#create_keep_relationship_form" ).dialog({
+		autoOpen: false,
+		height: 300,
+		width: 350,
+		modal: true,
+		buttons: {
+			"Create Keep Relationship": function() {
+				var bValid = true;
+				allFields.removeClass( "ui-state-error" );
+			if ( bValid ) {
+				$( this ).dialog( "close" );
+			}
+		},
+			Cancel: function() {
+				$( this ).dialog( "close" );
+			}
+		},
+		close: function() {
+			allFields.val( "" ).removeClass( "ui-state-error" );
+		}
+	});
+	$( "#create-keep_relationship" )
+		.button()
+		.click(function() {
+			$( "#create_keep_relationship_form" ).dialog( "open" );
+		});
+		
+	$( "#create_grow_relationship_form" ).dialog({
+		autoOpen: false,
+		height: 300,
+		width: 350,
+		modal: true,
+		buttons: {
+			"Create Grow Relationship": function() {
+				var bValid = true;
+				allFields.removeClass( "ui-state-error" );
+			if ( bValid ) {
+				$( this ).dialog( "close" );
+			}
+		},
+			Cancel: function() {
+				$( this ).dialog( "close" );
+			}
+		},
+		close: function() {
+			allFields.val( "" ).removeClass( "ui-state-error" );
+		}
+	});
+	$( "#create-grow_relationship" )
+		.button()
+		.click(function() {
+			$( "#create_grow_relationship_form" ).dialog( "open" );
+		});
+
+	$( "#create_channel_form" ).dialog({
 		autoOpen: false,
 		height: 300,
 		width: 350,
@@ -1718,10 +1774,10 @@ $( "#create_channel_form" ).dialog({
 	$( "#create-channel" )
 		.button()
 		.click(function() {
-	$( "#create_channel_form" ).dialog( "open" );
+			$( "#create_channel_form" ).dialog( "open" );
 		});
 
-$( "#create_cost_form" ).dialog({
+	$( "#create_cost_form" ).dialog({
 		autoOpen: false,
 		height: 300,
 		width: 350,
@@ -1757,7 +1813,7 @@ $( "#create_cost_form" ).dialog({
 	$( "#create-cost" )
 		.button()
 		.click(function() {
-	$( "#create_cost_form" ).dialog( "open" );
+			$( "#create_cost_form" ).dialog( "open" );
 		});
 
 
