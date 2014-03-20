@@ -658,16 +658,39 @@
 			<div class="canvas_content">
 			<!-- channels button-->
 				<button id="create-channel">Create channel</button>
-				<btn1 type="button" onclick="alert('Add more')">Add More</btn1>
+				<!--<btn1 type="button" onclick="alert('Add more')">Add More</btn1>-->
 				<ol class="sortable">
 					<li id="list_1"><div><span class="disclose"><span></span></span>Digital</div>
 					<ol>
-						<li id="list_2"><div><span class="disclose"><span></span></span>E-Commerce</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Sales Team</div>
+						<?php
+							$query = "SELECT * FROM channels WHERE canvas_id = '$canvas_id' AND type = 'digital'";
+							if($query_run = mysql_query($query)){
+								
+								while ($row = mysql_fetch_array($query_run)) {
+									$channel_name = $row['name'];
+									$channel_id = $row['id'];
+									echo '<li id="list_2"><div><span class="disclose"><span></span></span>'.$channel_name.'</div>';
+									echo '<form action="canvas_submit.php" method="post"><button name="channel-delete" type="submit" value="' . $channel_id . '">Delete</button></form>';
+								}
+
+							}
+						?>
 					</ol>
 					<li id="list_1"><div><span class="disclose"><span></span></span>Physical</div>
 					<ol>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Incubation Hubs</div>
+						<?php
+							$query = "SELECT * FROM channels WHERE canvas_id = '$canvas_id' AND type = 'physical'";
+							if($query_run = mysql_query($query)){
+								
+								while ($row = mysql_fetch_array($query_run)) {
+									$channel_name = $row['name'];
+									$channel_id = $row['id'];
+									echo '<li id="list_2"><div><span class="disclose"><span></span></span>'.$channel_name.'</div>';
+									echo '<form action="canvas_submit.php" method="post"><button name="channel-delete" type="submit" value="' . $channel_id . '">Delete</button></form>';
+								}
+
+							}
+						?>
 					</ol>
 
 				</ol>
@@ -681,36 +704,36 @@
 			<h1>Channel Economics</h1>
 			<div class="canvas_content">
 				<strong>Direct Sales:</strong>
-				<span title="e.g. price the customer will pay">List Price: <input type="text" size="5" id="Chan_Eco_list_price" value="100"></span>
+				<span title="e.g. price the customer will pay">List Price: <input type="text" size="5" id="Chan_Eco_Direct_list_price" value="100"></span>
 				<table id="Channel_Eco_Direct" width="100%" cellspacing="0" cellpadding="0" border="0" class="CRZ">
 					<tbody>
 						<tr>
-							<td id="Chan_RD" style="width: 122px; background-color:#00AEEF;"  class="Channel_Eco_OEM">R&D, Selling, Gen&Admin<br> (<span class="chan_eco_value"></span>)</td>
-							<td id="Chan_Cost" style="width: 189px; background-color: #ed146f;" class="Channel_Eco_OEM">Cost of Goods <br> (<span class="chan_eco_value"></span>)</td>
-							<td id="Chan_Profit" style="width: 107px; background-color: #cfd729;"  class="Channel_Eco_OEM">Profit<br> (<span class="chan_eco_value"></span>)</td>
-							<td id="Chan_Mup" style="width: 83px;"  class="Channel_Eco_OEM">Mark-up<br> (<span class="chan_eco_value"></span>)</td>
+							<td id="Chan_RD" style="width: 122px; background-color:#00AEEF;"  class="Channel_Eco_Direct">R&D, Selling, Gen&Admin<br> (<span class="chan_eco_value"></span>)</td>
+							<td id="Chan_Cost" style="width: 189px; background-color: #ed146f;" class="Channel_Eco_Direct">Cost of Goods <br> (<span class="chan_eco_value"></span>)</td>
+							<td id="Chan_Profit" style="width: 107px; background-color: #cfd729;"  class="Channel_Eco_Direct">Profit<br> (<span class="chan_eco_value"></span>)</td>
+							<td id="Chan_Mup" style="width: 83px;"  class="Channel_Eco_Direct">Mark-up<br> (<span class="chan_eco_value"></span>)</td>
 						</tr>
 					</tbody>
 				</table>
 				<br><br>
 				<br><br>
-								<strong>Indirect Sales:</strong>
-				<span title="e.g. price the customer will pay">List Price: <input type="text" size="5" id="Chan_Eco_list_price" value="100"></span>
+				<strong>Indirect Sales:</strong>
+				<span title="e.g. price the customer will pay">List Price: <input type="text" size="5" id="Chan_Eco_Indirect_list_price" value="100"></span>
 				<table id="Channel_Eco_Indirect" width="100%" cellspacing="0" cellpadding="0" border="0" class="CRZ">
 					<tbody>
 						<tr>
-							<td id="Chan_RD" style="width: 122px; background-color:#00AEEF;"  class="Channel_Eco_OEM">R&D, Sales, Gen&Admin<br> (<span class="chan_eco_value"></span>)</td>
-							<td id="Chan_Cost" style="width: 150px; background-color: #ed146f;" class="Channel_Eco_OEM">Cost of Goods <br> (<span class="chan_eco_value"></span>)</td>
-							<td id="Chan_Cost" style="width: 100px; background-color: #00AEEF;" class="Channel_Eco_OEM">Reseller <br> (<span class="chan_eco_value"></span>)</td>
-							<td id="Chan_Profit" style="width: 52px; background-color: #cfd729;"  class="Channel_Eco_OEM">Profit<br> (<span class="chan_eco_value"></span>)</td>
-							<td id="Chan_Mup" style="width: 83px;"  class="Channel_Eco_OEM">Mark-up<br> (<span class="chan_eco_value"></span>)</td>
+							<td id="Chan_RD" style="width: 122px; background-color:#00AEEF;"  class="Channel_Eco_Indirect">R&D, Sales, Gen&Admin<br> (<span class="chan_eco_value"></span>)</td>
+							<td id="Chan_Cost" style="width: 150px; background-color: #ed146f;" class="Channel_Eco_Indirect">Cost of Goods <br> (<span class="chan_eco_value"></span>)</td>
+							<td id="Chan_Cost" style="width: 100px; background-color: #00AEEF;" class="Channel_Eco_Indirect">Reseller <br> (<span class="chan_eco_value"></span>)</td>
+							<td id="Chan_Profit" style="width: 52px; background-color: #cfd729;"  class="Channel_Eco_Indirect">Profit<br> (<span class="chan_eco_value"></span>)</td>
+							<td id="Chan_Mup" style="width: 83px;"  class="Channel_Eco_Indirect">Mark-up<br> (<span class="chan_eco_value"></span>)</td>
 						</tr>
 					</tbody>
 				</table>
 				<br><br>
 				<br><br>
-								<strong>OEM Sales:</strong>
-				<span title="e.g. price the customer will pay">List Price: <input type="text" size="5" id="Chan_Eco_list_price" value="100"></span>
+				<strong>OEM Sales:</strong>
+				<span title="e.g. price the customer will pay">List Price: <input type="text" size="5" id="Chan_Eco_OEM_list_price" value="100"></span>
 				<table id="Channel_Eco_OEM" width="100%" cellspacing="0" cellpadding="0" border="0" class="CRZ">
 					<tbody>
 						<tr>
@@ -1198,12 +1221,16 @@
 	
 	<div id="create_channel_form" title="Create new channel">
 		<p class="validateTips">All form fields are required.</p>
-		<form>
+		<form name="create_channel_form" action="canvas_submit.php" method="post">
+			<select name="channel_type">
+				<option value="digital">Digital</option>
+				<option value="physical">Physical</option>
+			</select>
 			<fieldset>
-				<label for="name">Name</label>
-				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
-				<!-- not sure what to put in here -->
+				<label for="name">Channel Name</label>
+				<input type="text" name="channel_name" id="channel_name" class="text ui-widget-content ui-corner-all">
 			</fieldset>
+			<input type="submit" id="channel-submit" name="channel-submit" value="Submit" />
 		</form>
 	</div>
 	
@@ -1219,7 +1246,7 @@
 		</form>
 	</div>
 
-		<div id="create_activity_form" title="Create new activity">
+	<div id="create_activity_form" title="Create new activity">
 		<p class="validateTips">All form fields are required.</p>
 		<form>
 			<fieldset>
@@ -1233,7 +1260,7 @@
 		</form>
 	</div>
 	
-			<div id="create_resource_form" title="Create new resource">
+	<div id="create_resource_form" title="Create new resource">
 		<p class="validateTips">All form fields are required.</p>
 		<form>
 			<fieldset>
@@ -1247,7 +1274,7 @@
 		</form>
 	</div>
 	
-			<div id="create_partner_form" title="Create new partner">
+	<div id="create_partner_form" title="Create new partner">
 		<p class="validateTips">All form fields are required.</p>
 		<form>
 			<fieldset>
@@ -1485,36 +1512,62 @@
 				gripInnerHtml:"<div class='grip'></div>", 
 				draggingClass:"Chan_Eco_dragging", 
 				onResize:onSampleResized,
-				onDrag: onChan_Eco_Drag
+				onDrag: onChan_Eco_Direct_Drag
 			 });
 			$("#Channel_Eco_OEM").colResizable({
 				liveDrag:true,
 				gripInnerHtml:"<div class='grip'></div>", 
 				draggingClass:"Chan_Eco_dragging", 
 				onResize:onSampleResized,
-				onDrag: onChan_Eco_Drag
+				onDrag: onChan_Eco_OEM_Drag
 			 });
 			 $("#Channel_Eco_Indirect").colResizable({
 				liveDrag:true,
 				gripInnerHtml:"<div class='grip'></div>", 
 				draggingClass:"Chan_Eco_dragging", 
 				onResize:onSampleResized,
-				onDrag: onChan_Eco_Drag
+				onDrag: onChan_Eco_Indirect_Drag
 			 });
 		}
 		
-		var onChan_Eco_Drag = function(e){  
+		var onChan_Eco_Direct_Drag = function(e){  
 			var table = $(e.currentTarget).attr('id'); //reference to the resized table
 			var width = $(e.currentTarget).width();
 			$('.'+table).each(function() {
-			  var list_price = $('#Chan_Eco_list_price').val();
+			  var list_price = $('#Chan_Eco_Direct_list_price').val();
 			  var this_width = $( this ).width();
 			  var percentage = (this_width/width);
 			  var cost = list_price*percentage;
 			  $(this).children('.chan_eco_value').text(Math.round((cost*10))/10);
 			});
 
-		 }; 	
+		 };
+		 
+		var onChan_Eco_Indirect_Drag = function(e){  
+			var table = $(e.currentTarget).attr('id'); //reference to the resized table
+			var width = $(e.currentTarget).width();
+			$('.'+table).each(function() {
+			  var list_price = $('#Chan_Eco_Indirect_list_price').val();
+			  var this_width = $( this ).width();
+			  var percentage = (this_width/width);
+			  var cost = list_price*percentage;
+			  $(this).children('.chan_eco_value').text(Math.round((cost*10))/10);
+			});
+
+		 };
+		 
+		var onChan_Eco_OEM_Drag = function(e){  
+			var table = $(e.currentTarget).attr('id'); //reference to the resized table
+			var width = $(e.currentTarget).width();
+			$('.'+table).each(function() {
+			  var list_price = $('#Chan_Eco_OEM_list_price').val();
+			  var this_width = $( this ).width();
+			  var percentage = (this_width/width);
+			  var cost = list_price*percentage;
+			  $(this).children('.chan_eco_value').text(Math.round((cost*10))/10);
+			});
+
+		 };
 		 
 		var onSampleResized = function(e){  
 			var table = $(e.currentTarget); //reference to the resized table
@@ -1546,6 +1599,12 @@
 			$('#Customer_personas').hide();		
 			$('#Customer_Relationships').removeClass('canvas_focused');		
 			$('#Channel_economics').hide();	
+			$("#Channel_Eco_Direct").colResizable({
+				disable:true
+			 });
+			$("#Channel_Eco_Indirect").colResizable({
+				disable:true
+			 });
 			$("#Channel_Eco_OEM").colResizable({
 				disable:true
 			 });
@@ -1786,31 +1845,12 @@
 		width: 350,
 		modal: true,
 		buttons: {
-			"Create an channel": function() {
-				var bValid = true;
-				allFields.removeClass( "ui-state-error" );
-				bValid = bValid && checkLength( name, "username", 3, 16 );
-				bValid = bValid && checkLength( email, "email", 6, 80 );
-				bValid = bValid && checkLength( password, "password", 5, 16 );
-				bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-				// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-				bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-				bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-			if ( bValid ) {
-				$( "#users tbody" ).append( "<tr>" +
-					"<td>" + name.val() + "</td>" +
-					"<td>" + email.val() + "</td>" +
-					"<td>" + password.val() + "</td>" +
-					"</tr>" );
-				$( this ).dialog( "close" );
-			}
-		},
 			Cancel: function() {
 				$( this ).dialog( "close" );
 			}
 		},
 		close: function() {
-			allFields.val( "" ).removeClass( "ui-state-error" );
+			//allFields.val( "" ).removeClass( "ui-state-error" );
 		}
 	});
 	$( "#create-channel" )

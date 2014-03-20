@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 19, 2014 at 11:15 PM
+-- Generation Time: Mar 20, 2014 at 06:39 PM
 -- Server version: 5.5.36
 -- PHP Version: 5.4.25
 
@@ -38,28 +38,24 @@ CREATE TABLE IF NOT EXISTS `canvas` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `channel`
---
-
-CREATE TABLE IF NOT EXISTS `channel` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `channels_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `channels`
 --
 
 CREATE TABLE IF NOT EXISTS `channels` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `canvas_id` int(11) NOT NULL,
+  `type` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `channels`
+--
+
+INSERT INTO `channels` (`id`, `canvas_id`, `type`, `name`) VALUES
+(1, 0, 'physical', 'physical1'),
+(2, 0, 'digital', 'digital1');
 
 -- --------------------------------------------------------
 
@@ -128,24 +124,20 @@ CREATE TABLE IF NOT EXISTS `customer_relationships` (
   `type` varchar(20) NOT NULL,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 --
 -- Dumping data for table `customer_relationships`
 --
 
 INSERT INTO `customer_relationships` (`id`, `canvas_id`, `type`, `name`) VALUES
-(1, 0, 'paid', 'test'),
 (2, 0, 'keep', 'keep'),
 (3, 0, 'earned', 'earned'),
 (4, 0, 'grow', 'grow1'),
 (5, 0, 'paid', 'paid1'),
 (6, 0, 'earned', 'earned1'),
 (7, 0, 'keep', 'keep2'),
-(8, 0, 'grow', 'grow2'),
-(11, 0, 'paid', 'asd'),
-(13, 0, 'paid', 'paid3'),
-(14, 0, 'earned', 'earned4');
+(17, 0, 'paid', 'paid2');
 
 -- --------------------------------------------------------
 
@@ -158,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `customer_segments` (
   `canvas_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `customer_segments`
