@@ -1,48 +1,16 @@
 <!--coment to see if commits work-->
 
 <?php
-require 'php/connect.inc.php';
+	require 'php/connect.inc.php';
 
-$canvas_id = 0;
-$customer_persona_selected = false;
-?>
+	$canvas_id = 0;
+	$customer_persona_selected = false;
 
-<?php	
-	if (!empty($_POST['customer_segment-submit'])) {
-	   $value = $_POST['name'];
-	   
-	   $sql = "INSERT INTO customer_segments (canvas_id, name) VALUES ('$canvas_id', '$value')";
-
-		if (!mysql_query($sql)) {
-			die('ERROR: ' . mysql_error());
-		}
-	}
-	
 	if (!empty($_POST['customer_persona-view'])) {
 		$customer_persona_selected = true;
 		$customer_persona_id = $_POST['customer_persona-view'];
 	}
 	
-	if (!empty($_POST['customer_segment-delete'])) {
-		$customer_segment_id = $_POST['customer_segment-delete'];
-		
-		$sql = "DELETE FROM customer_segments WHERE id = '$customer_segment_id'";
-
-		if (!mysql_query($sql)) {
-			die('ERROR: ' . mysql_error());
-		}
-	}
-	
-	if (!empty($_POST['get_relationship-submit'])) {
-		$value = $_POST['relationship_name'];
-		$type = $_POST['customer_dropdown'];
-	   
-		$sql = "INSERT INTO customer_relationships (canvas_id, type, name) VALUES ('$canvas_id', '$type', '$value')";
-
-		if (!mysql_query($sql)) {
-			die('ERROR: ' . mysql_error());
-		}
-	}
 ?>
 
 <html lang="en">
@@ -125,7 +93,7 @@ $customer_persona_selected = false;
 										echo '<form action="canvas.php" method="post"> <button name="customer_persona-view" type="submit" value="' . $customer_id . '">View</button> </form>';
 									}
 								}
-								echo '<form action="canvas.php" method="post"> 
+								echo '<form action="canvas_submit.php" method="post"> 
 									<button name="customer_segment-delete" class ="delete_add_button" type="submit" value="' . $segment_id . '">
 										<img class ="delete_add" src="img/Delete_Icon.png">
 									</button> 
@@ -573,8 +541,9 @@ $customer_persona_selected = false;
 									
 									while ($row = mysql_fetch_array($query_run)) {
 										$relation_name = $row['name'];
+										$relationship_id = $row['id'];
 										echo '<li id="list_2"><div><span class="disclose"><span></span></span>' . $relation_name . ' <img class="cost_icon" src="img/euro_red.png" height="18" title="cost per customer?"></div></li>';
-										
+										echo '<form action="canvas_submit.php" method="post"><button name="relationship-delete" type="submit" value="' . $relationship_id . '">Delete</button></form>';
 									}
 
 								}
@@ -589,8 +558,9 @@ $customer_persona_selected = false;
 									
 									while ($row = mysql_fetch_array($query_run)) {
 										$relation_name = $row['name'];
+										$relationship_id = $row['id'];
 										echo '<li id="list_2"><div><span class="disclose"><span></span></span>'. $relation_name .'</div></li>';
-										
+										echo '<form action="canvas_submit.php" method="post"><button name="relationship-delete" type="submit" value="' . $relationship_id . '">Delete</button></form>';
 									}
 
 								}
@@ -616,8 +586,9 @@ $customer_persona_selected = false;
 								
 								while ($row = mysql_fetch_array($query_run)) {
 									$relation_name = $row['name'];
+									$relationship_id = $row['id'];
 									echo '<li id="list_2"><div><span class="disclose"><span></span></span>'.$relation_name.'</div></li>';
-									
+									echo '<form action="canvas_submit.php" method="post"><button name="relationship-delete" type="submit" value="' . $relationship_id . '">Delete</button></form>';
 								}
 
 							}
@@ -640,8 +611,9 @@ $customer_persona_selected = false;
 							
 							while ($row = mysql_fetch_array($query_run)) {
 								$relation_name = $row['name'];
+								$relationship_id = $row['id'];
 								echo '<li id="list_2"><div><span class="disclose"><span></span></span>'.$relation_name.' <img class="cost_icon" src="img/euro_green.png" height="18" title="increased value per customer?"></div></li>';
-								
+								echo '<form action="canvas_submit.php" method="post"><button name="relationship-delete" type="submit" value="' . $relationship_id . '">Delete</button></form>';
 							}
 
 						}
@@ -1150,7 +1122,7 @@ $customer_persona_selected = false;
 	
 	<div id="create_segment_form" title="Create new segment">
 		<p class="validateTips">All form fields are required.</p>
-		<form name="create_segment_form" action="canvas.php" method="post">
+		<form name="create_segment_form" action="canvas_submit.php" method="post">
 			<fieldset>
 				<label for="name">Name</label>
 				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
@@ -1188,7 +1160,7 @@ $customer_persona_selected = false;
 	
 	<div id="create_get_relationship_form" title="Create new relationship">
 		<p class="validateTips">All form fields are required.</p>
-		<form name="create_get_relationship_form" action="canvas.php" method="post">
+		<form name="create_get_relationship_form" action="canvas_submit.php" method="post">
 			<!-- Thea adding drop down menu -->
 			<select name ="customer_dropdown">
 				<option value="paid">Paid</option>
@@ -1202,23 +1174,25 @@ $customer_persona_selected = false;
 		</form>
 	</div>
 	
-		<div id="create_keep_relationship_form" title="Create new relationship">
+	<div id="create_keep_relationship_form" title="Create new relationship">
 		<p class="validateTips">All form fields are required.</p>
-		<form>
+		<form name="create_keep_relationship_form" action="canvas_submit.php" method="post">
 			<fieldset>
 				<label for="keep">Relationship Name</label>
-				<input type="text" name="relationship_name" id="relationship_name" value="" class="text ui-widget-content ui-corner-all">
+				<input type="text" name="relationship_name" id="relationship_name" class="text ui-widget-content ui-corner-all">
 			</fieldset>
+			<input type="submit" id="keep_relationship-submit" name="keep_relationship-submit" value="Submit" />
 		</form>
 	</div>
 	
-		<div id="create_grow_relationship_form" title="Create new relationship">
+	<div id="create_grow_relationship_form" title="Create new relationship">
 		<p class="validateTips">All form fields are required.</p>
-		<form>
+		<form name="create_grow_relationship_form" action="canvas_submit.php" method="post">
 			<fieldset>
 				<label for="grow">Relationship Name</label>
-				<input type="text" name="relationship_name" id="relationship_name" value="" class="text ui-widget-content ui-corner-all">
+				<input type="text" name="relationship_name" id="relationship_name" class="text ui-widget-content ui-corner-all">
 			</fieldset>
+			<input type="submit" id="grow_relationship-submit" name="grow_relationship-submit" value="Submit" />
 		</form>
 	</div>
 	
@@ -1771,19 +1745,13 @@ $customer_persona_selected = false;
 		width: 350,
 		modal: true,
 		buttons: {
-			"Create Keep Relationship": function() {
-				var bValid = true;
-				allFields.removeClass( "ui-state-error" );
-			if ( bValid ) {
-				$( this ).dialog( "close" );
-			}
-		},
+
 			Cancel: function() {
 				$( this ).dialog( "close" );
 			}
 		},
 		close: function() {
-			allFields.val( "" ).removeClass( "ui-state-error" );
+			//allFields.val( "" ).removeClass( "ui-state-error" );
 		}
 	});
 	$( "#create-keep_relationship" )
@@ -1798,19 +1766,12 @@ $customer_persona_selected = false;
 		width: 350,
 		modal: true,
 		buttons: {
-			"Create Grow Relationship": function() {
-				var bValid = true;
-				allFields.removeClass( "ui-state-error" );
-			if ( bValid ) {
-				$( this ).dialog( "close" );
-			}
-		},
 			Cancel: function() {
 				$( this ).dialog( "close" );
 			}
 		},
 		close: function() {
-			allFields.val( "" ).removeClass( "ui-state-error" );
+			//allFields.val( "" ).removeClass( "ui-state-error" );
 		}
 	});
 	$( "#create-grow_relationship" )
