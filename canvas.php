@@ -1759,8 +1759,14 @@
 	});
 	$( ".create-customer" ) //changed to . for testing
 		.button()
+		.css({ width: '30px', 'padding-top': '1px', 'padding-bottom': '1px' })
 		.click(function() {
 			$( "#create_customer_form" ).dialog( "open" );
+		})	;
+	$( ".delete_add_button" ) //changed to . for testing
+		.button()
+		.css({ width: '30px', 'padding-top': '1px', 'padding-bottom': '1px' })
+		.click(function() {
 		})	;
 
 
