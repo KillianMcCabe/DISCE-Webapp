@@ -98,20 +98,10 @@
 										<img class ="delete_add" src="img/Delete_Icon.png">
 									</button> 
 								</form>
-									<button  class="create-customer" >
-										<img class ="delete_add" src="img/plus.png">
-									</button>
+								<button class="create-customer" >
+									<img class ="delete_add" src="img/plus.png">
+								</button>
 								';
-								// echo '<button class ="delete_add_button" id="create-customer" >
-								// 	<img class ="delete_add" src="img/plus.png">
-								// 	</button>';
-
-									// <button class ="delete_add_button" id="create-customer" >
-									// 	<img class ="delete_add" src="img/plus.png">
-									// </button>
-
-									// <input type="button" id="create-customer" id="myBtn" value="Try it">
-
 								echo '</ol>';
 							}
 
@@ -1771,17 +1761,8 @@
 		.button()
 		.click(function() {
 			$( "#create_customer_form" ).dialog( "open" );
-		});
+		})	;
 
-		// thea testing for button
-		
-	// function myFunction()
-	// {
-	// 	// .button()
-	// 	// .click(function() {
-	// 	// 	$( "#create_customer_form" ).dialog( "open" );
-	// 	// })
-	// }
 
 	function myAjax() {
 		$.ajax({

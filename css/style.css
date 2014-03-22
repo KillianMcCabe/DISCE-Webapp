@@ -739,11 +739,11 @@ a:hover, a:active {
 			height: 20px;
 		}
 		.delete_add_button{
-			background-color: white;
-			width: 30px;
-			height: 30px;
+			background-color: white !important;
+			width: 30px !important;
+			height: 30px !important;
+   			border-radius: 5px !important;
 		}
-		
 		.selected_element{
 			position: absolute;
 			right: 0px;
