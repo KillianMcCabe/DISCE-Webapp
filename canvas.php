@@ -1191,7 +1191,7 @@
 				<label for="get">Relationship Name</label>
 				<input type="text" name="relationship_name" id="relationship_name" class="text ui-widget-content ui-corner-all">
 			</fieldset>
-			<input type="submit" id="get_relationship-submit" name="get_relationship-submit" value="Submit" />
+			<input type="submit" id="get_relationship-submit" name="get_relationship-submit" class ="submit_button" value="Submit" />
 		</form>
 	</div>
 	
@@ -1202,7 +1202,7 @@
 				<label for="keep">Relationship Name</label>
 				<input type="text" name="relationship_name" id="relationship_name" class="text ui-widget-content ui-corner-all">
 			</fieldset>
-			<input type="submit" id="keep_relationship-submit" name="keep_relationship-submit" value="Submit" />
+			<input type="submit" id="keep_relationship-submit" name="keep_relationship-submit" class ="submit_button" value="Submit" />
 		</form>
 	</div>
 	
@@ -1213,7 +1213,7 @@
 				<label for="grow">Relationship Name</label>
 				<input type="text" name="relationship_name" id="relationship_name" class="text ui-widget-content ui-corner-all">
 			</fieldset>
-			<input type="submit" id="grow_relationship-submit" name="grow_relationship-submit" value="Submit" />
+			<input type="submit" id="grow_relationship-submit" name="grow_relationship-submit" class ="submit_button" value="Submit" />
 		</form>
 	</div>
 	
@@ -1228,7 +1228,7 @@
 				<label for="name">Channel Name</label>
 				<input type="text" name="channel_name" id="channel_name" class="text ui-widget-content ui-corner-all">
 			</fieldset>
-			<input type="submit" id="channel-submit" name="channel-submit" value="Submit" />
+			<input type="submit" id="channel-submit" name="channel-submit" class ="submit_button" value="Submit" />
 		</form>
 	</div>
 	
