@@ -90,7 +90,11 @@
 										$customer_name = $row2['name'];
 										$customer_id = $row2['id'];
 										echo '<li id="list_2"><div><span class="disclose"><span></span></span>' . $customer_name . '</div>';
-										echo '<form action="canvas.php" method="post"> <button name="customer_persona-view" type="submit" value="' . $customer_id . '">View</button> </form>';
+										echo '<form action="canvas.php" method="post"> 
+												<button name="customer_persona-view" type="submit" value="' . $customer_id . '">
+													View
+												</button> 
+											</form>';
 									}
 								}
 								echo '<form action="canvas_submit.php" method="post"> 
@@ -541,7 +545,11 @@
 										$relation_name = $row['name'];
 										$relationship_id = $row['id'];
 										echo '<li id="list_2"><div><span class="disclose"><span></span></span>' . $relation_name . ' <img class="cost_icon" src="img/euro_red.png" height="18" title="cost per customer?"></div></li>';
-										echo '<form action="canvas_submit.php" method="post"><button name="relationship-delete" type="submit" value="' . $relationship_id . '">Delete</button></form>';
+										echo '<form action="canvas_submit.php" method="post">
+											<button name="relationship-delete" class="delete_add_button" type="submit" value="' . $relationship_id . '">
+												<img class ="delete_add" src="img/Delete_Icon.png">
+											</button>
+										</form>';
 									}
 
 								}
@@ -558,9 +566,12 @@
 										$relation_name = $row['name'];
 										$relationship_id = $row['id'];
 										echo '<li id="list_2"><div><span class="disclose"><span></span></span>'. $relation_name .'</div></li>';
-										echo '<form action="canvas_submit.php" method="post"><button name="relationship-delete" type="submit" value="' . $relationship_id . '">Delete</button></form>';
+										echo '<form action="canvas_submit.php" method="post">
+											<button name="relationship-delete" class="delete_add_button" type="submit" value="' . $relationship_id . '">
+												<img class ="delete_add" src="img/Delete_Icon.png">
+											</button>
+										</form>';
 									}
-
 								}
 							?>
 						</ol>
@@ -586,7 +597,11 @@
 									$relation_name = $row['name'];
 									$relationship_id = $row['id'];
 									echo '<li id="list_2"><div><span class="disclose"><span></span></span>'.$relation_name.'</div></li>';
-									echo '<form action="canvas_submit.php" method="post"><button name="relationship-delete" type="submit" value="' . $relationship_id . '">Delete</button></form>';
+									echo '<form action="canvas_submit.php" method="post">
+										<button name="relationship-delete" type="submit" class="delete_add_button" value="' . $relationship_id . '">
+											<img class ="delete_add" src="img/Delete_Icon.png"> 
+										</button>
+									</form>';
 								}
 
 							}
@@ -611,7 +626,11 @@
 								$relation_name = $row['name'];
 								$relationship_id = $row['id'];
 								echo '<li id="list_2"><div><span class="disclose"><span></span></span>'.$relation_name.' <img class="cost_icon" src="img/euro_green.png" height="18" title="increased value per customer?"></div></li>';
-								echo '<form action="canvas_submit.php" method="post"><button name="relationship-delete" type="submit" value="' . $relationship_id . '">Delete</button></form>';
+								echo '<form action="canvas_submit.php" method="post">
+									<button name="relationship-delete" class="delete_add_button" type="submit" value="' . $relationship_id . '">
+										<img class ="delete_add" src="img/Delete_Icon.png"> 
+									</button>
+								</form>';
 							}
 
 						}
@@ -668,7 +687,11 @@
 									$channel_name = $row['name'];
 									$channel_id = $row['id'];
 									echo '<li id="list_2"><div><span class="disclose"><span></span></span>'.$channel_name.'</div>';
-									echo '<form action="canvas_submit.php" method="post"><button name="channel-delete" type="submit" value="' . $channel_id . '">Delete</button></form>';
+									echo '<form action="canvas_submit.php" method="post">
+										<button name="channel-delete" type="submit" class="delete_add_button" value="' . $channel_id . '">
+											<img class ="delete_add" src="img/Delete_Icon.png"> 
+										</button>
+									</form>';
 								}
 
 							}
@@ -684,7 +707,11 @@
 									$channel_name = $row['name'];
 									$channel_id = $row['id'];
 									echo '<li id="list_2"><div><span class="disclose"><span></span></span>'.$channel_name.'</div>';
-									echo '<form action="canvas_submit.php" method="post"><button name="channel-delete" type="submit" value="' . $channel_id . '">Delete</button></form>';
+									echo '<form action="canvas_submit.php" method="post">
+										<button name="channel-delete" class="delete_add_button" type="submit" value="' . $channel_id . '">
+											<img class ="delete_add" src="img/Delete_Icon.png"> 
+										</button>
+									</form>';
 								}
 
 							}
@@ -1148,7 +1175,7 @@
 				<label for="name">Name</label>
 				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
 			</fieldset>
-			<input type="submit" name = "customer_segment-submit" value="Submit" />
+			<input type="submit" name = "customer_segment-submit"  class ="submit_button" value="Submit" />
 		</form>
 	</div>
 	
@@ -1766,6 +1793,10 @@
 	$( ".delete_add_button" ) //changed to . for testing
 		.button()
 		.css({ width: '30px', 'padding-top': '1px', 'padding-bottom': '1px' })
+		.click(function() {
+		})	;
+	$( ".submit_button" ) //changed to . for testing
+		.button()
 		.click(function() {
 		})	;
 
