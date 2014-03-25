@@ -1175,18 +1175,22 @@
 				<label for="name">Name</label>
 				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
 			</fieldset>
+			<!-- move button -->
+
 			<input type="submit" name = "customer_segment-submit"  class ="submit_button" value="Submit" />
+			<input type="button" name = "customer_segment-cancle"  class ="cancle_button" value="Cancle" />
+
 		</form>
 	</div>
 	
 	<div id="create_customer_form" title="Create new customer">
 		<p class="validateTips">All form fields are required.</p>
 		<form>
-				<!-- Thea adding drop down menu -->
-				<select name ="customer_dropdown" class ="drop_down">
-					<option value="startup">Start Up</option>
-					<option value="established">Established company</option>
-				</select>
+			<!-- Thea adding drop down menu -->
+			<select name ="customer_dropdown" class ="drop_down">
+				<option value="startup">Start Up</option>
+				<option value="established">Established company</option>
+			</select>
 			<fieldset>
 				<label for="name">Name</label>
 				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
@@ -1722,28 +1726,29 @@
 	 */
 	$( "#create_segment_form" ).dialog({
 		autoOpen: false,
-		height: 300,
 		width: 350,
 		modal: true,
 		buttons: {
-		/*	"Submit": function() {
-				var bValid = true;
-				allFields.removeClass( "ui-state-error" );
-				bValid = bValid && checkLength( name, "name", 0, 255 );
-				bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "feilds may consist of a-z, 0-9, underscores, begin with a letter." );
-				if ( bValid ) {
-					document.getElementById("customer_segment-submit").submit();
-					$( this ).dialog( "close" );
-				}
-		},*/
-			Cancel: function() {
-				$( this ).dialog( "close" );
-			}
+
+// 			// <input type="submit" name = "customer_segment-submit"  class ="submit_button" value="Submit" />
+			// "Submit": function() {
+			// 	$( this ).dialog( "close" );
+			// },
+			// Cancel: function() {
+			// 	$( this ).dialog( "close" );
+			// }
 		},
 		close: function() {
 			//allFields.val( "" ).removeClass( "ui-state-error" );
 		}
 	});
+
+	$( ".cancle_button" ) //changed to . for testing
+		.button()
+		.click(function() {
+			$( "#create_segment_form" ).dialog( "close" );
+		})	;
+
 	$( "#create-segment" )
 		.button()
 		.click(function() {
@@ -1799,6 +1804,7 @@
 		.button()
 		.click(function() {
 		})	;
+
 	$( ".customer_persona-view" ) //changed to . for testing
 		.button()
 		.click(function() {
