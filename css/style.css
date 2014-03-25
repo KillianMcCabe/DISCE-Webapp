@@ -738,11 +738,14 @@ a:hover, a:active {
 			width: 20px;
 			height: 20px;
 		}
-		/*.delete_add_button{
-			width: 30px !important;
-			height: 30px !important;
-   			border-radius: 5px !important;
-		}*/
+		.drop_down{
+			background-color: white;
+			border-radius: 5px;
+			font-family: Verdana,Arial,sans-serif;
+			font-size: 1em;
+			width: 290px;
+			height: 32px;
+		}
 		.selected_element{
 			position: absolute;
 			right: 0px;

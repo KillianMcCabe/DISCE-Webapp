@@ -1183,7 +1183,7 @@
 		<p class="validateTips">All form fields are required.</p>
 		<form>
 				<!-- Thea adding drop down menu -->
-				<select name ="customer_dropdown">
+				<select name ="customer_dropdown" class ="drop_down">
 					<option value="startup">Start Up</option>
 					<option value="established">Established company</option>
 				</select>
@@ -1210,7 +1210,7 @@
 		<p class="validateTips">All form fields are required.</p>
 		<form name="create_get_relationship_form" action="canvas_submit.php" method="post">
 			<!-- Thea adding drop down menu -->
-			<select name ="customer_dropdown">
+			<select name ="customer_dropdown" class ="drop_down">
 				<option value="paid">Paid</option>
 				<option value="earned">Earned</option>
 			</select>
@@ -1247,7 +1247,7 @@
 	<div id="create_channel_form" title="Create new channel">
 		<p class="validateTips">All form fields are required.</p>
 		<form name="create_channel_form" action="canvas_submit.php" method="post">
-			<select name="channel_type">
+			<select name="channel_type" class ="drop_down">
 				<option value="digital">Digital</option>
 				<option value="physical">Physical</option>
 			</select>
