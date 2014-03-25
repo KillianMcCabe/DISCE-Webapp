@@ -92,7 +92,7 @@
 										echo '<li id="list_2"><div><span class="disclose"><span></span></span>' . $customer_name . '</div>';
 										echo '<form action="canvas.php" method="post"> 
 												<button name="customer_persona-view" type="submit" value="' . $customer_id . '">
-													View
+													<img class ="delete_add" src="img/view.png">
 												</button> 
 											</form>';
 									}
@@ -1799,6 +1799,11 @@
 		.button()
 		.click(function() {
 		})	;
+	$( ".customer_persona-view" ) //changed to . for testing
+		.button()
+		.click(function() {
+		})	;
+		
 
 
 	function myAjax() {
