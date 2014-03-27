@@ -1804,6 +1804,10 @@
 		.button()
 		.click(function() {
 		})	;
+	$( ".sidebar_button" ) //changed to . for testing
+		.button()
+		.click(function() {
+		})	;
 
 	$( ".customer_persona-view" ) //changed to . for testing
 		.button()

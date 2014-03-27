@@ -424,7 +424,7 @@ a:hover, a:active {
 	border-style: solid;
 	border-width: 1px;
 	height: 430px;
-		background-color: #ccc;
+	background-color: #ccc;
 }
 .canvas_focused{
 	position: absolute !important;
@@ -686,38 +686,38 @@ a:hover, a:active {
 		}
 		/*added by Thea for highlighting */
 		.section_icon_selected_partners{
-			background-color: green;
+			background-color: #D7DBD3;
 			width: 70px;
 		}
 		.section_icon_selected_channels{
-			background-color: green;
+			background-color: #D7DBD3;
 			width: 70px;
-		}
+			}
 		.section_icon_selected_customer{
-			background-color: green;
+			background-color: #D7DBD3;
 			width: 70px;
 		}
 		.section_icon_selected_relationships{
-			background-color: green;
+			background-color: #D7DBD3;
 			width: 70px;
 		}
 		.section_icon_selected_value{
-			background-color: green;
+			background-color: #D7DBD3;
 			width: 70px;
 		}
 		.section_icon_selected_activites{
-			background-color: green;
+			background-color: #D7DBD3;
 			width: 70px;
 		}
 		.section_icon_selected_resources{
-			background-color: green;
+			background-color: #D7DBD3;
 			width: 70px		}
 		.section_icon_selected_cost{
-			background-color: green;
+			background-color: #D7DBD3;
 			width: 70px;
 		}
 		.section_icon_selected_revenu{
-			background-color: green;
+			background-color: #D7DBD3;
 			width: 70px;
 		}
 		.page_logo{
