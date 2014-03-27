@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2014 at 06:39 PM
+-- Generation Time: Mar 27, 2014 at 05:09 PM
 -- Server version: 5.5.36
 -- PHP Version: 5.4.25
 
@@ -47,15 +47,14 @@ CREATE TABLE IF NOT EXISTS `channels` (
   `type` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `channels`
 --
 
 INSERT INTO `channels` (`id`, `canvas_id`, `type`, `name`) VALUES
-(1, 0, 'physical', 'physical1'),
-(2, 0, 'digital', 'digital1');
+(8, 0, 'physical', 'physical2');
 
 -- --------------------------------------------------------
 
@@ -136,8 +135,7 @@ INSERT INTO `customer_relationships` (`id`, `canvas_id`, `type`, `name`) VALUES
 (4, 0, 'grow', 'grow1'),
 (5, 0, 'paid', 'paid1'),
 (6, 0, 'earned', 'earned1'),
-(7, 0, 'keep', 'keep2'),
-(17, 0, 'paid', 'paid2');
+(18, 0, 'keep', 'keep2');
 
 -- --------------------------------------------------------
 
@@ -159,6 +157,28 @@ CREATE TABLE IF NOT EXISTS `customer_segments` (
 INSERT INTO `customer_segments` (`id`, `canvas_id`, `name`) VALUES
 (1, 0, 'Start-ups'),
 (2, 0, 'new business');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `key_activities`
+--
+
+CREATE TABLE IF NOT EXISTS `key_activities` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `canvas_id` int(11) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `key_activities`
+--
+
+INSERT INTO `key_activities` (`id`, `canvas_id`, `type`, `name`) VALUES
+(1, 0, 'Product/Service Development', 'Business Model Development'),
+(7, 0, 'channel development', 'channel1');
 
 -- --------------------------------------------------------
 

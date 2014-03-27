@@ -97,6 +97,29 @@
 		}
 	}
 	
+	/*
+	 * Key Activities
+	 */
+	if (!empty($_POST['key_activities-submit'])) {
+		$type = $_POST['type'];
+		$name = $_POST['name'];
+	   
+		$sql = "INSERT INTO key_activities (canvas_id, type, name) VALUES ('$canvas_id', '$type', '$name')";
+
+		if (!mysql_query($sql)) {
+			die('ERROR: ' . mysql_error());
+		}
+	}
+	
+	if (!empty($_POST['key_activities-delete'])) {
+		$id = $_POST['key_activities-delete'];
+		
+		$sql = "DELETE FROM key_activities WHERE id = '$id' AND canvas_id = '$canvas_id'";
+
+		if (!mysql_query($sql)) {
+			die('ERROR: ' . mysql_error());
+		}
+	}
 	
 	header('Location: canvas.php'); // redirect back to canvas.php page
 ?>

@@ -44,36 +44,7 @@
 					<!--<button type="button" onclick="alert('Add more')">Add More</button>-->
 					<button id="create-segment">Create Segment</button>
 				<ol class="sortable">
-<!--
-					<ol class="hidden">
 
-					<li id="list_1"><div><span class="disclose"><span></span></span>Industries</div>
-					<ol>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Manufacturing</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Services</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>R & D</div>
-					</ol>
-					<li id="list_1"><div><span class="disclose"><span></span></span>SMEs</div>
-					<ol>
-						<li id="list_2"><div><span class="disclose"><span></span></span>C-level Execs</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>VPs</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Directors</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Division Managers</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Individual Employees</div>
-					</ol>
-					</ol>
-
-					<li id="list_1"><div><span class="disclose"><span></span></span>First-Time Entrepreneurs (single user)</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Early-Stage Startups (Teams)</div>
-					<ol>
-						<li id="list_2"><div><span class="disclose"><span></span></span>WearIT <img class="selected_element" src="img/arrow.png" height="20"></div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Writing for Tiny</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Campus Company Spin-Outs</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>High-Potential Start-Ups</div>
-						<button id="create-customer">Create Customer</button>
-					</ol>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Private Investors </div>
--->			
 					<?php
 						/* retrieve list of customer segments from customer_segments table and display results in html */
 						$query = "SELECT * FROM customer_segments WHERE canvas_id = '$canvas_id'";
@@ -111,18 +82,7 @@
 
 						}
 					?>
-										
-<!--					<ol class="hidden">
-						<li id="list_1"><div><span class="disclose"><span></span></span>Consultants</div>
-					<ol>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Management</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Strategy </div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Human Resources</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>IT</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Marketing</div>
-					</ol>
-					</ol>	
--->
+					
 				</ol>
 			</div>
 		</div>
@@ -674,7 +634,7 @@
 			<img class="section_background" src="img/channels-section.png">
 			<div class="canvas_content">
 			<!-- channels button-->
-				<button id="create-channel">Create channel</button>
+				<button id="create-channel">Create Channel</button>
 				<!--<btn1 type="button" onclick="alert('Add more')">Add More</btn1>-->
 				<ol class="sortable">
 					<li id="list_1"><div><span class="disclose"><span></span></span>Digital</div>
@@ -986,33 +946,57 @@
 		<div id="Key_Activities" class="canvas_section">
 			<img class="section_background" src="img/activities-section.png">
 			<div class="canvas_content">
-							<!--activities button-->
-					<button id="create-activity">Create activity</button>
+
 
 				<ol class="sortable">
-					<li id="list_1"><div><span class="disclose"><span></span></span>Business Model Development</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Platform/Tool Development</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Angel meetings</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Government agency contacts</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Staffing necessary positions</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Partner Liaising</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Marketing</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Sales</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Customer service</div>
+				
+					<?php
+						$query = "SELECT * FROM key_activities WHERE canvas_id = '$canvas_id'";
+						if($query_run = mysql_query($query)){
+							
+							while ($row = mysql_fetch_array($query_run)) {
+								$name = $row['name'];
+								echo '<li id="list_1"><div><span class="disclose"><span></span></span>'.$name.'</div>';
+							}
+
+						}
+					?>
 
 				</ol>
 			</div>
 
 		</div>
 		
+		<div id="Key_Activities_Create" class="Key_Activities_Tool canvas_depth">
+			<br>
+			<h1>Create Key Activity</h1>
+			<div class="canvas_content">
+				<button id="create-activity">Create Activity</button>
+			</div>
+		</div>
 				
 		<div id="Key_Activities_Product_Dev" class="Key_Activities_Tool canvas_depth">
 			<br>
 			<h1>Product/Service Development</h1>
 			<div class="canvas_content">
 				<ol class="sortable">
-					<li id="list_1"><div><span class="disclose"><span></span></span>Business Model Development</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Platform/Tool Development</div>
+					<?php
+						$query = "SELECT * FROM key_activities WHERE canvas_id = '$canvas_id' AND type = 'product/service development'";
+						if($query_run = mysql_query($query)){
+							
+							while ($row = mysql_fetch_array($query_run)) {
+								$name = $row['name'];
+								$id = $row['id'];
+								echo '<li id="list_1"><div><span class="disclose"><span></span></span>'.$name.'</div>';
+								echo '<form action="canvas_submit.php" method="post">
+										<button name="key_activities-delete" class="delete_add_button" type="submit" value="'.$id.'">
+											<img class ="delete_add" src="img/Delete_Icon.png"> 
+										</button>
+									</form>';
+							}
+
+						}
+					?>
 				</ol>
 			</div>
 		</div>	
@@ -1023,12 +1007,26 @@
 			<h1>Raising Capital</h1>
 			<div class="canvas_content">
 				<ol class="sortable">
-					<li id="list_1"><div><span class="disclose"><span></span></span>Business Model Generation</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Angel meetings</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Government agency contacts</div>
+					<?php
+						$query = "SELECT * FROM key_activities WHERE canvas_id = '$canvas_id' AND type = 'raising capital'";
+						if($query_run = mysql_query($query)){
+							
+							while ($row = mysql_fetch_array($query_run)) {
+								$name = $row['name'];
+								$id = $row['id'];
+								echo '<li id="list_1"><div><span class="disclose"><span></span></span>'.$name.'</div>';
+								echo '<form action="canvas_submit.php" method="post">
+										<button name="key_activities-delete" class="delete_add_button" type="submit" value="'.$id.'">
+											<img class ="delete_add" src="img/Delete_Icon.png"> 
+										</button>
+									</form>';
+							}
+
+						}
+					?>
 				</ol>
 			</div>
-		</div>	
+		</div>
 		
 				
 		<div id="Key_Activities_Team" class="Key_Activities_Tool canvas_depth">
@@ -1036,8 +1034,23 @@
 			<h1>Team Building</h1>
 			<div class="canvas_content">
 				<ol class="sortable">
-					<li id="list_1"><div><span class="disclose"><span></span></span>Interviewing prospective employees</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Staffing necessary positions</div>
+					<?php
+						$query = "SELECT * FROM key_activities WHERE canvas_id = '$canvas_id' AND type = 'team building'";
+						if($query_run = mysql_query($query)){
+							
+							while ($row = mysql_fetch_array($query_run)) {
+								$name = $row['name'];
+								$id = $row['id'];
+								echo '<li id="list_1"><div><span class="disclose"><span></span></span>'.$name.'</div>';
+								echo '<form action="canvas_submit.php" method="post">
+										<button name="key_activities-delete" class="delete_add_button" type="submit" value="'.$id.'">
+											<img class ="delete_add" src="img/Delete_Icon.png"> 
+										</button>
+									</form>';
+							}
+
+						}
+					?>
 				</ol>
 			</div>
 		</div>	
@@ -1047,8 +1060,23 @@
 			<h1>Channel Development</h1>
 			<div class="canvas_content">
 				<ol class="sortable">
-					<li id="list_1"><div><span class="disclose"><span></span></span>Partner Liaising</div>
+					<?php
+						$query = "SELECT * FROM key_activities WHERE canvas_id = '$canvas_id' AND type = 'channel development'";
+						if($query_run = mysql_query($query)){
+							
+							while ($row = mysql_fetch_array($query_run)) {
+								$name = $row['name'];
+								$id = $row['id'];
+								echo '<li id="list_1"><div><span class="disclose"><span></span></span>'.$name.'</div>';
+								echo '<form action="canvas_submit.php" method="post">
+										<button name="key_activities-delete" class="delete_add_button" type="submit" value="'.$id.'">
+											<img class ="delete_add" src="img/Delete_Icon.png"> 
+										</button>
+									</form>';
+							}
 
+						}
+					?>
 				</ol>
 			</div>
 		</div>	
@@ -1058,9 +1086,23 @@
 			<h1>Customer Acquisition</h1>
 			<div class="canvas_content">
 				<ol class="sortable">
-					<li id="list_1"><div><span class="disclose"><span></span></span>Marketing</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Sales</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Customer service</div>
+					<?php
+						$query = "SELECT * FROM key_activities WHERE canvas_id = '$canvas_id' AND type = 'customer acquisition'";
+						if($query_run = mysql_query($query)){
+							
+							while ($row = mysql_fetch_array($query_run)) {
+								$name = $row['name'];
+								$id = $row['id'];
+								echo '<li id="list_1"><div><span class="disclose"><span></span></span>'.$name.'</div>';
+								echo '<form action="canvas_submit.php" method="post">
+										<button name="key_activities-delete" class="delete_add_button" type="submit" value="'.$id.'">
+											<img class ="delete_add" src="img/Delete_Icon.png"> 
+										</button>
+									</form>';
+							}
+
+						}
+					?>
 
 				</ol>
 			</div>
@@ -1277,15 +1319,19 @@
 
 	<div id="create_activity_form" title="Create new activity">
 		<p class="validateTips">All form fields are required.</p>
-		<form>
+		<form name="create_activity_form" action="canvas_submit.php" method="post">
+			<select name="type" class ="drop_down">
+				<option value="product/service development">Product/Service Development</option>
+				<option value="raising capital">Raising Capital</option>
+				<option value="team building">Team Building</option>
+				<option value="channel development">Channel Development</option>
+				<option value="customer acquisition">Customer Acquisition</option>
+			</select>
 			<fieldset>
 				<label for="name">Name</label>
 				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
-				<label for="email">Email</label>
-				<input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all">
-				<label for="password">Password</label>
-				<input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all">
 			</fieldset>
+			<input type="submit" name="key_activities-submit" class="submit_button" value="Submit" />
 		</form>
 	</div>
 	
@@ -1951,31 +1997,12 @@ $( "#create_activity_form" ).dialog({
 		width: 350,
 		modal: true,
 		buttons: {
-			"Create an activity": function() {
-				var bValid = true;
-				allFields.removeClass( "ui-state-error" );
-				bValid = bValid && checkLength( name, "username", 3, 16 );
-				bValid = bValid && checkLength( email, "email", 6, 80 );
-				bValid = bValid && checkLength( password, "password", 5, 16 );
-				bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-				// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-				bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-				bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-			if ( bValid ) {
-				$( "#users tbody" ).append( "<tr>" +
-					"<td>" + name.val() + "</td>" +
-					"<td>" + email.val() + "</td>" +
-					"<td>" + password.val() + "</td>" +
-					"</tr>" );
-				$( this ).dialog( "close" );
-			}
-		},
 			Cancel: function() {
 				$( this ).dialog( "close" );
 			}
 		},
 		close: function() {
-			allFields.val( "" ).removeClass( "ui-state-error" );
+			//allFields.val( "" ).removeClass( "ui-state-error" );
 		}
 	});
 	$( "#create-activity" )
