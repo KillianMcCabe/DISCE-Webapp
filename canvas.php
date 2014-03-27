@@ -91,7 +91,7 @@
 										$customer_id = $row2['id'];
 										echo '<li id="list_2"><div><span class="disclose"><span></span></span>' . $customer_name . '</div>';
 										echo '<form action="canvas.php" method="post"> 
-												<button name="customer_persona-view" type="submit" value="' . $customer_id . '">
+												<button name="customer_persona-view" class ="delete_add_button" type="submit" value="' . $customer_id . '">
 													<img class ="delete_add" src="img/view.png">
 												</button> 
 											</form>';
@@ -1801,10 +1801,6 @@
 		.click(function() {
 		})	;
 	$( ".submit_button" ) //changed to . for testing
-		.button()
-		.click(function() {
-		})	;
-	$( ".sidebar_button" ) //changed to . for testing
 		.button()
 		.click(function() {
 		})	;
