@@ -62,19 +62,19 @@
 										$customer_id = $row2['id'];
 										echo '<li id="list_2"><div><span class="disclose"><span></span></span>' . $customer_name . '</div>';
 										echo '<form action="canvas.php" method="post"> 
-												<button name="customer_persona-view" class ="delete_add_button" type="submit" value="' . $customer_id . '">
-													<img class ="delete_add" src="img/view.png">
+												<button name="customer_persona-view" class ="view_button" type="submit" value="' . $customer_id . '">
+													
 												</button> 
 											</form>';
 									}
 								}
 								echo '<form action="canvas_submit.php" method="post"> 
-									<button name="customer_segment-delete" class ="delete_add_button" type="submit" value="' . $segment_id . '">
-										<img class ="delete_add" src="img/Delete_Icon.png">
+									<button name="customer_segment-delete" class ="delete_button" type="submit" value="' . $segment_id . '">
+										
 									</button> 
 								</form>
 								<button class="create-customer" >
-									<img class ="delete_add" src="img/plus.png">
+									
 								</button>
 								';
 								echo '</ol>';
@@ -506,8 +506,8 @@
 										$relationship_id = $row['id'];
 										echo '<li id="list_2"><div><span class="disclose"><span></span></span>' . $relation_name . ' <img class="cost_icon" src="img/euro_red.png" height="18" title="cost per customer?"></div></li>';
 										echo '<form action="canvas_submit.php" method="post">
-											<button name="relationship-delete" class="delete_add_button" type="submit" value="' . $relationship_id . '">
-												<img class ="delete_add" src="img/Delete_Icon.png">
+											<button name="relationship-delete" class="delete_button" type="submit" value="' . $relationship_id . '">
+												
 											</button>
 										</form>';
 									}
@@ -527,8 +527,8 @@
 										$relationship_id = $row['id'];
 										echo '<li id="list_2"><div><span class="disclose"><span></span></span>'. $relation_name .'</div></li>';
 										echo '<form action="canvas_submit.php" method="post">
-											<button name="relationship-delete" class="delete_add_button" type="submit" value="' . $relationship_id . '">
-												<img class ="delete_add" src="img/Delete_Icon.png">
+											<button name="relationship-delete" class="delete_button" type="submit" value="' . $relationship_id . '">
+												
 											</button>
 										</form>';
 									}
@@ -558,8 +558,8 @@
 									$relationship_id = $row['id'];
 									echo '<li id="list_2"><div><span class="disclose"><span></span></span>'.$relation_name.'</div></li>';
 									echo '<form action="canvas_submit.php" method="post">
-										<button name="relationship-delete" type="submit" class="delete_add_button" value="' . $relationship_id . '">
-											<img class ="delete_add" src="img/Delete_Icon.png"> 
+										<button name="relationship-delete" type="submit" class="delete_button" value="' . $relationship_id . '">
+											
 										</button>
 									</form>';
 								}
@@ -587,8 +587,8 @@
 								$relationship_id = $row['id'];
 								echo '<li id="list_2"><div><span class="disclose"><span></span></span>'.$relation_name.' <img class="cost_icon" src="img/euro_green.png" height="18" title="increased value per customer?"></div></li>';
 								echo '<form action="canvas_submit.php" method="post">
-									<button name="relationship-delete" class="delete_add_button" type="submit" value="' . $relationship_id . '">
-										<img class ="delete_add" src="img/Delete_Icon.png"> 
+									<button name="relationship-delete" class="delete_button" type="submit" value="' . $relationship_id . '">
+										
 									</button>
 								</form>';
 							}
@@ -648,8 +648,8 @@
 									$channel_id = $row['id'];
 									echo '<li id="list_2"><div><span class="disclose"><span></span></span>'.$channel_name.'</div>';
 									echo '<form action="canvas_submit.php" method="post">
-										<button name="channel-delete" type="submit" class="delete_add_button" value="' . $channel_id . '">
-											<img class ="delete_add" src="img/Delete_Icon.png"> 
+										<button name="channel-delete" type="submit" class="delete_button" value="' . $channel_id . '">
+											
 										</button>
 									</form>';
 								}
@@ -668,8 +668,8 @@
 									$channel_id = $row['id'];
 									echo '<li id="list_2"><div><span class="disclose"><span></span></span>'.$channel_name.'</div>';
 									echo '<form action="canvas_submit.php" method="post">
-										<button name="channel-delete" class="delete_add_button" type="submit" value="' . $channel_id . '">
-											<img class ="delete_add" src="img/Delete_Icon.png"> 
+										<button name="channel-delete" class="delete_button" type="submit" value="' . $channel_id . '">
+											
 										</button>
 									</form>';
 								}
@@ -989,8 +989,8 @@
 								$id = $row['id'];
 								echo '<li id="list_1"><div><span class="disclose"><span></span></span>'.$name.'</div>';
 								echo '<form action="canvas_submit.php" method="post">
-										<button name="key_activities-delete" class="delete_add_button" type="submit" value="'.$id.'">
-											<img class ="delete_add" src="img/Delete_Icon.png"> 
+										<button name="key_activities-delete" class="delete_button" type="submit" value="'.$id.'">
+											
 										</button>
 									</form>';
 							}
@@ -1016,8 +1016,8 @@
 								$id = $row['id'];
 								echo '<li id="list_1"><div><span class="disclose"><span></span></span>'.$name.'</div>';
 								echo '<form action="canvas_submit.php" method="post">
-										<button name="key_activities-delete" class="delete_add_button" type="submit" value="'.$id.'">
-											<img class ="delete_add" src="img/Delete_Icon.png"> 
+										<button name="key_activities-delete" class="delete_button" type="submit" value="'.$id.'">
+											
 										</button>
 									</form>';
 							}
@@ -1043,8 +1043,8 @@
 								$id = $row['id'];
 								echo '<li id="list_1"><div><span class="disclose"><span></span></span>'.$name.'</div>';
 								echo '<form action="canvas_submit.php" method="post">
-										<button name="key_activities-delete" class="delete_add_button" type="submit" value="'.$id.'">
-											<img class ="delete_add" src="img/Delete_Icon.png"> 
+										<button name="key_activities-delete" class="delete_button" type="submit" value="'.$id.'">
+											
 										</button>
 									</form>';
 							}
@@ -1069,8 +1069,8 @@
 								$id = $row['id'];
 								echo '<li id="list_1"><div><span class="disclose"><span></span></span>'.$name.'</div>';
 								echo '<form action="canvas_submit.php" method="post">
-										<button name="key_activities-delete" class="delete_add_button" type="submit" value="'.$id.'">
-											<img class ="delete_add" src="img/Delete_Icon.png"> 
+										<button name="key_activities-delete" class="delete_button" type="submit" value="'.$id.'">
+											
 										</button>
 									</form>';
 							}
@@ -1095,8 +1095,8 @@
 								$id = $row['id'];
 								echo '<li id="list_1"><div><span class="disclose"><span></span></span>'.$name.'</div>';
 								echo '<form action="canvas_submit.php" method="post">
-										<button name="key_activities-delete" class="delete_add_button" type="submit" value="'.$id.'">
-											<img class ="delete_add" src="img/Delete_Icon.png"> 
+										<button name="key_activities-delete" class="delete_button" type="submit" value="'.$id.'">
+											
 										</button>
 									</form>';
 							}
@@ -1836,20 +1836,34 @@
 		}
 	});
 	$( ".create-customer" ) //changed to . for testing
-		.button()
-		.css({ width: '30px', 'padding-top': '1px', 'padding-bottom': '1px' })
+		.button({text: false, icons: {primary: 'ui-icon-circle-plus'}})
+		.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' })
 		.click(function() {
 			$( "#create_customer_form" ).dialog( "open" );
 		})	;
-	$( ".delete_add_button" ) //changed to . for testing
-		.button()
-		.css({ width: '30px', 'padding-top': '1px', 'padding-bottom': '1px' })
+	$( ".delete_button" ) //changed to . for testing
+		// .button({ icons: { primary: "plus.png"} });
+		.button({text: false, icons: {primary: 'ui-icon-circle-close'}})
+		.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' ,'padding-left' : '0px' })
+		.click(function() {
+		});
+
+	$( ".view_button" ) //changed to . for testing
+		// .button({ icons: { primary: "plus.png"} });
+		.button({text: false, icons: { primary: 'ui-icon-circle-triangle-e'}})
+		.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' ,'padding-left' : '0px' })
 		.click(function() {
 		})	;
 	$( ".submit_button" ) //changed to . for testing
 		.button()
 		.click(function() {
 		})	;
+	// $('#button').button({
+ //    	text: false,  Don't include text on the button 
+ //    	icons: {
+ //    	    primary: 'ui-icon-gear'
+ //    	}
+	// });
 
 	$( ".customer_persona-view" ) //changed to . for testing
 		.button()
