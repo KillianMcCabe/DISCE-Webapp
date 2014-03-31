@@ -28,6 +28,36 @@
 		/*need to also delete personas that belong to this segment*/
 	}
 	
+	if (!empty($_POST['customer_persona-submit'])) {
+		$segment_id = $_POST['segment_id'];
+		$name = $_POST['name'];
+		$persona_name = $_POST['persona_name'];
+		$age = $_POST['age'];
+		$location = $_POST['location'];
+		$gender = $_POST['gender'];
+		$family_size = $_POST['family_size'];
+		$income = $_POST['income'];
+		$occupation = $_POST['occupation'];
+		$education = $_POST['education'];
+	   
+		$sql = "INSERT INTO customer_persona (customer_segments_id, name, persona_name, image_name, location, age, gender, family_size, income, occupation, education)
+					VALUES ('$segment_id', '$name', '$persona_name', 'image_name', '$location', '$age', '$gender', '$family_size', '$income', '$occupation', '$education')";
+
+		if (!mysql_query($sql)) {
+			die('ERROR: ' . mysql_error());
+		}
+	}
+	
+	if (!empty($_POST['customer_persona-delete'])) {
+		$customer_persona_id = $_POST['customer_persona-delete'];
+		
+		$sql = "DELETE FROM customer_persona WHERE id = '$customer_persona_id'";
+
+		if (!mysql_query($sql)) {
+			die('ERROR: ' . mysql_error());
+		}
+	}
+	
 	
 	/*
 	 * Customer Relationships

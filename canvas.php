@@ -54,6 +54,12 @@
 								$segment_id = $row['id'];
 								$segment_name = $row['name'];
 								echo '<li id="list_1"><div><span class="disclose"><span></span></span>' . $segment_name . '</div>';
+								echo '<button class="create-customer" onclick="setSegId('.$segment_id.')"></button>';								
+								echo '<form action="canvas_submit.php" method="post"> 
+									<button name="customer_segment-delete" class ="delete_button" type="submit" value="' . $segment_id . '">
+										
+									</button> 
+								</form>';
 								echo '<ol>';
 								$query2 = "SELECT * FROM customer_persona WHERE customer_segments_id = '$segment_id'";
 								if($query_run2 = mysql_query($query2)){
@@ -66,17 +72,13 @@
 													
 												</button> 
 											</form>';
+										echo '<form action="canvas_submit.php" method="post"> 
+												<button name="customer_persona-delete" class ="delete_button" type="submit" value="' . $customer_id . '">
+													
+												</button> 
+											</form>';
 									}
 								}
-								echo '<form action="canvas_submit.php" method="post"> 
-									<button name="customer_segment-delete" class ="delete_button" type="submit" value="' . $segment_id . '">
-										
-									</button> 
-								</form>
-								<button class="create-customer" >
-									
-								</button>
-								';
 								echo '</ol>';
 							}
 
@@ -731,6 +733,9 @@
 						</tr>
 					</tbody>
 				</table>
+				<div id="channel_economics-save">
+				<button name="channel_economics-save" type="submit">Save</button>
+				</div>
 			</div>
 		</div>
 		
@@ -1225,23 +1230,29 @@
 		</form>
 	</div>
 	
+	<script>
+		function DoSubmit(){
+			document.create_customer_form.segment_id.value = segment_id;
+			return true;
+		}
+	</script>
 	<div id="create_customer_form" title="Create new customer">
 		<p class="validateTips">All form fields are required.</p>
-		<form>
-			<!-- Thea adding drop down menu -->
-			<select name ="customer_dropdown" class ="drop_down">
-				<option value="startup">Start Up</option>
-				<option value="established">Established company</option>
-			</select>
+		<form name="create_customer_form" action="canvas_submit.php" method="post" onsubmit="DoSubmit();">
 			<fieldset>
+				<input type="hidden" name="segment_id" value="0" />
 				<label for="name">Name</label>
 				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+				<label for="persona_name">Persona Name</label>
+				<input type="text" name="persona_name" id="persona_name" class="text ui-widget-content ui-corner-all">
 				<label for="age">Age</label>
 				<input type="text" name="age" id="age" value="" class="text ui-widget-content ui-corner-all">
 				<label for="location">Location</label>
 				<input type="location" name="location" id="location" value="" class="text ui-widget-content ui-corner-all">
 				<label for="gender">Gender</label>
 				<input type="gender" name="gender" id="gender" value="" class="text ui-widget-content ui-corner-all">
+				<label for="family_size">Family Size</label>
+				<input type="family_size" name="family_size" id="family_size" value="" class="text ui-widget-content ui-corner-all">
 				<label for="income">Income</label>
 				<input type="income" name="income" id="income" value="" class="text ui-widget-content ui-corner-all">
 				<label for="occupation">Occupation</label>
@@ -1249,6 +1260,7 @@
 				<label for="education">Education</label>
 				<input type="education" name="education" id="education" value="" class="text ui-widget-content ui-corner-all">
 			</fieldset>
+			<input type="submit" id="customer_persona-submit" name="customer_persona-submit" class ="submit_button" value="Submit" />
 		</form>
 	</div>
 	
@@ -1379,6 +1391,7 @@
 
 		<script>
 		
+		var segment_id;
 		
 		$(document).ready(function(){
 		
@@ -1807,34 +1820,20 @@
 		width: 350,
 		modal: true,
 		buttons: {
-			"Submit": function() {
-				var bValid = true;
-				allFields.removeClass( "ui-state-error" );
-				bValid = bValid && checkLength( name, "name", 0, 255 );
-				bValid = bValid && checkLength( age, "age", 0, 255 );
-				bValid = bValid && checkLength( location, "location", 0, 255 );
-				bValid = bValid && checkLength( gender, "gender", 0, 255 );
-				bValid = bValid && checkLength( age, "age", 0, 255 );
-				bValid = bValid && checkLength( income, "income", 0, 255 );
-				bValid = bValid && checkLength( occupation, "occupation", 0, 255 );
-				bValid = bValid && checkLength( education, "education", 0, 255 );
-				if ( bValid ) {
-					$( "#users tbody" ).append( "<tr>" +
-						"<td>" + name.val() + "</td>" +
-						"<td>" + email.val() + "</td>" +
-						"<td>" + password.val() + "</td>" +
-						"</tr>" );
-					$( this ).dialog( "close" );
-				}
-			},
 			Cancel: function() {
 				$( this ).dialog( "close" );
 			}
 		},
 		close: function() {
-			allFields.val( "" ).removeClass( "ui-state-error" );
+			//allFields.val( "" ).removeClass( "ui-state-error" );
 		}
 	});
+	
+	function setSegId(value)
+	{
+		segment_id = value;
+	}
+  
 	$( ".create-customer" ) //changed to . for testing
 		.button({text: false, icons: {primary: 'ui-icon-circle-plus'}})
 		.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' })
