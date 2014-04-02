@@ -4,13 +4,6 @@
 	require 'php/connect.inc.php';
 
 	$canvas_id = 0;
-	$customer_persona_selected = false;
-
-	if (!empty($_POST['customer_persona-view'])) {
-		$customer_persona_selected = true;
-		$customer_persona_id = $_POST['customer_persona-view'];
-	}
-	
 ?>
 
 <html lang="en">
@@ -26,6 +19,7 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
 	<script src="js/colResizable-1.3.min.js"></script>
 	<script src="js/jquery.mjs.nestedSortable.js"></script>
+	<script src="ajax.js"></script>
 	<!--<script src="js/canvas_buttons.js"></script>-->
 	<!-- stops side nav buttons from working in php -->
 	<!--<script src="//code.jquery.com/jquery-1.9.1.js"></script>-->
@@ -34,10 +28,8 @@
 </head>
 <body>
 
-
 	<div id="canvas">
 
-	
 		<div id="Customer_Segments" class="canvas_section">
 			<img class="section_background" src="img/customer-section.png">
 				<div class="canvas_content">
@@ -67,11 +59,13 @@
 										$customer_name = $row2['name'];
 										$customer_id = $row2['id'];
 										echo '<li id="list_2"><div><span class="disclose"><span></span></span>' . $customer_name . '</div>';
-										echo '<form action="canvas.php" method="post"> 
+										/*echo '<form action="canvas.php" method="post"> 
 												<button name="customer_persona-view" class ="view_button" type="submit" value="' . $customer_id . '">
 													
 												</button> 
-											</form>';
+											</form>';*/
+										echo '<button name="customer_persona-view" class="view_button" onclick="view_persona(' . $customer_id . ')"></button>';
+										
 										echo '<form action="canvas_submit.php" method="post"> 
 												<button name="customer_persona-delete" class ="delete_button" type="submit" value="' . $customer_id . '">
 													
@@ -89,37 +83,7 @@
 			</div>
 		</div>
 		
-		<?php
-			if ($customer_persona_selected) {
-				/* retrieve contents of customer_persona table and display results in html */
-				$query = "SELECT * FROM customer_persona WHERE id = '$customer_persona_id'";
-				if($query_run = mysql_query($query)){
-					$query_num_rows = mysql_num_rows($query_run);
-					if($query_num_rows == 0){
-						die('Table SELECT failed.');
-					}
-					else{
-						$name = mysql_result($query_run, 0, 'persona_name');
-						$location = mysql_result($query_run, 0, 'location');
-						$age = mysql_result($query_run, 0, 'age');
-						$gender = mysql_result($query_run, 0, 'gender');
-						$family_size = mysql_result($query_run, 0, 'family_size');
-						$income = mysql_result($query_run, 0, 'income');
-						$occupation = mysql_result($query_run, 0, 'occupation');
-						$education = mysql_result($query_run, 0, 'education');
-					}
-				}
-			} else {
-				$name = "";
-				$location = "";
-				$age = "";
-				$gender = "";
-				$family_size = "";
-				$income = "";
-				$occupation = "";
-				$education = "";
-			}
-		?>
+		
 
 		<div id="Customer_personas" class="Customer_Segments_Tool canvas_depth">
 			<br>
@@ -128,8 +92,7 @@
 				<table border="1">
 					<tr>
 						<td>name</td>
-						<td><?php echo $name; ?></td>
-						
+						<td><div id="persona_name"/></td>
 					</tr>
 					<tr>
 						<td>photo</td>
@@ -137,31 +100,31 @@
 					</tr>
 					<tr>
 						<td>Location</td>
-						<td><?php echo $location; ?></td>
+						<td><div id="persona_location"/></td>
 					</tr>
 					<tr>
 						<td>age</td>
-						<td><?php echo $age; ?></td>
+						<td><div id="persona_age"/></td>
 					</tr>
 					<tr>
 						<td>gender</td>
-						<td><?php echo $gender; ?></td>
+						<td><div id="persona_gender"/></td>
 					</tr>
 					<tr>
 						<td>family size</td>
-						<td><?php echo $family_size; ?></td>
+						<td><div id="persona_family_size"/></td>
 					</tr>
 					<tr>
 						<td>income</td>
-						<td><?php echo $income; ?></td>
+						<td><div id="persona_income"/></td>
 					</tr>
 					<tr>
 						<td>occupation</td>
-						<td><?php echo $occupation; ?></td>
+						<td><div id="persona_occupation"/></td>
 					</tr>
 					<tr>
 						<td>education</td>
-						<td><?php echo $education; ?></td>
+						<td><div id="persona_education"/></td>
 					</tr>
 				</table>
 
