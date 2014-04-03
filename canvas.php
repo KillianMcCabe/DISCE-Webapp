@@ -20,10 +20,6 @@
 	<script src="js/colResizable-1.3.min.js"></script>
 	<script src="js/jquery.mjs.nestedSortable.js"></script>
 	<script src="ajax.js"></script>
-	<!--<script src="js/canvas_buttons.js"></script>-->
-	<!-- stops side nav buttons from working in php -->
-	<!--<script src="//code.jquery.com/jquery-1.9.1.js"></script>-->
-	<!--<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>-->
 	
 </head>
 <body>
@@ -706,8 +702,8 @@
 		<div id="Key_Partners" class="canvas_section">
 			<img class="section_background" src="img/partners-section.png">
 			<div class="canvas_content">
-					<!--partners button-->
-					<button id="create-partner">Create partner</button>
+			
+				<button id="create-partner">Create partner</button>
 
 				<ol class="sortable">
 					<li id="list_1"><div><span class="disclose"><span></span></span>Joint Business Development (Time to Market)</div>
@@ -1165,9 +1161,9 @@
 	<div id="page_logo">
 			<img class="page_logo" src="http://disce.ie/wp-content/uploads/2013/09/logo5-hi-res-black-with-TM--300x300.png">
 	</div>
+	
 	<!-- menu section -->
-	<div id="menu">
-		
+	<div id="menu">	
 
 		<ul>
 		<li>
@@ -1218,12 +1214,11 @@
 
 		</ul>
 
-		
 	</div>	
-	<div id="notifications"></div>
-
-	<!-- forms input -->
 	
+	<div id="notifications"></div>
+	
+	<!-- forms input -->
 	<div id="create_segment_form" title="Create new segment">
 		<p class="validateTips">All form fields are required.</p>
 		<form name="create_segment_form" action="canvas_submit.php" method="post">
@@ -1231,11 +1226,7 @@
 				<label for="name">Name</label>
 				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
 			</fieldset>
-			<!-- move button -->
-
 			<input type="submit" name = "customer_segment-submit"  class ="submit_button" value="Submit" />
-			<input type="button" name = "customer_segment-cancel"  class ="cancel_button" value="Cancel" />
-
 		</form>
 	</div>
 	
@@ -1397,15 +1388,12 @@
 	
 	<div id="create_partner_form" title="Create new partner">
 		<p class="validateTips">All form fields are required.</p>
-		<form>
+		<form name="create_partner_form" action="canvas_submit.php" method="post">
 			<fieldset>
 				<label for="name">Name</label>
 				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
-				<label for="email">Email</label>
-				<input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all">
-				<label for="password">Password</label>
-				<input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all">
 			</fieldset>
+			<input type="submit" name="key_resources-submit" class="submit_button" value="Submit" />
 		</form>
 	</div>
 
@@ -1423,7 +1411,7 @@
 		</form>
 	</div>
 
-		<script>
+	<script>
 		
 		var segment_id;
 		
@@ -1694,8 +1682,6 @@
 		var onSampleResized = function(e){  
 			var table = $(e.currentTarget); //reference to the resized table
 		 }; 
-
-		 //seems to just hide everything ~Thea
   
 		function GoToModel(){
 			$('.canvas_blocker').hide();
@@ -1748,7 +1734,7 @@
 			$('#Resources_Human').hide();	
 			$('#Resources_Intellectual').hide();	
 
-			//~Thea adding highlighting
+			// Sidebar highlighting
 
 			$('.section_icon_selected_partners').removeClass('section_icon_selected_partners').addClass('section_icon_partners');
 			$('.section_icon_selected_channels').removeClass('section_icon_selected_channels').addClass('section_icon_channels');
@@ -1762,9 +1748,6 @@
 		
 		}
 		
-	
-		
-
 		jQuery.fn.center = function () {
 			this.css("position","absolute");
 			this.css("position","absolute");
@@ -1773,434 +1756,196 @@
 			this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + 
 														$(window).scrollLeft()) + "px");
 			return this;
-
-
 		}
 	
+		function setSegId(value)
+		{
+			segment_id = value;
+		}
 
-	/*var name = $( "#name" ),
-	email = $( "#email" ),
-	password = $( "#password" ),
-	allFields = $( [] ).add( name ).add( email ).add( password ),
-	tips = $( ".validateTips" );*/
-	
-	function updateTips( t ) {
-		tips
-		.text( t )
-		.addClass( "ui-state-highlight" );
-		setTimeout(function() {
-			tips.removeClass( "ui-state-highlight", 1500 );
-		}, 500 );
-	}
-	function checkLength( o, n, min, max ) {
-		if ( o.val().length > max || o.val().length < min ) {
-			o.addClass( "ui-state-error" );
-			updateTips( "Length of " + n + " must be between " +
-			min + " and " + max + "." );
-			return false;
-		}
-		else {
-			return true;
-		}
-	}
-	function checkRegexp( o, regexp, n ) {
-		if ( !( regexp.test( o.val() ) ) ) {
-			o.addClass( "ui-state-error" );
-			updateTips( n );
-			return false;
-		} 
-		else {
-			return true;
-		}
-	}
-	
-	/*
-	 * Canvas Buttons
-	 */
-	$( "#create_segment_form" ).dialog({
-		autoOpen: false,
-		width: 350,
-		modal: true,
-		buttons: {
-
-// 			// <input type="submit" name = "customer_segment-submit"  class ="submit_button" value="Submit" />
-			// "Submit": function() {
-			// 	$( this ).dialog( "close" );
-			// },
-			// Cancel: function() {
-			// 	$( this ).dialog( "close" );
-			// }
-		},
-		close: function() {
-			//allFields.val( "" ).removeClass( "ui-state-error" );
-		}
+		/* Javascript for opening forms when buttons are pressed */
+ 
+$( "#create_segment_form" ).dialog({
+	autoOpen: false,
+	width: 350,
+	modal: true,
+});
+$( "#create-segment" )
+	.button()
+	.click(function() {
+		$( "#create_segment_form" ).dialog( "open" );
 	});
 
-	$( ".cancel_button" ) //changed to . for testing
-		.button()
-		.click(function() {
-			$( "#create_segment_form" ).dialog( "close" );
-		})	;
+$( "#create_customer_form" ).dialog({
+	autoOpen: false,
+	height: 300,
+	width: 350,
+	modal: true,
+});
 
-	$( "#create-segment" )
-		.button()
-		.click(function() {
-			$( "#create_segment_form" ).dialog( "open" );
-		});
-	
-	$( "#create_customer_form" ).dialog({
-		autoOpen: false,
-		height: 300,
-		width: 350,
-		modal: true,
-		buttons: {
-			Cancel: function() {
-				$( this ).dialog( "close" );
-			}
-		},
-		close: function() {
-			//allFields.val( "" ).removeClass( "ui-state-error" );
-		}
+$( ".create-customer" ) //changed to . for testing
+	.button({text: false, icons: {primary: 'ui-icon-circle-plus'}})
+	.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' })
+	.click(function() {
+		$( "#create_customer_form" ).dialog( "open" );
+	})	;
+$( ".delete_button" )
+	.button({text: false, icons: {primary: 'ui-icon-circle-close'}})
+	.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' ,'padding-left' : '0px' })
+	.click(function() {
+	});
+
+$( ".view_button" )
+	.button({text: false, icons: { primary: 'ui-icon-circle-triangle-e'}})
+	.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' ,'padding-left' : '0px' })
+	.click(function() {
+	})	;
+$( ".submit_button" )
+	.button()
+	.click(function() {
+	})	;
+
+$( ".customer_persona-view" )
+	.button()
+	.click(function() {
+	})	;
+
+$( "#create_get_relationship_form" ).dialog({
+	autoOpen: false,
+	height: 300,
+	width: 350,
+	modal: true,
+});
+$( "#create-get_relationship" )
+	.button()
+	.click(function() {
+		$( "#create_get_relationship_form" ).dialog( "open" );
+	});
+
+$( "#create_keep_relationship_form" ).dialog({
+	autoOpen: false,
+	height: 300,
+	width: 350,
+	modal: true,
+});
+$( "#create-keep_relationship" )
+	.button()
+	.click(function() {
+		$( "#create_keep_relationship_form" ).dialog( "open" );
 	});
 	
-	function setSegId(value)
-	{
-		segment_id = value;
-	}
-  
-	$( ".create-customer" ) //changed to . for testing
-		.button({text: false, icons: {primary: 'ui-icon-circle-plus'}})
-		.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' })
-		.click(function() {
-			$( "#create_customer_form" ).dialog( "open" );
-		})	;
-	$( ".delete_button" ) //changed to . for testing
-		// .button({ icons: { primary: "plus.png"} });
-		.button({text: false, icons: {primary: 'ui-icon-circle-close'}})
-		.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' ,'padding-left' : '0px' })
-		.click(function() {
-		});
-
-	$( ".view_button" ) //changed to . for testing
-		// .button({ icons: { primary: "plus.png"} });
-		.button({text: false, icons: { primary: 'ui-icon-circle-triangle-e'}})
-		.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' ,'padding-left' : '0px' })
-		.click(function() {
-		})	;
-	$( ".submit_button" ) //changed to . for testing
-		.button()
-		.click(function() {
-		})	;
-	// $('#button').button({
- //    	text: false,  Don't include text on the button 
- //    	icons: {
- //    	    primary: 'ui-icon-gear'
- //    	}
-	// });
-
-	$( ".customer_persona-view" ) //changed to . for testing
-		.button()
-		.click(function() {
-		})	;
-		
-
-
-	function myAjax() {
-		$.ajax({
-			type: 'POST',
-			url: 'send-ajax-data.php',
-			data: {action:'_-submit'},
-			success: function(data){
-				alert(data);//data returned from php
-			}
-		});
-	}
-	
-	$( "#create_get_relationship_form" ).dialog({
-		autoOpen: false,
-		height: 300,
-		width: 350,
-		modal: true,
-		buttons: {
-			
-			Cancel: function() {
-				$( this ).dialog( "close" );
-			}
-		},
-		close: function() {
-			//allFields.val( "" ).removeClass( "ui-state-error" );
-		}
+$( "#create_grow_relationship_form" ).dialog({
+	autoOpen: false,
+	height: 300,
+	width: 350,
+	modal: true,
+});
+$( "#create-grow_relationship" )
+	.button()
+	.click(function() {
+		$( "#create_grow_relationship_form" ).dialog( "open" );
 	});
-	$( "#create-get_relationship" )
-		.button()
-		.click(function() {
-			$( "#create_get_relationship_form" ).dialog( "open" );
-		});
 
-	$( "#create_keep_relationship_form" ).dialog({
-		autoOpen: false,
-		height: 300,
-		width: 350,
-		modal: true,
-		buttons: {
+$( "#create_channel_form" ).dialog({
+	autoOpen: false,
+	height: 300,
+	width: 350,
+	modal: true,
+});
+$( "#create-channel" )
+	.button()
+	.click(function() {
+		$( "#create_channel_form" ).dialog( "open" );
+	});
 
-			Cancel: function() {
-				$( this ).dialog( "close" );
-			}
-		},
-		close: function() {
-			//allFields.val( "" ).removeClass( "ui-state-error" );
-		}
+$( "#create_cost_form" ).dialog({
+	autoOpen: false,
+	height: 300,
+	width: 350,
+	modal: true,
+});
+$( "#create-cost" )
+	.button()
+	.click(function() {
+		$( "#create_cost_form" ).dialog( "open" );
 	});
-	$( "#create-keep_relationship" )
-		.button()
-		.click(function() {
-			$( "#create_keep_relationship_form" ).dialog( "open" );
-		});
-		
-	$( "#create_grow_relationship_form" ).dialog({
-		autoOpen: false,
-		height: 300,
-		width: 350,
-		modal: true,
-		buttons: {
-			Cancel: function() {
-				$( this ).dialog( "close" );
-			}
-		},
-		close: function() {
-			//allFields.val( "" ).removeClass( "ui-state-error" );
-		}
-	});
-	$( "#create-grow_relationship" )
-		.button()
-		.click(function() {
-			$( "#create_grow_relationship_form" ).dialog( "open" );
-		});
-
-	$( "#create_channel_form" ).dialog({
-		autoOpen: false,
-		height: 300,
-		width: 350,
-		modal: true,
-		buttons: {
-			Cancel: function() {
-				$( this ).dialog( "close" );
-			}
-		},
-		close: function() {
-			//allFields.val( "" ).removeClass( "ui-state-error" );
-		}
-	});
-	$( "#create-channel" )
-		.button()
-		.click(function() {
-			$( "#create_channel_form" ).dialog( "open" );
-		});
-
-	$( "#create_cost_form" ).dialog({
-		autoOpen: false,
-		height: 300,
-		width: 350,
-		modal: true,
-		buttons: {
-			"Create a new cost": function() {
-				var bValid = true;
-				allFields.removeClass( "ui-state-error" );
-				bValid = bValid && checkLength( name, "username", 3, 16 );
-				bValid = bValid && checkLength( email, "email", 6, 80 );
-				bValid = bValid && checkLength( password, "password", 5, 16 );
-				bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-				// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-				bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-				bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-			if ( bValid ) {
-				$( "#users tbody" ).append( "<tr>" +
-					"<td>" + name.val() + "</td>" +
-					"<td>" + email.val() + "</td>" +
-					"<td>" + password.val() + "</td>" +
-					"</tr>" );
-				$( this ).dialog( "close" );
-			}
-		},
-			Cancel: function() {
-				$( this ).dialog( "close" );
-			}
-		},
-		close: function() {
-			allFields.val( "" ).removeClass( "ui-state-error" );
-		}
-	});
-	$( "#create-cost" )
-		.button()
-		.click(function() {
-			$( "#create_cost_form" ).dialog( "open" );
-		});
 
 
 $( "#create_activity_form" ).dialog({
-		autoOpen: false,
-		height: 300,
-		width: 350,
-		modal: true,
-		buttons: {
-			Cancel: function() {
-				$( this ).dialog( "close" );
-			}
-		},
-		close: function() {
-			//allFields.val( "" ).removeClass( "ui-state-error" );
-		}
+	autoOpen: false,
+	height: 300,
+	width: 350,
+	modal: true,
+});
+$( "#create-activity" )
+	.button()
+	.click(function() {
+$( "#create_activity_form" ).dialog( "open" );
 	});
-	$( "#create-activity" )
-		.button()
-		.click(function() {
-	$( "#create_activity_form" ).dialog( "open" );
-		});
 
 
 
-	$( "#create_financial_resource_form" ).dialog({
-			autoOpen: false,
-			height: 300,
-			width: 350,
-			modal: true,
-			buttons: {
-				Cancel: function() {
-					$( this ).dialog( "close" );
-				}
-			},
-			close: function() {
-				allFields.val( "" ).removeClass( "ui-state-error" );
-			}
-		});
-		$( "#create-financial_resource" )
-			.button()
-			.click(function() {
-		$( "#create_financial_resource_form" ).dialog( "open" );
-			});
-			
-	$( "#create_human_resource_form" ).dialog({
-			autoOpen: false,
-			height: 300,
-			width: 350,
-			modal: true,
-			buttons: {
-				Cancel: function() {
-					$( this ).dialog( "close" );
-				}
-			},
-			close: function() {
-				allFields.val( "" ).removeClass( "ui-state-error" );
-			}
-		});
-		$( "#create-human_resource" )
-			.button()
-			.click(function() {
-		$( "#create_human_resource_form" ).dialog( "open" );
-			});
-	
-	$( "#create_intellectual_resource_form" ).dialog({
-			autoOpen: false,
-			height: 300,
-			width: 350,
-			modal: true,
-			buttons: {
-				Cancel: function() {
-					$( this ).dialog( "close" );
-				}
-			},
-			close: function() {
-				allFields.val( "" ).removeClass( "ui-state-error" );
-			}
-		});
-		$( "#create-intellectual_resource" )
-			.button()
-			.click(function() {
-		$( "#create_intellectual_resource_form" ).dialog( "open" );
-			});
-	
-	$( "#create_partner_form" ).dialog({
-			autoOpen: false,
-			height: 300,
-			width: 350,
-			modal: true,
-			buttons: {
-				"Create a new partner": function() {
-					var bValid = true;
-					allFields.removeClass( "ui-state-error" );
-					bValid = bValid && checkLength( name, "username", 3, 16 );
-					bValid = bValid && checkLength( email, "email", 6, 80 );
-					bValid = bValid && checkLength( password, "password", 5, 16 );
-					bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-					// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-					bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-					bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-				if ( bValid ) {
-					$( "#users tbody" ).append( "<tr>" +
-						"<td>" + name.val() + "</td>" +
-						"<td>" + email.val() + "</td>" +
-						"<td>" + password.val() + "</td>" +
-						"</tr>" );
-					$( this ).dialog( "close" );
-				}
-			},
-				Cancel: function() {
-					$( this ).dialog( "close" );
-				}
-			},
-			close: function() {
-				allFields.val( "" ).removeClass( "ui-state-error" );
-			}
-		});
-		$( "#create-partner" )
-			.button()
-			.click(function() {
-		$( "#create_partner_form" ).dialog( "open" );
-			});
+$( "#create_financial_resource_form" ).dialog({
+	autoOpen: false,
+	height: 300,
+	width: 350,
+	modal: true,
+});
+$( "#create-financial_resource" )
+	.button()
+	.click(function() {
+$( "#create_financial_resource_form" ).dialog( "open" );
+	});
+		
+$( "#create_human_resource_form" ).dialog({
+	autoOpen: false,
+	height: 300,
+	width: 350,
+	modal: true,
+});
+$( "#create-human_resource" )
+	.button()
+	.click(function() {
+$( "#create_human_resource_form" ).dialog( "open" );
+	});
+
+$( "#create_intellectual_resource_form" ).dialog({
+	autoOpen: false,
+	height: 300,
+	width: 350,
+	modal: true,
+});
+$( "#create-intellectual_resource" )
+	.button()
+	.click(function() {
+$( "#create_intellectual_resource_form" ).dialog( "open" );
+	});
+
+$( "#create_partner_form" ).dialog({
+	autoOpen: false,
+	height: 300,
+	width: 350,
+	modal: true,
+});
+$( "#create-partner" )
+	.button()
+	.click(function() {
+$( "#create_partner_form" ).dialog( "open" );
+	});
 
 
-				$( "#create_revenue_stream_form" ).dialog({
-			autoOpen: false,
-			height: 300,
-			width: 350,
-			modal: true,
-			buttons: {
-				"Create a new revenue stream": function() {
-					var bValid = true;
-					allFields.removeClass( "ui-state-error" );
-					bValid = bValid && checkLength( name, "username", 3, 16 );
-					bValid = bValid && checkLength( email, "email", 6, 80 );
-					bValid = bValid && checkLength( password, "password", 5, 16 );
-					bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-					// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-					bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-					bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-				if ( bValid ) {
-					$( "#users tbody" ).append( "<tr>" +
-						"<td>" + name.val() + "</td>" +
-						"<td>" + email.val() + "</td>" +
-						"<td>" + password.val() + "</td>" +
-						"</tr>" );
-					$( this ).dialog( "close" );
-				}
-			},
-				Cancel: function() {
-					$( this ).dialog( "close" );
-				}
-			},
-			close: function() {
-				allFields.val( "" ).removeClass( "ui-state-error" );
-			}
-		});
-		$( "#create-revenue-stream" )
-			.button()
-			.click(function() {
-		$( "#create_revenue_stream_form" ).dialog( "open" );
-			});
-
-
-	
+$( "#create_revenue_stream_form" ).dialog({
+	autoOpen: false,
+	height: 300,
+	width: 350,
+	modal: true,
+});
+$( "#create-revenue-stream" )
+	.button()
+	.click(function() {
+$( "#create_revenue_stream_form" ).dialog( "open" );
+	});
+		
 	</script>
 	
 </body>
