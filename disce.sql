@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 27, 2014 at 05:09 PM
+-- Generation Time: Apr 03, 2014 at 05:18 PM
 -- Server version: 5.5.36
 -- PHP Version: 5.4.25
 
@@ -170,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `key_activities` (
   `type` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `key_activities`
@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `key_activities` (
 
 INSERT INTO `key_activities` (`id`, `canvas_id`, `type`, `name`) VALUES
 (1, 0, 'Product/Service Development', 'Business Model Development'),
-(7, 0, 'channel development', 'channel1');
+(8, 0, 'raising capital', 'rais');
 
 -- --------------------------------------------------------
 
@@ -200,6 +200,30 @@ CREATE TABLE IF NOT EXISTS `key_partners` (
 INSERT INTO `key_partners` (`id`, `canvas_id`, `partners`) VALUES
 (10, 0, 'ITs'),
 (11, 0, 'ITs');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `key_resources`
+--
+
+CREATE TABLE IF NOT EXISTS `key_resources` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `canvas_id` int(11) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `key_resources`
+--
+
+INSERT INTO `key_resources` (`id`, `canvas_id`, `type`, `name`) VALUES
+(1, 0, 'capital', 'Government Grants'),
+(2, 0, 'assets', 'IT Infrastructure'),
+(3, 0, 'human', 'Advisors'),
+(4, 0, 'intellectual', 'Disce prototype');
 
 -- --------------------------------------------------------
 

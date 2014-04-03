@@ -151,5 +151,29 @@
 		}
 	}
 	
+	/*
+	 * Key Resources
+	 */
+	if (!empty($_POST['key_resources-submit'])) {
+		$type = $_POST['type'];
+		$name = $_POST['name'];
+	
+		$sql = "INSERT INTO key_resources (canvas_id, type, name) VALUES ('$canvas_id', '$type', '$name')";
+
+		if (!mysql_query($sql)) {
+			die('ERROR: ' . mysql_error());
+		}
+	}
+	
+	if (!empty($_POST['key_resources-delete'])) {
+		$id = $_POST['key_resources-delete'];
+		
+		$sql = "DELETE FROM key_resources WHERE id = '$id' AND canvas_id = '$canvas_id'";
+
+		if (!mysql_query($sql)) {
+			die('ERROR: ' . mysql_error());
+		}
+	}
+	
 	header('Location: canvas.php'); // redirect back to canvas.php page
 ?>
