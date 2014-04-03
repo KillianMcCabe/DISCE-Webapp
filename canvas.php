@@ -703,29 +703,41 @@
 			<img class="section_background" src="img/partners-section.png">
 			<div class="canvas_content">
 			
-				<button id="create-partner">Create partner</button>
+				<button id="create-partner_group">Create Partner Group</button>
 
 				<ol class="sortable">
-					<li id="list_1"><div><span class="disclose"><span></span></span>Joint Business Development (Time to Market)</div>
-					<ol>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Trinity College Dublin</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>DBIC<img class="selected_element" src="img/arrow.png" height="20"></div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Business Innovation Centres</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>HBAN</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Bloom Equity</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Irrus Investments</div>
-					</ol>			
-					<li id="list_1"><div><span class="disclose"><span></span></span>Joint Business Development (Broader Product Offering)</div>
-					<ol>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Innovation Academy</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>UCD/DCU/UCC/NUIG</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Enterprise Ireland</div>
-					</ol>			
-					<li id="list_1"><div><span class="disclose"><span></span></span>Strategic Alliance (Unique know-how)</div>
-					<ol>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Incubation Hubs: NDRC/Wayra/NovaUCD</div>
-					</ol>
+					<?php
+						$query = "SELECT * FROM key_partner_groups WHERE canvas_id = '$canvas_id'";
+						if($query_run = mysql_query($query)){
+							
+							while ($row = mysql_fetch_array($query_run)) {
+								$group_id = $row['id'];
+								$group_name = $row['name'];
+								echo '<li id="list_1"><div><span class="disclose"><span></span></span>' . $group_name . '</div>';
+								echo '<button class="create_partner" onclick="setPartnerGroupId('.$group_id.')"></button>';
+								echo '<form action="canvas_submit.php" method="post"> 
+									<button name="key_partner_groups-delete" class="delete_button" type="submit" value="' . $group_id . '">
+									</button> 
+								</form>';
+								echo '<ol>';
+								$query2 = "SELECT * FROM key_partners WHERE key_partner_group_id = '$group_id'";
+								if($query_run2 = mysql_query($query2)){
+									while ($row2 = mysql_fetch_array($query_run2)) {
+										$name = $row2['name'];
+										$id = $row2['id'];
+										echo '<li id="list_2"><div><span class="disclose"><span></span></span>' . $name . '</div>';
+										echo '<button name="key_partner-view" class="view_button" onclick="view_partner('.$id.')"></button>';
+										echo '<form action="canvas_submit.php" method="post"> 
+												<button name="key_partners-delete" class ="delete_button" type="submit" value="' . $id . '">
+												</button> 
+											</form>';
+									}
+								}
+								echo '</ol>';
+							}
 
+						}
+					?>
 
 				</ol>
 			</div>
@@ -1386,14 +1398,54 @@
 		</form>
 	</div>
 	
-	<div id="create_partner_form" title="Create new partner">
+	<div id="create_partner_group_form" title="Create New Partner Group">
 		<p class="validateTips">All form fields are required.</p>
-		<form name="create_partner_form" action="canvas_submit.php" method="post">
+		<form name="create_partner_group_form" action="canvas_submit.php" method="post">
 			<fieldset>
 				<label for="name">Name</label>
 				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
 			</fieldset>
-			<input type="submit" name="key_resources-submit" class="submit_button" value="Submit" />
+			<input type="submit" name="key_partner_groups-submit" class="submit_button" value="Submit" />
+		</form>
+	</div>
+
+	<script>
+		function setGroupId(){
+			document.create_partner_form.group_id.value = partner_group_id;
+			return true;
+		}
+	</script>	
+	<div id="create_partner_form" title="Create New Partner">
+		<p class="validateTips">All form fields are required.</p>
+		<form name="create_partner_form" action="canvas_submit.php" method="post" onsubmit="setGroupId();">
+			<fieldset>
+				<input type="hidden" name="group_id" value="0" />
+				<label for="name">Name</label>
+				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+			</fieldset>
+			<input type="submit" name="key_partners-submit" class="submit_button" value="Submit" />
+		</form>
+	</div>
+	
+	<div id="create_partner_relationship_form" title="Create New Partner Relationship">
+		<p class="validateTips">All form fields are required.</p>
+		<form name="create_partner_relationship_form" action="canvas_submit.php" method="post">
+			<fieldset>
+				<label for="name">Name</label>
+				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+			</fieldset>
+			<input type="submit" name="key_partner_relationships-submit" class="submit_button" value="Submit" />
+		</form>
+	</div>
+	
+	<div id="create_partner_resource_form" title="Create New Partner Resource">
+		<p class="validateTips">All form fields are required.</p>
+		<form name="create_partner_resource_form" action="canvas_submit.php" method="post">
+			<fieldset>
+				<label for="name">Name</label>
+				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+			</fieldset>
+			<input type="submit" name="key_partners_resources-submit" class="submit_button" value="Submit" />
 		</form>
 	</div>
 
@@ -1758,6 +1810,11 @@
 			return this;
 		}
 	
+		function setPartnerGroupId(value)
+		{
+			partner_group_id = value;
+		}
+		
 		function setSegId(value)
 		{
 			segment_id = value;
@@ -1765,186 +1822,227 @@
 
 		/* Javascript for opening forms when buttons are pressed */
  
-$( "#create_segment_form" ).dialog({
-	autoOpen: false,
-	width: 350,
-	modal: true,
-});
-$( "#create-segment" )
-	.button()
-	.click(function() {
-		$( "#create_segment_form" ).dialog( "open" );
-	});
+		$( "#create_segment_form" ).dialog({
+			autoOpen: false,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-segment" )
+			.button()
+			.click(function() {
+				$( "#create_segment_form" ).dialog( "open" );
+			});
 
-$( "#create_customer_form" ).dialog({
-	autoOpen: false,
-	height: 300,
-	width: 350,
-	modal: true,
-});
+		$( "#create_customer_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
 
-$( ".create-customer" ) //changed to . for testing
-	.button({text: false, icons: {primary: 'ui-icon-circle-plus'}})
-	.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' })
-	.click(function() {
-		$( "#create_customer_form" ).dialog( "open" );
-	})	;
-$( ".delete_button" )
-	.button({text: false, icons: {primary: 'ui-icon-circle-close'}})
-	.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' ,'padding-left' : '0px' })
-	.click(function() {
-	});
+		$( ".create_button" )
+			.button({text: false, icons: {primary: 'ui-icon-circle-plus'}})
+			.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' })
+			
+		$( ".create-customer" ) //changed to . for testing
+			.button({text: false, icons: {primary: 'ui-icon-circle-plus'}})
+			.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' })
+			.click(function() {
+				$( "#create_customer_form" ).dialog( "open" );
+			});
+		$( ".delete_button" )
+			.button({text: false, icons: {primary: 'ui-icon-circle-close'}})
+			.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' ,'padding-left' : '0px' })
+			.click(function() {
+			});
 
-$( ".view_button" )
-	.button({text: false, icons: { primary: 'ui-icon-circle-triangle-e'}})
-	.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' ,'padding-left' : '0px' })
-	.click(function() {
-	})	;
-$( ".submit_button" )
-	.button()
-	.click(function() {
-	})	;
+		$( ".view_button" )
+			.button({text: false, icons: { primary: 'ui-icon-circle-triangle-e'}})
+			.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' ,'padding-left' : '0px' })
+			.click(function() {
+			})	;
+		$( ".submit_button" )
+			.button()
+			.click(function() {
+			})	;
 
-$( ".customer_persona-view" )
-	.button()
-	.click(function() {
-	})	;
+		$( ".customer_persona-view" )
+			.button()
+			.click(function() {
+			})	;
 
-$( "#create_get_relationship_form" ).dialog({
-	autoOpen: false,
-	height: 300,
-	width: 350,
-	modal: true,
-});
-$( "#create-get_relationship" )
-	.button()
-	.click(function() {
-		$( "#create_get_relationship_form" ).dialog( "open" );
-	});
+		$( "#create_get_relationship_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-get_relationship" )
+			.button()
+			.click(function() {
+				$( "#create_get_relationship_form" ).dialog( "open" );
+			});
 
-$( "#create_keep_relationship_form" ).dialog({
-	autoOpen: false,
-	height: 300,
-	width: 350,
-	modal: true,
-});
-$( "#create-keep_relationship" )
-	.button()
-	.click(function() {
-		$( "#create_keep_relationship_form" ).dialog( "open" );
-	});
-	
-$( "#create_grow_relationship_form" ).dialog({
-	autoOpen: false,
-	height: 300,
-	width: 350,
-	modal: true,
-});
-$( "#create-grow_relationship" )
-	.button()
-	.click(function() {
-		$( "#create_grow_relationship_form" ).dialog( "open" );
-	});
+		$( "#create_keep_relationship_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-keep_relationship" )
+			.button()
+			.click(function() {
+				$( "#create_keep_relationship_form" ).dialog( "open" );
+			});
+			
+		$( "#create_grow_relationship_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-grow_relationship" )
+			.button()
+			.click(function() {
+				$( "#create_grow_relationship_form" ).dialog( "open" );
+			});
 
-$( "#create_channel_form" ).dialog({
-	autoOpen: false,
-	height: 300,
-	width: 350,
-	modal: true,
-});
-$( "#create-channel" )
-	.button()
-	.click(function() {
-		$( "#create_channel_form" ).dialog( "open" );
-	});
+		$( "#create_channel_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-channel" )
+			.button()
+			.click(function() {
+				$( "#create_channel_form" ).dialog( "open" );
+			});
 
-$( "#create_cost_form" ).dialog({
-	autoOpen: false,
-	height: 300,
-	width: 350,
-	modal: true,
-});
-$( "#create-cost" )
-	.button()
-	.click(function() {
-		$( "#create_cost_form" ).dialog( "open" );
-	});
-
-
-$( "#create_activity_form" ).dialog({
-	autoOpen: false,
-	height: 300,
-	width: 350,
-	modal: true,
-});
-$( "#create-activity" )
-	.button()
-	.click(function() {
-$( "#create_activity_form" ).dialog( "open" );
-	});
+		$( "#create_cost_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-cost" )
+			.button()
+			.click(function() {
+				$( "#create_cost_form" ).dialog( "open" );
+			});
 
 
-
-$( "#create_financial_resource_form" ).dialog({
-	autoOpen: false,
-	height: 300,
-	width: 350,
-	modal: true,
-});
-$( "#create-financial_resource" )
-	.button()
-	.click(function() {
-$( "#create_financial_resource_form" ).dialog( "open" );
-	});
-		
-$( "#create_human_resource_form" ).dialog({
-	autoOpen: false,
-	height: 300,
-	width: 350,
-	modal: true,
-});
-$( "#create-human_resource" )
-	.button()
-	.click(function() {
-$( "#create_human_resource_form" ).dialog( "open" );
-	});
-
-$( "#create_intellectual_resource_form" ).dialog({
-	autoOpen: false,
-	height: 300,
-	width: 350,
-	modal: true,
-});
-$( "#create-intellectual_resource" )
-	.button()
-	.click(function() {
-$( "#create_intellectual_resource_form" ).dialog( "open" );
-	});
-
-$( "#create_partner_form" ).dialog({
-	autoOpen: false,
-	height: 300,
-	width: 350,
-	modal: true,
-});
-$( "#create-partner" )
-	.button()
-	.click(function() {
-$( "#create_partner_form" ).dialog( "open" );
-	});
+		$( "#create_activity_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-activity" )
+			.button()
+			.click(function() {
+		$( "#create_activity_form" ).dialog( "open" );
+			});
 
 
-$( "#create_revenue_stream_form" ).dialog({
-	autoOpen: false,
-	height: 300,
-	width: 350,
-	modal: true,
-});
-$( "#create-revenue-stream" )
-	.button()
-	.click(function() {
-$( "#create_revenue_stream_form" ).dialog( "open" );
-	});
+
+		$( "#create_financial_resource_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-financial_resource" )
+			.button()
+			.click(function() {
+		$( "#create_financial_resource_form" ).dialog( "open" );
+			});
+				
+		$( "#create_human_resource_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-human_resource" )
+			.button()
+			.click(function() {
+		$( "#create_human_resource_form" ).dialog( "open" );
+			});
+
+		$( "#create_intellectual_resource_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-intellectual_resource" )
+			.button()
+			.click(function() {
+		$( "#create_intellectual_resource_form" ).dialog( "open" );
+			});
+
+		$( "#create_partner_group_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-partner_group" )
+			.button()
+			.click(function() {
+		$( "#create_partner_group_form" ).dialog( "open" );
+			});
+			
+		$( "#create_partner_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( ".create_partner" ) //changed to . for testing
+			.button({text: false, icons: {primary: 'ui-icon-circle-plus'}})
+			.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' })
+			.click(function() {
+				$( "#create_partner_form" ).dialog( "open" );
+			});
+			
+		$( "#create_partner_relationship_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-partner_relationship" )
+			.button()
+			.click(function() {
+		$( "#create_partner_relationship_form" ).dialog( "open" );
+			});
+			
+		$( "#create_partner_resource_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-partner_resource" )
+			.button()
+			.click(function() {
+		$( "#create_partner_resource_form" ).dialog( "open" );
+			});
+
+
+		$( "#create_revenue_stream_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-revenue-stream" )
+			.button()
+			.click(function() {
+		$( "#create_revenue_stream_form" ).dialog( "open" );
+			});
 		
 	</script>
 	

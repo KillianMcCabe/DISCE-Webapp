@@ -175,5 +175,91 @@
 		}
 	}
 	
+	/*
+	 * Key Partners
+	 */
+	if (!empty($_POST['key_partner_groups-submit'])) {
+	   $name = $_POST['name'];
+	   
+	   $sql = "INSERT INTO key_partner_groups (canvas_id, name) VALUES ('$canvas_id', '$name')";
+
+		if (!mysql_query($sql)) {
+			die('ERROR: ' . mysql_error());
+		}
+	}
+
+	if (!empty($_POST['key_partner_groups-delete'])) {
+		$id = $_POST['key_partner_groups-delete'];
+		
+		$sql = "DELETE FROM key_partner_groups WHERE id = '$id' AND canvas_id = '$canvas_id'";
+
+		if (!mysql_query($sql)) {
+			die('ERROR: ' . mysql_error());
+		}
+		/* need to also delete key_partners that belong to this segment */
+	}
+	 
+	if (!empty($_POST['key_partners-submit'])) {
+		$key_partner_group_id = $_POST['group_id'];
+		$name = $_POST['name'];
+	   
+		$sql = "INSERT INTO key_partners (key_partner_group_id, name) VALUES ('$key_partner_group_id', '$name')";
+
+		if (!mysql_query($sql)) {
+			die('ERROR: ' . mysql_error());
+		}
+	}
+
+	if (!empty($_POST['key_partners-delete'])) {
+		$id = $_POST['key_partners-delete'];
+		
+		$sql = "DELETE FROM key_partners WHERE id = '$id'";
+
+		if (!mysql_query($sql)) {
+			die('ERROR: ' . mysql_error());
+		}
+		/* need to also delete relationships and resources that belong to this segment */
+	}
+	
+	if (!empty($_POST['key_partner_relationships-submit'])) {
+		$name = $_POST['name'];
+	    
+		$sql = "INSERT INTO key_partner_relationships (partner_id, name) VALUES ('$partner_id', 'name')";
+
+		if (!mysql_query($sql)) {
+			die('ERROR: ' . mysql_error());
+		}
+	}
+	
+	if (!empty($_POST['key_partner_relationships-delete'])) {
+		$partner_id = $_POST['key_partner_relationships-delete'];
+		
+		$sql = "DELETE FROM key_partner_relationships WHERE partner_id = '$partner_id'";
+
+		if (!mysql_query($sql)) {
+			die('ERROR: ' . mysql_error());
+		}
+	}
+	
+	if (!empty($_POST['key_partner_resources-submit'])) {
+		$name = $_POST['name'];
+	    
+		$sql = "INSERT INTO key_partner_resources (partner_id, name) VALUES ('$partner_id', 'name')";
+
+		if (!mysql_query($sql)) {
+			die('ERROR: ' . mysql_error());
+		}
+	}
+	
+	if (!empty($_POST['key_partner_resources-delete'])) {
+		$partner_id = $_POST['key_partner_resources-delete'];
+		
+		$sql = "DELETE FROM key_partner_resources WHERE partner_id = '$partner_id'";
+
+		if (!mysql_query($sql)) {
+			die('ERROR: ' . mysql_error());
+		}
+	}
+	
 	header('Location: canvas.php'); // redirect back to canvas.php page
 ?>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 03, 2014 at 05:18 PM
+-- Generation Time: Apr 04, 2014 at 12:05 AM
 -- Server version: 5.5.36
 -- PHP Version: 5.4.25
 
@@ -148,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `customer_segments` (
   `canvas_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `customer_segments`
@@ -188,18 +188,65 @@ INSERT INTO `key_activities` (`id`, `canvas_id`, `type`, `name`) VALUES
 
 CREATE TABLE IF NOT EXISTS `key_partners` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `canvas_id` int(11) NOT NULL,
-  `partners` varchar(256) NOT NULL,
+  `key_partner_group_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
 -- Dumping data for table `key_partners`
 --
 
-INSERT INTO `key_partners` (`id`, `canvas_id`, `partners`) VALUES
-(10, 0, 'ITs'),
-(11, 0, 'ITs');
+INSERT INTO `key_partners` (`id`, `key_partner_group_id`, `name`) VALUES
+(12, 0, 'group1 partner'),
+(13, 1, 'group1 partner');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `key_partner_groups`
+--
+
+CREATE TABLE IF NOT EXISTS `key_partner_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `canvas_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `key_partner_groups`
+--
+
+INSERT INTO `key_partner_groups` (`id`, `canvas_id`, `name`) VALUES
+(1, 0, 'group1'),
+(3, 0, 'group2');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `key_partner_relationships`
+--
+
+CREATE TABLE IF NOT EXISTS `key_partner_relationships` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `key_partner_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `key_partner_resources`
+--
+
+CREATE TABLE IF NOT EXISTS `key_partner_resources` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `key_partner_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
