@@ -219,17 +219,33 @@ a:hover, a:active {
 			box-shadow: 0px 5px 15px #857F7F;
 		}	
 
-#Key_Activities{
-	position: absolute;
-	top: 70px;
-	left: 598px;
-	width: 198px;
-	border-style: solid;
-	border-width: 1px;
-	height: 212px;
-		background-color: #ccc;
-}
-
+	#Key_Activities{
+		position: absolute;
+		top: 70px;
+		left: 598px;
+		width: 198px;
+		border-style: solid;
+		border-width: 1px;
+		height: 212px;
+			background-color: #ccc;
+	}
+		#Key_Activities_Create{
+			display: none;
+			position: absolute;
+			left: 900px;
+			top: 50px;
+			width: 200px;
+			height: 100px;
+			background-color: #ccc;
+			z-index: 500;
+			border-style: solid;
+			border-width: 1px;
+			font-size: 16px !important;
+			text-align: center;
+			overflow:auto;
+			-webkit-box-shadow: 0px 5px 15px #857F7F;
+			box-shadow: 0px 5px 15px #857F7F;
+		}	
 			
 		#Key_Activities_Product_Dev{
 			display: none;
@@ -424,7 +440,7 @@ a:hover, a:active {
 	border-style: solid;
 	border-width: 1px;
 	height: 430px;
-		background-color: #ccc;
+	background-color: #ccc;
 }
 .canvas_focused{
 	position: absolute !important;
@@ -686,38 +702,38 @@ a:hover, a:active {
 		}
 		/*added by Thea for highlighting */
 		.section_icon_selected_partners{
-			background-color: green;
+			background-color: #D7DBD3;
 			width: 70px;
 		}
 		.section_icon_selected_channels{
-			background-color: green;
+			background-color: #D7DBD3;
 			width: 70px;
-		}
+			}
 		.section_icon_selected_customer{
-			background-color: green;
+			background-color: #D7DBD3;
 			width: 70px;
 		}
 		.section_icon_selected_relationships{
-			background-color: green;
+			background-color: #D7DBD3;
 			width: 70px;
 		}
 		.section_icon_selected_value{
-			background-color: green;
+			background-color: #D7DBD3;
 			width: 70px;
 		}
 		.section_icon_selected_activites{
-			background-color: green;
+			background-color: #D7DBD3;
 			width: 70px;
 		}
 		.section_icon_selected_resources{
-			background-color: green;
+			background-color: #D7DBD3;
 			width: 70px		}
 		.section_icon_selected_cost{
-			background-color: green;
+			background-color: #D7DBD3;
 			width: 70px;
 		}
 		.section_icon_selected_revenu{
-			background-color: green;
+			background-color: #D7DBD3;
 			width: 70px;
 		}
 		.page_logo{
@@ -738,11 +754,14 @@ a:hover, a:active {
 			width: 20px;
 			height: 20px;
 		}
-		/*.delete_add_button{
-			width: 30px !important;
-			height: 30px !important;
-   			border-radius: 5px !important;
-		}*/
+		.drop_down{
+			background-color: white;
+			border-radius: 5px;
+			font-family: Verdana,Arial,sans-serif;
+			font-size: 1em;
+			width: 290px;
+			height: 32px;
+		}
 		.selected_element{
 			position: absolute;
 			right: 0px;
@@ -824,6 +843,19 @@ a:hover, a:active {
 			overflow:auto;
 			-webkit-box-shadow: 0px 5px 15px #857F7F;
 			box-shadow: 0px 5px 15px #857F7F;
+		}
+		
+		#channel_economics-save button{
+			width:60px;
+			height:30px;
+			display: inline-block;
+			outline:none;
+			border-radius: 7px;
+			-moz-border-radius: 7px;
+			float:right;
+			position: absolute;
+			right:    50;
+			bottom:   50;
 		}
 		
 		#Value_Pains{

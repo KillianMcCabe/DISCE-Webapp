@@ -4,13 +4,6 @@
 	require 'php/connect.inc.php';
 
 	$canvas_id = 0;
-	$customer_persona_selected = false;
-
-	if (!empty($_POST['customer_persona-view'])) {
-		$customer_persona_selected = true;
-		$customer_persona_id = $_POST['customer_persona-view'];
-	}
-	
 ?>
 
 <html lang="en">
@@ -26,54 +19,20 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
 	<script src="js/colResizable-1.3.min.js"></script>
 	<script src="js/jquery.mjs.nestedSortable.js"></script>
-	<!--<script src="js/canvas_buttons.js"></script>-->
-	<!-- stops side nav buttons from working in php -->
-	<!--<script src="//code.jquery.com/jquery-1.9.1.js"></script>-->
-	<!--<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>-->
+	<script src="ajax.js"></script>
 	
 </head>
 <body>
 
-
 	<div id="canvas">
 
-	
 		<div id="Customer_Segments" class="canvas_section">
 			<img class="section_background" src="img/customer-section.png">
 				<div class="canvas_content">
 					<!--<button type="button" onclick="alert('Add more')">Add More</button>-->
 					<button id="create-segment">Create Segment</button>
 				<ol class="sortable">
-<!--
-					<ol class="hidden">
 
-					<li id="list_1"><div><span class="disclose"><span></span></span>Industries</div>
-					<ol>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Manufacturing</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Services</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>R & D</div>
-					</ol>
-					<li id="list_1"><div><span class="disclose"><span></span></span>SMEs</div>
-					<ol>
-						<li id="list_2"><div><span class="disclose"><span></span></span>C-level Execs</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>VPs</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Directors</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Division Managers</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Individual Employees</div>
-					</ol>
-					</ol>
-
-					<li id="list_1"><div><span class="disclose"><span></span></span>First-Time Entrepreneurs (single user)</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Early-Stage Startups (Teams)</div>
-					<ol>
-						<li id="list_2"><div><span class="disclose"><span></span></span>WearIT <img class="selected_element" src="img/arrow.png" height="20"></div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Writing for Tiny</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Campus Company Spin-Outs</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>High-Potential Start-Ups</div>
-						<button id="create-customer">Create Customer</button>
-					</ol>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Private Investors </div>
--->			
 					<?php
 						/* retrieve list of customer segments from customer_segments table and display results in html */
 						$query = "SELECT * FROM customer_segments WHERE canvas_id = '$canvas_id'";
@@ -83,6 +42,12 @@
 								$segment_id = $row['id'];
 								$segment_name = $row['name'];
 								echo '<li id="list_1"><div><span class="disclose"><span></span></span>' . $segment_name . '</div>';
+								echo '<button class="create-customer" onclick="setSegId('.$segment_id.')"></button>';								
+								echo '<form action="canvas_submit.php" method="post"> 
+									<button name="customer_segment-delete" class ="delete_button" type="submit" value="' . $segment_id . '">
+										
+									</button> 
+								</form>';
 								echo '<ol>';
 								$query2 = "SELECT * FROM customer_persona WHERE customer_segments_id = '$segment_id'";
 								if($query_run2 = mysql_query($query2)){
@@ -90,70 +55,31 @@
 										$customer_name = $row2['name'];
 										$customer_id = $row2['id'];
 										echo '<li id="list_2"><div><span class="disclose"><span></span></span>' . $customer_name . '</div>';
-										echo '<form action="canvas.php" method="post"> <button name="customer_persona-view" type="submit" value="' . $customer_id . '">View</button> </form>';
+										/*echo '<form action="canvas.php" method="post"> 
+												<button name="customer_persona-view" class ="view_button" type="submit" value="' . $customer_id . '">
+													
+												</button> 
+											</form>';*/
+										echo '<button name="customer_persona-view" class="view_button" onclick="view_persona(' . $customer_id . ')"></button>';
+										
+										echo '<form action="canvas_submit.php" method="post"> 
+												<button name="customer_persona-delete" class ="delete_button" type="submit" value="' . $customer_id . '">
+													
+												</button> 
+											</form>';
 									}
 								}
-								echo '<form action="canvas_submit.php" method="post"> 
-									<button name="customer_segment-delete" class ="delete_add_button" type="submit" value="' . $segment_id . '">
-										<img class ="delete_add" src="img/Delete_Icon.png">
-									</button> 
-								</form>
-								<button class="create-customer" >
-									<img class ="delete_add" src="img/plus.png">
-								</button>
-								';
 								echo '</ol>';
 							}
 
 						}
 					?>
-										
-<!--					<ol class="hidden">
-						<li id="list_1"><div><span class="disclose"><span></span></span>Consultants</div>
-					<ol>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Management</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Strategy </div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Human Resources</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>IT</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Marketing</div>
-					</ol>
-					</ol>	
--->
+					
 				</ol>
 			</div>
 		</div>
 		
-		<?php
-			if ($customer_persona_selected) {
-				/* retrieve contents of customer_persona table and display results in html */
-				$query = "SELECT * FROM customer_persona WHERE id = '$customer_persona_id'";
-				if($query_run = mysql_query($query)){
-					$query_num_rows = mysql_num_rows($query_run);
-					if($query_num_rows == 0){
-						die('Table SELECT failed.');
-					}
-					else{
-						$name = mysql_result($query_run, 0, 'persona_name');
-						$location = mysql_result($query_run, 0, 'location');
-						$age = mysql_result($query_run, 0, 'age');
-						$gender = mysql_result($query_run, 0, 'gender');
-						$family_size = mysql_result($query_run, 0, 'family_size');
-						$income = mysql_result($query_run, 0, 'income');
-						$occupation = mysql_result($query_run, 0, 'occupation');
-						$education = mysql_result($query_run, 0, 'education');
-					}
-				}
-			} else {
-				$name = "";
-				$location = "";
-				$age = "";
-				$gender = "";
-				$family_size = "";
-				$income = "";
-				$occupation = "";
-				$education = "";
-			}
-		?>
+		
 
 		<div id="Customer_personas" class="Customer_Segments_Tool canvas_depth">
 			<br>
@@ -162,8 +88,7 @@
 				<table border="1">
 					<tr>
 						<td>name</td>
-						<td><?php echo $name; ?></td>
-						
+						<td><div id="persona_name"/></td>
 					</tr>
 					<tr>
 						<td>photo</td>
@@ -171,31 +96,31 @@
 					</tr>
 					<tr>
 						<td>Location</td>
-						<td><?php echo $location; ?></td>
+						<td><div id="persona_location"/></td>
 					</tr>
 					<tr>
 						<td>age</td>
-						<td><?php echo $age; ?></td>
+						<td><div id="persona_age"/></td>
 					</tr>
 					<tr>
 						<td>gender</td>
-						<td><?php echo $gender; ?></td>
+						<td><div id="persona_gender"/></td>
 					</tr>
 					<tr>
 						<td>family size</td>
-						<td><?php echo $family_size; ?></td>
+						<td><div id="persona_family_size"/></td>
 					</tr>
 					<tr>
 						<td>income</td>
-						<td><?php echo $income; ?></td>
+						<td><div id="persona_income"/></td>
 					</tr>
 					<tr>
 						<td>occupation</td>
-						<td><?php echo $occupation; ?></td>
+						<td><div id="persona_occupation"/></td>
 					</tr>
 					<tr>
 						<td>education</td>
-						<td><?php echo $education; ?></td>
+						<td><div id="persona_education"/></td>
 					</tr>
 				</table>
 
@@ -541,7 +466,11 @@
 										$relation_name = $row['name'];
 										$relationship_id = $row['id'];
 										echo '<li id="list_2"><div><span class="disclose"><span></span></span>' . $relation_name . ' <img class="cost_icon" src="img/euro_red.png" height="18" title="cost per customer?"></div></li>';
-										echo '<form action="canvas_submit.php" method="post"><button name="relationship-delete" type="submit" value="' . $relationship_id . '">Delete</button></form>';
+										echo '<form action="canvas_submit.php" method="post">
+											<button name="relationship-delete" class="delete_button" type="submit" value="' . $relationship_id . '">
+												
+											</button>
+										</form>';
 									}
 
 								}
@@ -558,9 +487,12 @@
 										$relation_name = $row['name'];
 										$relationship_id = $row['id'];
 										echo '<li id="list_2"><div><span class="disclose"><span></span></span>'. $relation_name .'</div></li>';
-										echo '<form action="canvas_submit.php" method="post"><button name="relationship-delete" type="submit" value="' . $relationship_id . '">Delete</button></form>';
+										echo '<form action="canvas_submit.php" method="post">
+											<button name="relationship-delete" class="delete_button" type="submit" value="' . $relationship_id . '">
+												
+											</button>
+										</form>';
 									}
-
 								}
 							?>
 						</ol>
@@ -586,7 +518,11 @@
 									$relation_name = $row['name'];
 									$relationship_id = $row['id'];
 									echo '<li id="list_2"><div><span class="disclose"><span></span></span>'.$relation_name.'</div></li>';
-									echo '<form action="canvas_submit.php" method="post"><button name="relationship-delete" type="submit" value="' . $relationship_id . '">Delete</button></form>';
+									echo '<form action="canvas_submit.php" method="post">
+										<button name="relationship-delete" type="submit" class="delete_button" value="' . $relationship_id . '">
+											
+										</button>
+									</form>';
 								}
 
 							}
@@ -611,7 +547,11 @@
 								$relation_name = $row['name'];
 								$relationship_id = $row['id'];
 								echo '<li id="list_2"><div><span class="disclose"><span></span></span>'.$relation_name.' <img class="cost_icon" src="img/euro_green.png" height="18" title="increased value per customer?"></div></li>';
-								echo '<form action="canvas_submit.php" method="post"><button name="relationship-delete" type="submit" value="' . $relationship_id . '">Delete</button></form>';
+								echo '<form action="canvas_submit.php" method="post">
+									<button name="relationship-delete" class="delete_button" type="submit" value="' . $relationship_id . '">
+										
+									</button>
+								</form>';
 							}
 
 						}
@@ -655,7 +595,7 @@
 			<img class="section_background" src="img/channels-section.png">
 			<div class="canvas_content">
 			<!-- channels button-->
-				<button id="create-channel">Create channel</button>
+				<button id="create-channel">Create Channel</button>
 				<!--<btn1 type="button" onclick="alert('Add more')">Add More</btn1>-->
 				<ol class="sortable">
 					<li id="list_1"><div><span class="disclose"><span></span></span>Digital</div>
@@ -668,7 +608,11 @@
 									$channel_name = $row['name'];
 									$channel_id = $row['id'];
 									echo '<li id="list_2"><div><span class="disclose"><span></span></span>'.$channel_name.'</div>';
-									echo '<form action="canvas_submit.php" method="post"><button name="channel-delete" type="submit" value="' . $channel_id . '">Delete</button></form>';
+									echo '<form action="canvas_submit.php" method="post">
+										<button name="channel-delete" type="submit" class="delete_button" value="' . $channel_id . '">
+											
+										</button>
+									</form>';
 								}
 
 							}
@@ -684,7 +628,11 @@
 									$channel_name = $row['name'];
 									$channel_id = $row['id'];
 									echo '<li id="list_2"><div><span class="disclose"><span></span></span>'.$channel_name.'</div>';
-									echo '<form action="canvas_submit.php" method="post"><button name="channel-delete" type="submit" value="' . $channel_id . '">Delete</button></form>';
+									echo '<form action="canvas_submit.php" method="post">
+										<button name="channel-delete" class="delete_button" type="submit" value="' . $channel_id . '">
+											
+										</button>
+									</form>';
 								}
 
 							}
@@ -744,6 +692,9 @@
 						</tr>
 					</tbody>
 				</table>
+				<div id="channel_economics-save">
+				<button name="channel_economics-save" type="submit">Save</button>
+				</div>
 			</div>
 		</div>
 		
@@ -751,30 +702,42 @@
 		<div id="Key_Partners" class="canvas_section">
 			<img class="section_background" src="img/partners-section.png">
 			<div class="canvas_content">
-					<!--partners button-->
-					<button id="create-partner">Create partner</button>
+			
+				<button id="create-partner_group">Create Partner Group</button>
 
 				<ol class="sortable">
-					<li id="list_1"><div><span class="disclose"><span></span></span>Joint Business Development (Time to Market)</div>
-					<ol>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Trinity College Dublin</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>DBIC<img class="selected_element" src="img/arrow.png" height="20"></div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Business Innovation Centres</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>HBAN</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Bloom Equity</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Irrus Investments</div>
-					</ol>			
-					<li id="list_1"><div><span class="disclose"><span></span></span>Joint Business Development (Broader Product Offering)</div>
-					<ol>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Innovation Academy</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>UCD/DCU/UCC/NUIG</div>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Enterprise Ireland</div>
-					</ol>			
-					<li id="list_1"><div><span class="disclose"><span></span></span>Strategic Alliance (Unique know-how)</div>
-					<ol>
-						<li id="list_2"><div><span class="disclose"><span></span></span>Incubation Hubs: NDRC/Wayra/NovaUCD</div>
-					</ol>
+					<?php
+						$query = "SELECT * FROM key_partner_groups WHERE canvas_id = '$canvas_id'";
+						if($query_run = mysql_query($query)){
+							
+							while ($row = mysql_fetch_array($query_run)) {
+								$group_id = $row['id'];
+								$group_name = $row['name'];
+								echo '<li id="list_1"><div><span class="disclose"><span></span></span>' . $group_name . '</div>';
+								echo '<button class="create_partner" onclick="setPartnerGroupId('.$group_id.')"></button>';
+								echo '<form action="canvas_submit.php" method="post"> 
+									<button name="key_partner_groups-delete" class="delete_button" type="submit" value="' . $group_id . '">
+									</button> 
+								</form>';
+								echo '<ol>';
+								$query2 = "SELECT * FROM key_partners WHERE key_partner_group_id = '$group_id'";
+								if($query_run2 = mysql_query($query2)){
+									while ($row2 = mysql_fetch_array($query_run2)) {
+										$name = $row2['name'];
+										$id = $row2['id'];
+										echo '<li id="list_2"><div><span class="disclose"><span></span></span>' . $name . '</div>';
+										echo '<button name="key_partner-view" class="view_button" onclick="view_partner('.$id.')"></button>';
+										echo '<form action="canvas_submit.php" method="post"> 
+												<button name="key_partners-delete" class ="delete_button" type="submit" value="' . $id . '">
+												</button> 
+											</form>';
+									}
+								}
+								echo '</ol>';
+							}
 
+						}
+					?>
 
 				</ol>
 			</div>
@@ -897,17 +860,19 @@
 		<div id="Key_Resources" class="canvas_section">
 			<img class="section_background" src="img/resources-section.png">
 			<div class="canvas_content">
-											<!--resources button-->
-					<button id="create-resource">Create resource</button>
 
 				<ol class="sortable">
-					<li id="list_1"><div><span class="disclose"><span></span></span>Government grants</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Angel Investment</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Advisors: Prof. Majella Giblins</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Mentors: Ruth Kearney, Sean Blanchfield</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Employees: Lead Developer, Lead Designer</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>DISCE™ Prototype/platform</div>
-					
+					<?php
+						$query = "SELECT * FROM key_resources WHERE canvas_id = '$canvas_id'";
+						if($query_run = mysql_query($query)){
+							
+							while ($row = mysql_fetch_array($query_run)) {
+								$name = $row['name'];
+								echo '<li id="list_1"><div><span class="disclose"><span></span></span>'.$name.'</div>';
+							}
+
+						}
+					?>
 				</ol>
 			</div>
 		</div>
@@ -916,16 +881,39 @@
 			<br>
 			<h1>Financial</h1>
 			<div class="canvas_content">
+				<button id="create-financial_resource">Create Financial Resource</button>
 				<ol class="sortable">
 					<li id="list_1"><div><span class="disclose"><span></span></span>Capital</div>
 					<ol>
-						<li id="list_1"><div><span class="disclose"><span></span></span>Government grants</div>
-						<li id="list_1"><div><span class="disclose"><span></span></span>Angel Investment</div>
+						<?php
+							$query = "SELECT * FROM key_resources WHERE canvas_id = '$canvas_id' AND type = 'capital'";
+							if($query_run = mysql_query($query)){
+								
+								while ($row = mysql_fetch_array($query_run)) {
+									$name = $row['name'];
+									$id = $row['id'];
+									echo '<li id="list_1"><div><span class="disclose"><span></span></span>'.$name.'</div>';
+									echo '<form action="canvas_submit.php" method="post"><button name="key_resources-delete" class="delete_button" type="submit" value="' . $id . '"></button></form>';
+								}
+
+							}
+						?>
 					</ol>
 					<li id="list_1"><div><span class="disclose"><span></span></span>Assets</div>
 					<ol>
-						<li id="list_1"><div><span class="disclose"><span></span></span>IT Infrastructure</div>
-						<li id="list_1"><div><span class="disclose"><span></span></span>Premises</div>
+						<?php
+							$query = "SELECT * FROM key_resources WHERE canvas_id = '$canvas_id' AND type = 'assets'";
+							if($query_run = mysql_query($query)){
+								
+								while ($row = mysql_fetch_array($query_run)) {
+									$name = $row['name'];
+									$id = $row['id'];
+									echo '<li id="list_1"><div><span class="disclose"><span></span></span>'.$name.'</div>';
+									echo '<form action="canvas_submit.php" method="post"><button name="key_resources-delete" class="delete_button" type="submit" value="' . $id . '"></button></form>';
+								}
+
+							}
+						?>
 					</ol>
 				</ol>
 			</div>
@@ -934,13 +922,22 @@
 		<div id="Resources_Human" class="Key_Resources_Tool canvas_depth">
 			<br>
 			<h1>Human</h1>
-
 			<div class="canvas_content">
-					<ol class="sortable">
-					<li id="list_1"><div><span class="disclose"><span></span></span>Advisors: Prof. Majella Giblins</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Mentors: Ruth Kearney, Sean Blanchfield</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Employees: Lead Developer, Lead Designer</div>
-					
+				<button id="create-human_resource">Create Human Resource</button>
+				<ol class="sortable">
+					<?php
+						$query = "SELECT * FROM key_resources WHERE canvas_id = '$canvas_id' AND type = 'human'";
+						if($query_run = mysql_query($query)){
+							
+							while ($row = mysql_fetch_array($query_run)) {
+								$name = $row['name'];
+								$id = $row['id'];
+								echo '<li id="list_1"><div><span class="disclose"><span></span></span>'.$name.'</div>';
+								echo '<form action="canvas_submit.php" method="post"><button name="key_resources-delete" class="delete_button" type="submit" value="' . $id . '"></button></form>';
+							}
+
+						}
+					?>
 				</ol>
 			</div>
 		</div>	
@@ -949,9 +946,21 @@
 			<br>
 			<h1>Intellectual</h1>
 			<div class="canvas_content">
+				<button id="create-intellectual_resource">Create Intellectual Resource</button>
 				<ol class="sortable">
-					<li id="list_1"><div><span class="disclose"><span></span></span>DISCE™ Prototype/platform</div>
-					
+					<?php
+						$query = "SELECT * FROM key_resources WHERE canvas_id = '$canvas_id' AND type = 'intellectual'";
+						if($query_run = mysql_query($query)){
+							
+							while ($row = mysql_fetch_array($query_run)) {
+								$name = $row['name'];
+								$id = $row['id'];
+								echo '<li id="list_1"><div><span class="disclose"><span></span></span>'.$name.'</div>';
+								echo '<form action="canvas_submit.php" method="post"><button name="key_resources-delete" class="delete_button" type="submit" value="' . $id . '"></button></form>';
+							}
+
+						}
+					?>
 				</ol>
 			</div>
 		</div>
@@ -959,33 +968,57 @@
 		<div id="Key_Activities" class="canvas_section">
 			<img class="section_background" src="img/activities-section.png">
 			<div class="canvas_content">
-							<!--activities button-->
-					<button id="create-activity">Create activity</button>
+
 
 				<ol class="sortable">
-					<li id="list_1"><div><span class="disclose"><span></span></span>Business Model Development</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Platform/Tool Development</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Angel meetings</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Government agency contacts</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Staffing necessary positions</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Partner Liaising</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Marketing</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Sales</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Customer service</div>
+				
+					<?php
+						$query = "SELECT * FROM key_activities WHERE canvas_id = '$canvas_id'";
+						if($query_run = mysql_query($query)){
+							
+							while ($row = mysql_fetch_array($query_run)) {
+								$name = $row['name'];
+								echo '<li id="list_1"><div><span class="disclose"><span></span></span>'.$name.'</div>';
+							}
+
+						}
+					?>
 
 				</ol>
 			</div>
 
 		</div>
 		
+		<div id="Key_Activities_Create" class="Key_Activities_Tool canvas_depth">
+			<br>
+			<h1>Create Key Activity</h1>
+			<div class="canvas_content">
+				<button id="create-activity">Create Activity</button>
+			</div>
+		</div>
 				
 		<div id="Key_Activities_Product_Dev" class="Key_Activities_Tool canvas_depth">
 			<br>
 			<h1>Product/Service Development</h1>
 			<div class="canvas_content">
 				<ol class="sortable">
-					<li id="list_1"><div><span class="disclose"><span></span></span>Business Model Development</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Platform/Tool Development</div>
+					<?php
+						$query = "SELECT * FROM key_activities WHERE canvas_id = '$canvas_id' AND type = 'product/service development'";
+						if($query_run = mysql_query($query)){
+							
+							while ($row = mysql_fetch_array($query_run)) {
+								$name = $row['name'];
+								$id = $row['id'];
+								echo '<li id="list_1"><div><span class="disclose"><span></span></span>'.$name.'</div>';
+								echo '<form action="canvas_submit.php" method="post">
+										<button name="key_activities-delete" class="delete_button" type="submit" value="'.$id.'">
+											
+										</button>
+									</form>';
+							}
+
+						}
+					?>
 				</ol>
 			</div>
 		</div>	
@@ -996,12 +1029,26 @@
 			<h1>Raising Capital</h1>
 			<div class="canvas_content">
 				<ol class="sortable">
-					<li id="list_1"><div><span class="disclose"><span></span></span>Business Model Generation</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Angel meetings</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Government agency contacts</div>
+					<?php
+						$query = "SELECT * FROM key_activities WHERE canvas_id = '$canvas_id' AND type = 'raising capital'";
+						if($query_run = mysql_query($query)){
+							
+							while ($row = mysql_fetch_array($query_run)) {
+								$name = $row['name'];
+								$id = $row['id'];
+								echo '<li id="list_1"><div><span class="disclose"><span></span></span>'.$name.'</div>';
+								echo '<form action="canvas_submit.php" method="post">
+										<button name="key_activities-delete" class="delete_button" type="submit" value="'.$id.'">
+											
+										</button>
+									</form>';
+							}
+
+						}
+					?>
 				</ol>
 			</div>
-		</div>	
+		</div>
 		
 				
 		<div id="Key_Activities_Team" class="Key_Activities_Tool canvas_depth">
@@ -1009,8 +1056,23 @@
 			<h1>Team Building</h1>
 			<div class="canvas_content">
 				<ol class="sortable">
-					<li id="list_1"><div><span class="disclose"><span></span></span>Interviewing prospective employees</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Staffing necessary positions</div>
+					<?php
+						$query = "SELECT * FROM key_activities WHERE canvas_id = '$canvas_id' AND type = 'team building'";
+						if($query_run = mysql_query($query)){
+							
+							while ($row = mysql_fetch_array($query_run)) {
+								$name = $row['name'];
+								$id = $row['id'];
+								echo '<li id="list_1"><div><span class="disclose"><span></span></span>'.$name.'</div>';
+								echo '<form action="canvas_submit.php" method="post">
+										<button name="key_activities-delete" class="delete_button" type="submit" value="'.$id.'">
+											
+										</button>
+									</form>';
+							}
+
+						}
+					?>
 				</ol>
 			</div>
 		</div>	
@@ -1020,8 +1082,23 @@
 			<h1>Channel Development</h1>
 			<div class="canvas_content">
 				<ol class="sortable">
-					<li id="list_1"><div><span class="disclose"><span></span></span>Partner Liaising</div>
+					<?php
+						$query = "SELECT * FROM key_activities WHERE canvas_id = '$canvas_id' AND type = 'channel development'";
+						if($query_run = mysql_query($query)){
+							
+							while ($row = mysql_fetch_array($query_run)) {
+								$name = $row['name'];
+								$id = $row['id'];
+								echo '<li id="list_1"><div><span class="disclose"><span></span></span>'.$name.'</div>';
+								echo '<form action="canvas_submit.php" method="post">
+										<button name="key_activities-delete" class="delete_button" type="submit" value="'.$id.'">
+											
+										</button>
+									</form>';
+							}
 
+						}
+					?>
 				</ol>
 			</div>
 		</div>	
@@ -1031,9 +1108,23 @@
 			<h1>Customer Acquisition</h1>
 			<div class="canvas_content">
 				<ol class="sortable">
-					<li id="list_1"><div><span class="disclose"><span></span></span>Marketing</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Sales</div>
-					<li id="list_1"><div><span class="disclose"><span></span></span>Customer service</div>
+					<?php
+						$query = "SELECT * FROM key_activities WHERE canvas_id = '$canvas_id' AND type = 'customer acquisition'";
+						if($query_run = mysql_query($query)){
+							
+							while ($row = mysql_fetch_array($query_run)) {
+								$name = $row['name'];
+								$id = $row['id'];
+								echo '<li id="list_1"><div><span class="disclose"><span></span></span>'.$name.'</div>';
+								echo '<form action="canvas_submit.php" method="post">
+										<button name="key_activities-delete" class="delete_button" type="submit" value="'.$id.'">
+											
+										</button>
+									</form>';
+							}
+
+						}
+					?>
 
 				</ol>
 			</div>
@@ -1082,9 +1173,9 @@
 	<div id="page_logo">
 			<img class="page_logo" src="http://disce.ie/wp-content/uploads/2013/09/logo5-hi-res-black-with-TM--300x300.png">
 	</div>
+	
 	<!-- menu section -->
-	<div id="menu">
-		
+	<div id="menu">	
 
 		<ul>
 		<li>
@@ -1135,12 +1226,11 @@
 
 		</ul>
 
-		
 	</div>	
-	<div id="notifications"></div>
-
-	<!-- forms input -->
 	
+	<div id="notifications"></div>
+	
+	<!-- forms input -->
 	<div id="create_segment_form" title="Create new segment">
 		<p class="validateTips">All form fields are required.</p>
 		<form name="create_segment_form" action="canvas_submit.php" method="post">
@@ -1148,27 +1238,33 @@
 				<label for="name">Name</label>
 				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
 			</fieldset>
-			<input type="submit" name = "customer_segment-submit" value="Submit" />
+			<input type="submit" name = "customer_segment-submit"  class ="submit_button" value="Submit" />
 		</form>
 	</div>
 	
+	<script>
+		function DoSubmit(){
+			document.create_customer_form.segment_id.value = segment_id;
+			return true;
+		}
+	</script>
 	<div id="create_customer_form" title="Create new customer">
 		<p class="validateTips">All form fields are required.</p>
-		<form>
-				<!-- Thea adding drop down menu -->
-				<select name ="customer_dropdown">
-					<option value="startup">Start Up</option>
-					<option value="established">Established company</option>
-				</select>
+		<form name="create_customer_form" action="canvas_submit.php" method="post" onsubmit="DoSubmit();">
 			<fieldset>
+				<input type="hidden" name="segment_id" value="0" />
 				<label for="name">Name</label>
 				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+				<label for="persona_name">Persona Name</label>
+				<input type="text" name="persona_name" id="persona_name" class="text ui-widget-content ui-corner-all">
 				<label for="age">Age</label>
 				<input type="text" name="age" id="age" value="" class="text ui-widget-content ui-corner-all">
 				<label for="location">Location</label>
 				<input type="location" name="location" id="location" value="" class="text ui-widget-content ui-corner-all">
 				<label for="gender">Gender</label>
 				<input type="gender" name="gender" id="gender" value="" class="text ui-widget-content ui-corner-all">
+				<label for="family_size">Family Size</label>
+				<input type="family_size" name="family_size" id="family_size" value="" class="text ui-widget-content ui-corner-all">
 				<label for="income">Income</label>
 				<input type="income" name="income" id="income" value="" class="text ui-widget-content ui-corner-all">
 				<label for="occupation">Occupation</label>
@@ -1176,6 +1272,7 @@
 				<label for="education">Education</label>
 				<input type="education" name="education" id="education" value="" class="text ui-widget-content ui-corner-all">
 			</fieldset>
+			<input type="submit" id="customer_persona-submit" name="customer_persona-submit" class ="submit_button" value="Submit" />
 		</form>
 	</div>
 	
@@ -1183,7 +1280,7 @@
 		<p class="validateTips">All form fields are required.</p>
 		<form name="create_get_relationship_form" action="canvas_submit.php" method="post">
 			<!-- Thea adding drop down menu -->
-			<select name ="customer_dropdown">
+			<select name ="customer_dropdown" class ="drop_down">
 				<option value="paid">Paid</option>
 				<option value="earned">Earned</option>
 			</select>
@@ -1191,7 +1288,7 @@
 				<label for="get">Relationship Name</label>
 				<input type="text" name="relationship_name" id="relationship_name" class="text ui-widget-content ui-corner-all">
 			</fieldset>
-			<input type="submit" id="get_relationship-submit" name="get_relationship-submit" value="Submit" />
+			<input type="submit" id="get_relationship-submit" name="get_relationship-submit" class ="submit_button" value="Submit" />
 		</form>
 	</div>
 	
@@ -1202,7 +1299,7 @@
 				<label for="keep">Relationship Name</label>
 				<input type="text" name="relationship_name" id="relationship_name" class="text ui-widget-content ui-corner-all">
 			</fieldset>
-			<input type="submit" id="keep_relationship-submit" name="keep_relationship-submit" value="Submit" />
+			<input type="submit" id="keep_relationship-submit" name="keep_relationship-submit" class ="submit_button" value="Submit" />
 		</form>
 	</div>
 	
@@ -1213,14 +1310,14 @@
 				<label for="grow">Relationship Name</label>
 				<input type="text" name="relationship_name" id="relationship_name" class="text ui-widget-content ui-corner-all">
 			</fieldset>
-			<input type="submit" id="grow_relationship-submit" name="grow_relationship-submit" value="Submit" />
+			<input type="submit" id="grow_relationship-submit" name="grow_relationship-submit" class ="submit_button" value="Submit" />
 		</form>
 	</div>
 	
 	<div id="create_channel_form" title="Create new channel">
 		<p class="validateTips">All form fields are required.</p>
 		<form name="create_channel_form" action="canvas_submit.php" method="post">
-			<select name="channel_type">
+			<select name="channel_type" class ="drop_down">
 				<option value="digital">Digital</option>
 				<option value="physical">Physical</option>
 			</select>
@@ -1228,7 +1325,7 @@
 				<label for="name">Channel Name</label>
 				<input type="text" name="channel_name" id="channel_name" class="text ui-widget-content ui-corner-all">
 			</fieldset>
-			<input type="submit" id="channel-submit" name="channel-submit" value="Submit" />
+			<input type="submit" id="channel-submit" name="channel-submit" class ="submit_button" value="Submit" />
 		</form>
 	</div>
 	
@@ -1246,43 +1343,109 @@
 
 	<div id="create_activity_form" title="Create new activity">
 		<p class="validateTips">All form fields are required.</p>
-		<form>
+		<form name="create_activity_form" action="canvas_submit.php" method="post">
+			<select name="type" class ="drop_down">
+				<option value="product/service development">Product/Service Development</option>
+				<option value="raising capital">Raising Capital</option>
+				<option value="team building">Team Building</option>
+				<option value="channel development">Channel Development</option>
+				<option value="customer acquisition">Customer Acquisition</option>
+			</select>
 			<fieldset>
 				<label for="name">Name</label>
 				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
-				<label for="email">Email</label>
-				<input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all">
-				<label for="password">Password</label>
-				<input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all">
 			</fieldset>
+			<input type="submit" name="key_activities-submit" class="submit_button" value="Submit" />
 		</form>
 	</div>
 	
-	<div id="create_resource_form" title="Create new resource">
+	<div id="create_financial_resource_form" title="Create new resource">
 		<p class="validateTips">All form fields are required.</p>
-		<form>
+		<form name="create_financial_resource_form" action="canvas_submit.php" method="post">
+			<select name="type" class ="drop_down">
+				<option value="capital">Capital</option>
+				<option value="assets">Assets</option>
+			</select>
 			<fieldset>
 				<label for="name">Name</label>
 				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
-				<label for="email">Email</label>
-				<input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all">
-				<label for="password">Password</label>
-				<input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all">
 			</fieldset>
+			<input type="submit" name="key_resources-submit" class="submit_button" value="Submit" />
 		</form>
 	</div>
 	
-	<div id="create_partner_form" title="Create new partner">
+	<div id="create_human_resource_form" title="Create new resource">
 		<p class="validateTips">All form fields are required.</p>
-		<form>
+		<form name="create_human_resource_form" action="canvas_submit.php" method="post">
+			<input type="hidden" name="type" value="human">
 			<fieldset>
 				<label for="name">Name</label>
 				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
-				<label for="email">Email</label>
-				<input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all">
-				<label for="password">Password</label>
-				<input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all">
 			</fieldset>
+			<input type="submit" name="key_resources-submit" class="submit_button" value="Submit" />
+		</form>
+	</div>
+	
+	<div id="create_intellectual_resource_form" title="Create new resource">
+		<p class="validateTips">All form fields are required.</p>
+		<form name="create_intellectual_resource_form" action="canvas_submit.php" method="post">
+			<input type="hidden" name="type" value="intellectual">
+			<fieldset>
+				<label for="name">Name</label>
+				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+			</fieldset>
+			<input type="submit" name="key_resources-submit" class="submit_button" value="Submit" />
+		</form>
+	</div>
+	
+	<div id="create_partner_group_form" title="Create New Partner Group">
+		<p class="validateTips">All form fields are required.</p>
+		<form name="create_partner_group_form" action="canvas_submit.php" method="post">
+			<fieldset>
+				<label for="name">Name</label>
+				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+			</fieldset>
+			<input type="submit" name="key_partner_groups-submit" class="submit_button" value="Submit" />
+		</form>
+	</div>
+
+	<script>
+		function setGroupId(){
+			document.create_partner_form.group_id.value = partner_group_id;
+			return true;
+		}
+	</script>	
+	<div id="create_partner_form" title="Create New Partner">
+		<p class="validateTips">All form fields are required.</p>
+		<form name="create_partner_form" action="canvas_submit.php" method="post" onsubmit="setGroupId();">
+			<fieldset>
+				<input type="hidden" name="group_id" value="0" />
+				<label for="name">Name</label>
+				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+			</fieldset>
+			<input type="submit" name="key_partners-submit" class="submit_button" value="Submit" />
+		</form>
+	</div>
+	
+	<div id="create_partner_relationship_form" title="Create New Partner Relationship">
+		<p class="validateTips">All form fields are required.</p>
+		<form name="create_partner_relationship_form" action="canvas_submit.php" method="post">
+			<fieldset>
+				<label for="name">Name</label>
+				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+			</fieldset>
+			<input type="submit" name="key_partner_relationships-submit" class="submit_button" value="Submit" />
+		</form>
+	</div>
+	
+	<div id="create_partner_resource_form" title="Create New Partner Resource">
+		<p class="validateTips">All form fields are required.</p>
+		<form name="create_partner_resource_form" action="canvas_submit.php" method="post">
+			<fieldset>
+				<label for="name">Name</label>
+				<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+			</fieldset>
+			<input type="submit" name="key_partners_resources-submit" class="submit_button" value="Submit" />
 		</form>
 	</div>
 
@@ -1300,8 +1463,9 @@
 		</form>
 	</div>
 
-		<script>
+	<script>
 		
+		var segment_id;
 		
 		$(document).ready(function(){
 		
@@ -1570,8 +1734,6 @@
 		var onSampleResized = function(e){  
 			var table = $(e.currentTarget); //reference to the resized table
 		 }; 
-
-		 //seems to just hide everything ~Thea
   
 		function GoToModel(){
 			$('.canvas_blocker').hide();
@@ -1624,7 +1786,7 @@
 			$('#Resources_Human').hide();	
 			$('#Resources_Intellectual').hide();	
 
-			//~Thea adding highlighting
+			// Sidebar highlighting
 
 			$('.section_icon_selected_partners').removeClass('section_icon_selected_partners').addClass('section_icon_partners');
 			$('.section_icon_selected_channels').removeClass('section_icon_selected_channels').addClass('section_icon_channels');
@@ -1638,9 +1800,6 @@
 		
 		}
 		
-	
-		
-
 		jQuery.fn.center = function () {
 			this.css("position","absolute");
 			this.css("position","absolute");
@@ -1649,421 +1808,242 @@
 			this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + 
 														$(window).scrollLeft()) + "px");
 			return this;
-
-
 		}
 	
-
-	/*var name = $( "#name" ),
-	email = $( "#email" ),
-	password = $( "#password" ),
-	allFields = $( [] ).add( name ).add( email ).add( password ),
-	tips = $( ".validateTips" );*/
-	
-	function updateTips( t ) {
-		tips
-		.text( t )
-		.addClass( "ui-state-highlight" );
-		setTimeout(function() {
-			tips.removeClass( "ui-state-highlight", 1500 );
-		}, 500 );
-	}
-	function checkLength( o, n, min, max ) {
-		if ( o.val().length > max || o.val().length < min ) {
-			o.addClass( "ui-state-error" );
-			updateTips( "Length of " + n + " must be between " +
-			min + " and " + max + "." );
-			return false;
+		function setPartnerGroupId(value)
+		{
+			partner_group_id = value;
 		}
-		else {
-			return true;
-		}
-	}
-	function checkRegexp( o, regexp, n ) {
-		if ( !( regexp.test( o.val() ) ) ) {
-			o.addClass( "ui-state-error" );
-			updateTips( n );
-			return false;
-		} 
-		else {
-			return true;
-		}
-	}
-	
-	/*
-	 * Canvas Buttons
-	 */
-	$( "#create_segment_form" ).dialog({
-		autoOpen: false,
-		height: 300,
-		width: 350,
-		modal: true,
-		buttons: {
-		/*	"Submit": function() {
-				var bValid = true;
-				allFields.removeClass( "ui-state-error" );
-				bValid = bValid && checkLength( name, "name", 0, 255 );
-				bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "feilds may consist of a-z, 0-9, underscores, begin with a letter." );
-				if ( bValid ) {
-					document.getElementById("customer_segment-submit").submit();
-					$( this ).dialog( "close" );
-				}
-		},*/
-			Cancel: function() {
-				$( this ).dialog( "close" );
-			}
-		},
-		close: function() {
-			//allFields.val( "" ).removeClass( "ui-state-error" );
-		}
-	});
-	$( "#create-segment" )
-		.button()
-		.click(function() {
-			$( "#create_segment_form" ).dialog( "open" );
-		});
-	
-	$( "#create_customer_form" ).dialog({
-		autoOpen: false,
-		height: 300,
-		width: 350,
-		modal: true,
-		buttons: {
-			"Submit": function() {
-				var bValid = true;
-				allFields.removeClass( "ui-state-error" );
-				bValid = bValid && checkLength( name, "name", 0, 255 );
-				bValid = bValid && checkLength( age, "age", 0, 255 );
-				bValid = bValid && checkLength( location, "location", 0, 255 );
-				bValid = bValid && checkLength( gender, "gender", 0, 255 );
-				bValid = bValid && checkLength( age, "age", 0, 255 );
-				bValid = bValid && checkLength( income, "income", 0, 255 );
-				bValid = bValid && checkLength( occupation, "occupation", 0, 255 );
-				bValid = bValid && checkLength( education, "education", 0, 255 );
-				if ( bValid ) {
-					$( "#users tbody" ).append( "<tr>" +
-						"<td>" + name.val() + "</td>" +
-						"<td>" + email.val() + "</td>" +
-						"<td>" + password.val() + "</td>" +
-						"</tr>" );
-					$( this ).dialog( "close" );
-				}
-			},
-			Cancel: function() {
-				$( this ).dialog( "close" );
-			}
-		},
-		close: function() {
-			allFields.val( "" ).removeClass( "ui-state-error" );
-		}
-	});
-	$( ".create-customer" ) //changed to . for testing
-		.button()
-		.css({ width: '30px', 'padding-top': '1px', 'padding-bottom': '1px' })
-		.click(function() {
-			$( "#create_customer_form" ).dialog( "open" );
-		})	;
-	$( ".delete_add_button" ) //changed to . for testing
-		.button()
-		.css({ width: '30px', 'padding-top': '1px', 'padding-bottom': '1px' })
-		.click(function() {
-		})	;
-
-
-	function myAjax() {
-		$.ajax({
-			type: 'POST',
-			url: 'send-ajax-data.php',
-			data: {action:'_-submit'},
-			success: function(data){
-				alert(data);//data returned from php
-			}
-		});
-	}
-	
-	$( "#create_get_relationship_form" ).dialog({
-		autoOpen: false,
-		height: 300,
-		width: 350,
-		modal: true,
-		buttons: {
-			
-			Cancel: function() {
-				$( this ).dialog( "close" );
-			}
-		},
-		close: function() {
-			//allFields.val( "" ).removeClass( "ui-state-error" );
-		}
-	});
-	$( "#create-get_relationship" )
-		.button()
-		.click(function() {
-			$( "#create_get_relationship_form" ).dialog( "open" );
-		});
-
-	$( "#create_keep_relationship_form" ).dialog({
-		autoOpen: false,
-		height: 300,
-		width: 350,
-		modal: true,
-		buttons: {
-
-			Cancel: function() {
-				$( this ).dialog( "close" );
-			}
-		},
-		close: function() {
-			//allFields.val( "" ).removeClass( "ui-state-error" );
-		}
-	});
-	$( "#create-keep_relationship" )
-		.button()
-		.click(function() {
-			$( "#create_keep_relationship_form" ).dialog( "open" );
-		});
 		
-	$( "#create_grow_relationship_form" ).dialog({
-		autoOpen: false,
-		height: 300,
-		width: 350,
-		modal: true,
-		buttons: {
-			Cancel: function() {
-				$( this ).dialog( "close" );
-			}
-		},
-		close: function() {
-			//allFields.val( "" ).removeClass( "ui-state-error" );
+		function setSegId(value)
+		{
+			segment_id = value;
 		}
-	});
-	$( "#create-grow_relationship" )
-		.button()
-		.click(function() {
-			$( "#create_grow_relationship_form" ).dialog( "open" );
-		});
 
-	$( "#create_channel_form" ).dialog({
-		autoOpen: false,
-		height: 300,
-		width: 350,
-		modal: true,
-		buttons: {
-			Cancel: function() {
-				$( this ).dialog( "close" );
-			}
-		},
-		close: function() {
-			//allFields.val( "" ).removeClass( "ui-state-error" );
-		}
-	});
-	$( "#create-channel" )
-		.button()
-		.click(function() {
-			$( "#create_channel_form" ).dialog( "open" );
-		});
-
-	$( "#create_cost_form" ).dialog({
-		autoOpen: false,
-		height: 300,
-		width: 350,
-		modal: true,
-		buttons: {
-			"Create a new cost": function() {
-				var bValid = true;
-				allFields.removeClass( "ui-state-error" );
-				bValid = bValid && checkLength( name, "username", 3, 16 );
-				bValid = bValid && checkLength( email, "email", 6, 80 );
-				bValid = bValid && checkLength( password, "password", 5, 16 );
-				bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-				// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-				bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-				bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-			if ( bValid ) {
-				$( "#users tbody" ).append( "<tr>" +
-					"<td>" + name.val() + "</td>" +
-					"<td>" + email.val() + "</td>" +
-					"<td>" + password.val() + "</td>" +
-					"</tr>" );
-				$( this ).dialog( "close" );
-			}
-		},
-			Cancel: function() {
-				$( this ).dialog( "close" );
-			}
-		},
-		close: function() {
-			allFields.val( "" ).removeClass( "ui-state-error" );
-		}
-	});
-	$( "#create-cost" )
-		.button()
-		.click(function() {
-			$( "#create_cost_form" ).dialog( "open" );
-		});
-
-
-$( "#create_activity_form" ).dialog({
-		autoOpen: false,
-		height: 300,
-		width: 350,
-		modal: true,
-		buttons: {
-			"Create an activity": function() {
-				var bValid = true;
-				allFields.removeClass( "ui-state-error" );
-				bValid = bValid && checkLength( name, "username", 3, 16 );
-				bValid = bValid && checkLength( email, "email", 6, 80 );
-				bValid = bValid && checkLength( password, "password", 5, 16 );
-				bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-				// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-				bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-				bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-			if ( bValid ) {
-				$( "#users tbody" ).append( "<tr>" +
-					"<td>" + name.val() + "</td>" +
-					"<td>" + email.val() + "</td>" +
-					"<td>" + password.val() + "</td>" +
-					"</tr>" );
-				$( this ).dialog( "close" );
-			}
-		},
-			Cancel: function() {
-				$( this ).dialog( "close" );
-			}
-		},
-		close: function() {
-			allFields.val( "" ).removeClass( "ui-state-error" );
-		}
-	});
-	$( "#create-activity" )
-		.button()
-		.click(function() {
-	$( "#create_activity_form" ).dialog( "open" );
-		});
-
-
-
-$( "#create_resource_form" ).dialog({
+		/* Javascript for opening forms when buttons are pressed */
+ 
+		$( "#create_segment_form" ).dialog({
 			autoOpen: false,
-			height: 300,
 			width: 350,
 			modal: true,
-			buttons: {
-				"Create a new resource": function() {
-					var bValid = true;
-					allFields.removeClass( "ui-state-error" );
-					bValid = bValid && checkLength( name, "username", 3, 16 );
-					bValid = bValid && checkLength( email, "email", 6, 80 );
-					bValid = bValid && checkLength( password, "password", 5, 16 );
-					bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-					// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-					bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-					bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-				if ( bValid ) {
-					$( "#users tbody" ).append( "<tr>" +
-						"<td>" + name.val() + "</td>" +
-						"<td>" + email.val() + "</td>" +
-						"<td>" + password.val() + "</td>" +
-						"</tr>" );
-					$( this ).dialog( "close" );
-				}
-			},
-				Cancel: function() {
-					$( this ).dialog( "close" );
-				}
-			},
-			close: function() {
-				allFields.val( "" ).removeClass( "ui-state-error" );
-			}
 		});
-		$( "#create-resource" )
+		$( "#create-segment" )
 			.button()
 			.click(function() {
-		$( "#create_resource_form" ).dialog( "open" );
+				$( "#create_segment_form" ).dialog( "open" );
 			});
-	
-	$( "#create_partner_form" ).dialog({
+
+		$( "#create_customer_form" ).dialog({
 			autoOpen: false,
 			height: 300,
 			width: 350,
 			modal: true,
-			buttons: {
-				"Create a new partner": function() {
-					var bValid = true;
-					allFields.removeClass( "ui-state-error" );
-					bValid = bValid && checkLength( name, "username", 3, 16 );
-					bValid = bValid && checkLength( email, "email", 6, 80 );
-					bValid = bValid && checkLength( password, "password", 5, 16 );
-					bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-					// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-					bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-					bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-				if ( bValid ) {
-					$( "#users tbody" ).append( "<tr>" +
-						"<td>" + name.val() + "</td>" +
-						"<td>" + email.val() + "</td>" +
-						"<td>" + password.val() + "</td>" +
-						"</tr>" );
-					$( this ).dialog( "close" );
-				}
-			},
-				Cancel: function() {
-					$( this ).dialog( "close" );
-				}
-			},
-			close: function() {
-				allFields.val( "" ).removeClass( "ui-state-error" );
-			}
 		});
-		$( "#create-partner" )
+
+		$( ".create_button" )
+			.button({text: false, icons: {primary: 'ui-icon-circle-plus'}})
+			.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' })
+			
+		$( ".create-customer" ) //changed to . for testing
+			.button({text: false, icons: {primary: 'ui-icon-circle-plus'}})
+			.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' })
+			.click(function() {
+				$( "#create_customer_form" ).dialog( "open" );
+			});
+		$( ".delete_button" )
+			.button({text: false, icons: {primary: 'ui-icon-circle-close'}})
+			.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' ,'padding-left' : '0px' })
+			.click(function() {
+			});
+
+		$( ".view_button" )
+			.button({text: false, icons: { primary: 'ui-icon-circle-triangle-e'}})
+			.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' ,'padding-left' : '0px' })
+			.click(function() {
+			})	;
+		$( ".submit_button" )
 			.button()
 			.click(function() {
-		$( "#create_partner_form" ).dialog( "open" );
+			})	;
+
+		$( ".customer_persona-view" )
+			.button()
+			.click(function() {
+			})	;
+
+		$( "#create_get_relationship_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-get_relationship" )
+			.button()
+			.click(function() {
+				$( "#create_get_relationship_form" ).dialog( "open" );
+			});
+
+		$( "#create_keep_relationship_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-keep_relationship" )
+			.button()
+			.click(function() {
+				$( "#create_keep_relationship_form" ).dialog( "open" );
+			});
+			
+		$( "#create_grow_relationship_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-grow_relationship" )
+			.button()
+			.click(function() {
+				$( "#create_grow_relationship_form" ).dialog( "open" );
+			});
+
+		$( "#create_channel_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-channel" )
+			.button()
+			.click(function() {
+				$( "#create_channel_form" ).dialog( "open" );
+			});
+
+		$( "#create_cost_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-cost" )
+			.button()
+			.click(function() {
+				$( "#create_cost_form" ).dialog( "open" );
 			});
 
 
-				$( "#create_revenue_stream_form" ).dialog({
+		$( "#create_activity_form" ).dialog({
 			autoOpen: false,
 			height: 300,
 			width: 350,
 			modal: true,
-			buttons: {
-				"Create a new revenue stream": function() {
-					var bValid = true;
-					allFields.removeClass( "ui-state-error" );
-					bValid = bValid && checkLength( name, "username", 3, 16 );
-					bValid = bValid && checkLength( email, "email", 6, 80 );
-					bValid = bValid && checkLength( password, "password", 5, 16 );
-					bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-					// From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-					bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-					bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-				if ( bValid ) {
-					$( "#users tbody" ).append( "<tr>" +
-						"<td>" + name.val() + "</td>" +
-						"<td>" + email.val() + "</td>" +
-						"<td>" + password.val() + "</td>" +
-						"</tr>" );
-					$( this ).dialog( "close" );
-				}
-			},
-				Cancel: function() {
-					$( this ).dialog( "close" );
-				}
-			},
-			close: function() {
-				allFields.val( "" ).removeClass( "ui-state-error" );
-			}
+		});
+		$( "#create-activity" )
+			.button()
+			.click(function() {
+		$( "#create_activity_form" ).dialog( "open" );
+			});
+
+
+
+		$( "#create_financial_resource_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-financial_resource" )
+			.button()
+			.click(function() {
+		$( "#create_financial_resource_form" ).dialog( "open" );
+			});
+				
+		$( "#create_human_resource_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-human_resource" )
+			.button()
+			.click(function() {
+		$( "#create_human_resource_form" ).dialog( "open" );
+			});
+
+		$( "#create_intellectual_resource_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-intellectual_resource" )
+			.button()
+			.click(function() {
+		$( "#create_intellectual_resource_form" ).dialog( "open" );
+			});
+
+		$( "#create_partner_group_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-partner_group" )
+			.button()
+			.click(function() {
+		$( "#create_partner_group_form" ).dialog( "open" );
+			});
+			
+		$( "#create_partner_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( ".create_partner" ) //changed to . for testing
+			.button({text: false, icons: {primary: 'ui-icon-circle-plus'}})
+			.css({ width: '30px', height: '30px', 'padding-top': '1px', 'padding-bottom': '1px' })
+			.click(function() {
+				$( "#create_partner_form" ).dialog( "open" );
+			});
+			
+		$( "#create_partner_relationship_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-partner_relationship" )
+			.button()
+			.click(function() {
+		$( "#create_partner_relationship_form" ).dialog( "open" );
+			});
+			
+		$( "#create_partner_resource_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+		});
+		$( "#create-partner_resource" )
+			.button()
+			.click(function() {
+		$( "#create_partner_resource_form" ).dialog( "open" );
+			});
+
+
+		$( "#create_revenue_stream_form" ).dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
 		});
 		$( "#create-revenue-stream" )
 			.button()
 			.click(function() {
 		$( "#create_revenue_stream_form" ).dialog( "open" );
 			});
-
-
-	
+		
 	</script>
 	
 </body>
